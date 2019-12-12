@@ -1,3 +1,10 @@
+/*
+ * @Author: kslamp
+ * @Date: 2019-12-11 20:11:22
+ * @LastEditTime: 2019-12-12 13:38:26
+ * @FilePath: /goshop/restful/main.go
+ * @Description:
+ */
 package main
 
 import (
@@ -6,11 +13,17 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
+	"goshop/restful/common"
 	"goshop/restful/config"
+	"goshop/restful/models"
 	"goshop/restful/routers"
 )
 
 func main() {
+	db := common.Init()
+
+	db.AutoMigrate(&models.Address{}, &models.Item{}, &models.ItemDesc{}, &models.Order{}, &models.Role{}, &models.User{})
+
 	s := &http.Server{
 		Addr:           ":" + config.ServerConf.Port,
 		Handler:        routers.Routers(),
