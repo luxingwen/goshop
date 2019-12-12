@@ -5,6 +5,10 @@ import (
 
 	"fmt"
 	"log"
+
+	"goshop/restful/models"
+
+	"github.com/bxcodec/faker"
 )
 
 const (
@@ -20,13 +24,25 @@ func testLogin() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	fmt.Println(string(b))
 
 }
 
+func testGenerate() {
+	user := models.User{}
+	err := faker.FakeData(&user)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Printf("%+v\n", user)
+}
+
 func main() {
+	fmt.Println("开始生成数据...")
+
+	testGenerate()
 
 	fmt.Println("开始测试登录....")
 	testLogin()
+
 }

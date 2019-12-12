@@ -13,13 +13,14 @@ import (
 
 type User struct {
 	gorm.Model
-	Username string `gorm:"column:username" json:"username"`
-	Password string `gorm:"column:password" json:"password"`
-	Phone    string `gorm:"column:phone" json:"phone"`
-	Email    string `gorm:"column:email" json:"email"`
+	Username string `gorm:"column:username" json:"username" faker:"username"`
+	Password string `gorm:"column:password" json:"password" faker:"password"`
+	Name     string `gorm:"column:name" json:"name" faker:"name"`
+	Phone    string `gorm:"column:phone" json:"phone" faker:"phone_number"`
+	Email    string `gorm:"column:email" json:"email" faker:"email"`
 	Sex      string `gorm:"column:sex" json:"sex"`
 	Address  string `gorm:"column:address" json:"address"`
 	Status   int    `gorm:"column:status" json:"status"`
-	Desc     string `gorm:"column:desc" json:"desc"`
-	Img      string `gorm:"column:img" json:"img"`
+	Desc     string `gorm:"column:desc" json:"desc" faker:"word"`
+	Img      string `gorm:"column:img" json:"img" faker:"url"`
 }
