@@ -21,7 +21,70 @@
                         "in": "body",
                         "required": true,
                         "schema": {
+                            "type": "object",
                             "$ref": "#/definitions/controllers.ReqLogin"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":0,\"data\":{},\"msg\":\"ok\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/register": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "注册",
+                "parameters": [
+                    {
+                        "description": "{}",
+                        "name": "param",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/controllers.ReqLogin"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":0,\"data\":{},\"msg\":\"ok\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/userlist": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "查询用户列表",
+                "parameters": [
+                    {
+                        "description": "{}",
+                        "name": "param",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ReqUser"
                         }
                     }
                 ],
@@ -45,6 +108,20 @@
                 },
                 "username": {
                     "type": "string"
+                }
+            }
+        },
+        "models.ReqUser": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "page": {
+                    "type": "integer"
+                },
+                "pageNum": {
+                    "type": "integer"
                 }
             }
         }

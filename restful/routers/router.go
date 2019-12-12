@@ -2,7 +2,7 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/swaggo/gin-swagger"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 
 	"goshop/restful/controllers"
@@ -17,5 +17,7 @@ func Routers() *gin.Engine {
 
 	api := r.Group("/api")
 	api.POST("/user/login", controllers.Login)
+	api.POST("/user/register", controllers.Register)
+	api.POST("/user/userlist", controllers.UserList)
 	return r
 }

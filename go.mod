@@ -6,13 +6,14 @@ require (
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/asaskevich/govalidator v0.0.0-20190424111038-f61b66f89f4a // indirect
 	github.com/aws/aws-sdk-go v1.26.0 // indirect
-	github.com/bxcodec/faker v2.0.1+incompatible // indirect
+	github.com/bxcodec/faker v2.0.1+incompatible
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/disintegration/imaging v1.6.2 // indirect
 	github.com/gin-gonic/gin v1.5.0
 	github.com/go-ini/ini v1.51.0
 	github.com/google/go-github v17.0.0+incompatible // indirect
 	github.com/google/go-querystring v1.0.0 // indirect
+	github.com/google/martian v2.1.0+incompatible
 	github.com/gorilla/sessions v1.2.0 // indirect
 	github.com/gosimple/slug v1.9.0 // indirect
 	github.com/jinzhu/configor v1.1.1 // indirect
