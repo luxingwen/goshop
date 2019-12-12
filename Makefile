@@ -14,3 +14,8 @@ build-swag:
 
 build-swag-run: build-swag
 	cd restful && ./bin/goshop-restful
+
+
+test:
+	go build -o restful/bin/goshop-test restful/test/main.go
+	restful/bin/goshop-test
