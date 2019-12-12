@@ -7,6 +7,17 @@ import (
 	"goshop/restful/models"
 )
 
+type ReqLogin struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
+// @Summary 登录
+// @Accept json
+// @Produce  json
+// @Param param body controllers.ReqLogin true "{}"
+// @Success 200 {string} string "{"code":0,"data":{},"msg":"ok"}"
+// @Router /api/user/login [post]
 func Login(c *gin.Context) {
 	user := new(models.User)
 

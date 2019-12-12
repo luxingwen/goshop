@@ -1,0 +1,32 @@
+definitions:
+  controllers.ReqLogin:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+info:
+  contact: {}
+  license: {}
+paths:
+  /api/user/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: '{}'
+        in: body
+        name: param
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.ReqLogin'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 登录
+swagger: "2.0"
