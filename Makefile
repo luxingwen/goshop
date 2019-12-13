@@ -18,4 +18,4 @@ build-swag-run: build-swag
 
 test:
 	go build -o restful/bin/goshop-test restful/test/main.go
-	restful/bin/goshop-test
+	cd restful && bin/goshop-test

@@ -8,7 +8,6 @@
 package models
 
 import (
-	"errors"
 	"goshop/restful/common"
 
 	"github.com/jinzhu/gorm"
@@ -16,7 +15,7 @@ import (
 
 type User struct {
 	gorm.Model
-	Username string `gorm:"column:username" json:"username" faker:"username"`
+	Username string `gorm:"column:username;not null;unique" json:"username" faker:"username"`
 	Password string `gorm:"column:password" json:"password" faker:"password"`
 	Name     string `gorm:"column:name" json:"name" faker:"name"`
 	Phone    string `gorm:"column:phone" json:"phone" faker:"phone_number"`
@@ -30,7 +29,8 @@ type User struct {
 
 type ReqUser struct {
 	Query
-	Name string `form:"name"`
+	Name     string `form:"name"`
+	Username string `form:"username"`
 }
 
 func (this *User) IsUserExist() (err error) {
@@ -40,33 +40,34 @@ func (this *User) IsUserExist() (err error) {
 
 func (this *User) RegisterUser() (err error) {
 	db := common.GetDB()
-	if db.NewRecord(this) {
-		err = db.Create(&this).Error
-		return
-	}
-	return errors.New("can not create record")
+	err = db.Create(&this).Error
+	return
 }
 
 func (req *ReqUser) UserList() (r []*User, count int, err error) {
 	limit := 10
 	page := 0
 
-	if req.Page != 0 {
-		page = 0
+	if req.Page > 0 {
+		page = req.Page - 1
 	}
-	if req.PageNum != 0 {
-		limit = 0
+	if req.PageNum > 0 {
+		limit = req.PageNum
 	}
 
 	offset := limit * page
 
 	db := common.GetDB()
 	if req.Name != "" {
-		db = db.Where("Username = ?", req.Name)
+		db = db.Where("name = ?", req.Name)
+	}
+
+	if req.Username != "" {
+		db = db.Where("username = ?", req.Name)
 	}
 
 	r = make([]*User, offset)
-	err = db.Offset(offset).Limit(limit).Find(&r).Error
+	err = db.Offset(offset).Limit(limit).Order("ID ASC").Find(&r).Error
 	if err != nil {
 		return
 	}

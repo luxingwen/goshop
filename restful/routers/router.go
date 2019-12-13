@@ -18,6 +18,6 @@ func Routers() *gin.Engine {
 	api := r.Group("/api")
 	api.POST("/user/login", controllers.Login)
 	api.POST("/user/register", controllers.Register)
-	api.POST("/user/userlist", controllers.UserList)
+	api.GET("/user/userlist", controllers.UserList)
 	return r
 }

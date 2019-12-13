@@ -21,7 +21,6 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/controllers.ReqLogin"
                         }
                     }
@@ -52,7 +51,6 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/controllers.ReqLogin"
                         }
                     }
@@ -69,23 +67,30 @@
         },
         "/api/user/userlist": {
             "get": {
-                "consumes": [
-                    "application/json"
-                ],
                 "produces": [
                     "application/json"
                 ],
                 "summary": "查询用户列表",
                 "parameters": [
                     {
-                        "description": "{}",
-                        "name": "param",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/models.ReqUser"
-                        }
+                        "type": "integer",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "limit",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "username",
+                        "name": "username",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -108,20 +113,6 @@
                 },
                 "username": {
                     "type": "string"
-                }
-            }
-        },
-        "models.ReqUser": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "page": {
-                    "type": "integer"
-                },
-                "pageNum": {
-                    "type": "integer"
                 }
             }
         }

@@ -6,15 +6,6 @@ definitions:
       username:
         type: string
     type: object
-  models.ReqUser:
-    properties:
-      name:
-        type: string
-      page:
-        type: integer
-      pageNum:
-        type: integer
-    type: object
 info:
   contact: {}
   license: {}
@@ -30,7 +21,6 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/controllers.ReqLogin'
-          type: object
       produces:
       - application/json
       responses:
@@ -50,7 +40,6 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/controllers.ReqLogin'
-          type: object
       produces:
       - application/json
       responses:
@@ -61,16 +50,21 @@ paths:
       summary: 注册
   /api/user/userlist:
     get:
-      consumes:
-      - application/json
       parameters:
-      - description: '{}'
-        in: body
-        name: param
+      - description: page
+        in: query
+        name: page
         required: true
-        schema:
-          $ref: '#/definitions/models.ReqUser'
-          type: object
+        type: integer
+      - description: limit
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: username
+        in: query
+        name: username
+        type: string
       produces:
       - application/json
       responses:

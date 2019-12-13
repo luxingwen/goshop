@@ -32,7 +32,6 @@ func main() {
 		MaxHeaderBytes: 1 << 20,
 	}
 	log.Info("start server  on ", config.ServerConf.Port)
-
 	if err := s.ListenAndServe(); err != nil {
 		log.Fatal(err)
 	}

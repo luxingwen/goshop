@@ -19,6 +19,6 @@ func handleOk(c *gin.Context, data interface{}) {
 func handleErr(c *gin.Context, err error) {
 	c.JSON(http.StatusOK, gin.H{
 		"code":    errcode.ErrCode(err),
-		"message": "fail",
+		"message": err.Error(),
 	})
 }

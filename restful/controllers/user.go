@@ -5,11 +5,15 @@ import (
 
 	"goshop/restful/common"
 	"goshop/restful/models"
+
+	"goshop/libs/errcode"
+
+	"strings"
 )
 
 type ReqLogin struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
+	Username string `json:"username" faker:"username"`
+	Password string `json:"password" faker:"password"`
 }
 
 type ResUserList struct {
@@ -67,22 +71,28 @@ func Register(c *gin.Context) {
 
 	err = user.RegisterUser()
 	if err != nil {
+		if strings.Contains(err.Error(), "Duplicate entry") {
+			handleErr(c, errcode.NewErrcode(1001, "用户名已存在"))
+			return
+		}
 		handleErr(c, err)
 		return
 	}
-	handleOk(c, "")
+	user.Password = ""
+	handleOk(c, user)
 }
 
 // @Summary 查询用户列表
-// @Accept json
 // @Produce  json
-// @Param param body models.ReqUser true "{}"
+// @Param page query int true "page"
+// @Param limit query int true "limit"
+// @Param username query string false "username"
 // @Success 200 {string} string "{"code":0,"data":{},"msg":"ok"}"
 // @Router /api/user/userlist [get]
 func UserList(c *gin.Context) {
 	req := new(models.ReqUser)
 
-	err := c.ShouldBindJSON(&req)
+	err := c.ShouldBindQuery(&req)
 	if err != nil {
 		handleErr(c, err)
 		return
