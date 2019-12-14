@@ -1,5 +1,9 @@
 package models
 
+import (
+	"github.com/jinzhu/gorm"
+)
+
 type Category struct {
 	gorm.Model
 	Title     string `gorm:"column:title" json:"title"`          // 分类名
