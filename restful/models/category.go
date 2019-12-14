@@ -13,10 +13,10 @@ type Category struct {
 // 返回的category 结构体
 type ResCategory struct {
 	Id        int            `json:"id"`
-	Title     string         `json:"title"`       // 分类名
-	SortOrder int            `json:"sortOrder"`   // 排序
-	PicUrl    string         `json:"picUrl"`      // 分类大封面
-	Type      int            `json:"type"`        // 类型
-	RelateId  int            `json:"relateId"`    // 关联id
-	Children  []*ResCategory `json:"ResCategory"` // 孩子
+	Title     string         `json:"title"`     // 分类名
+	SortOrder int            `json:"sortOrder"` // 排序
+	PicUrl    string         `json:"picUrl"`    // 分类大封面
+	Type      int            `json:"type"`      // 类型
+	RelateId  int            `json:"relateId"`  // 关联id
+	Children  []*ResCategory `json:"children"`  // 孩子
 }
