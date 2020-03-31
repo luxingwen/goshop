@@ -52,6 +52,7 @@ func toTitle(s string) (r string) {
 	for _, item := range strings.Split(s, "_") {
 		r += strings.Title(item)
 	}
+
 	return
 
 }
@@ -71,6 +72,8 @@ func getTyp(sqlTyp schemas.SQLType) (r string) {
 		return "int"
 	case strings.ToUpper(sqlTyp.Name) == "BOOL" || strings.ToLower(sqlTyp.Name) == "BOOLEAN":
 		return "bool"
+	case sqlTyp.IsTime():
+		return "time.Time"
 	}
 	return "string"
 }
