@@ -26,6 +26,8 @@ type MySqlConfig struct {
 }
 
 func init() {
+	log.Println("loading app.conf")
+
 	cfg, err := ini.Load("conf/app.conf")
 	if err != nil {
 		log.Fatal("load app conf err:%v", err)
