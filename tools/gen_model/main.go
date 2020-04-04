@@ -15,7 +15,8 @@ var engine *xorm.Engine
 
 func main() {
 	var err error
-	engine, err = xorm.NewEngine("mysql", "root:root@/crmeb_hh?charset=utf8")
+	engine, err = xorm.NewEngine("mysql", "root:mysql57@tcp(localhost:8300)/gostore?charset=utf8")
+
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -29,20 +30,35 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(string(b))
+	_ = b
+	//fmt.Println(string(b))
 
 	for _, itemTable := range tables {
 		genStruct(itemTable)
 	}
+
+	// fmt.Println(itemTable)
 }
 
 func genStruct(table *schemas.Table) {
 
+	if table.Name != "eb_store_order" {
+		return
+	}
 	fmt.Println("//", table.Name)
 	fmt.Println("//", table.Comment)
 	name := strings.TrimPrefix(table.Name, "eb_")
 	structName := toTitle(name)
 	fmt.Printf("type %s struct {\n", structName)
+
+	cols := table.Columns()
+
+	b, err := json.MarshalIndent(cols, "", "\t")
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(string(b))
 
 	genFlieds(table.Columns())
 	fmt.Println("}\n")
@@ -68,6 +84,8 @@ func genFlieds(cs []*schemas.Column) {
 
 func getTyp(sqlTyp schemas.SQLType) (r string) {
 	switch true {
+	case strings.ToUpper(sqlTyp.Name) == "DECIMAL":
+		return "float64"
 	case sqlTyp.IsNumeric():
 		return "int"
 	case strings.ToUpper(sqlTyp.Name) == "BOOL" || strings.ToLower(sqlTyp.Name) == "BOOLEAN":

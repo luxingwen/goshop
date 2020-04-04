@@ -11,6 +11,7 @@ require (
 	github.com/disintegration/imaging v1.6.2 // indirect
 	github.com/gin-gonic/gin v1.5.0
 	github.com/go-ini/ini v1.51.0
+	github.com/go-sql-driver/mysql v1.4.1
 	github.com/google/go-github v17.0.0+incompatible // indirect
 	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/google/martian v2.1.0+incompatible
@@ -51,4 +52,5 @@ require (
 	github.com/swaggo/swag v1.6.3
 	github.com/theplant/cldr v0.0.0-20190423050709-9f76f7ce4ee8 // indirect
 	github.com/unrolled/render v1.0.1 // indirect
+	xorm.io/xorm v1.0.1
 )

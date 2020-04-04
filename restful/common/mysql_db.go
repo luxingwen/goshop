@@ -2,7 +2,7 @@ package common
 
 import (
 	"fmt"
-
+	"log"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 
@@ -17,6 +17,7 @@ var db *gorm.DB
 
 // Opening a database and save the reference to `Database` struct.
 func Init() *gorm.DB {
+	log.Info("init db")
 	server := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True", config.MySqlConf.UserName, config.MySqlConf.PassWd, config.MySqlConf.Host, config.MySqlConf.Port, config.MySqlConf.DbName)
 
 	db0, err := gorm.Open("mysql", server)

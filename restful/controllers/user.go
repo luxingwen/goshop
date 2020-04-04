@@ -2,12 +2,9 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
-
 	"goshop/restful/common"
 	"goshop/restful/models"
-
 	"goshop/libs/errcode"
-
 	"strings"
 )
 
