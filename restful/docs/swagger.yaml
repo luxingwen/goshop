@@ -1,76 +1,8241 @@
-xxdefinitions:
-  controllers.ReqLogin:
+definitions:
+  models.Article:
     properties:
-      password:
+      addTime:
+        description: 添加时间
         type: string
-      username:
+      adminId:
+        description: 管理员id
+        type: integer
+      author:
+        description: 文章作者
+        type: string
+      cid:
+        description: 分类id
+        type: string
+      hide:
+        description: 是否隐藏
+        type: integer
+      id:
+        description: 文章管理ID
+        type: integer
+      imageInput:
+        description: 文章图片
+        type: string
+      isBanner:
+        description: 是否轮播图(小程序)
+        type: integer
+      isHot:
+        description: 是否热门(小程序)
+        type: integer
+      merId:
+        description: 商户id
+        type: integer
+      shareSynopsis:
+        description: 文章分享简介
+        type: string
+      shareTitle:
+        description: 文章分享标题
+        type: string
+      sort:
+        description: 排序
+        type: integer
+      status:
+        description: 状态
+        type: integer
+      synopsis:
+        description: 文章简介
+        type: string
+      title:
+        description: 文章标题
+        type: string
+      url:
+        description: 原文链接
+        type: string
+      visit:
+        description: 浏览次数
+        type: string
+    type: object
+  models.ArticleCategory:
+    properties:
+      addTime:
+        description: 添加时间
+        type: string
+      hidden:
+        description: 是否隐藏
+        type: integer
+      id:
+        description: 文章分类id
+        type: integer
+      image:
+        description: 文章分类图片
+        type: string
+      intr:
+        description: 文章分类简介
+        type: string
+      isDel:
+        description: 1删除0未删除
+        type: integer
+      pid:
+        description: 父级ID
+        type: integer
+      sort:
+        description: 排序
+        type: integer
+      status:
+        description: 状态
+        type: integer
+      title:
+        description: 文章分类标题
+        type: string
+    type: object
+  models.Express:
+    properties:
+      code:
+        description: 快递公司简称
+        type: string
+      id:
+        description: 快递公司id
+        type: integer
+      isShow:
+        description: 是否显示
+        type: integer
+      name:
+        description: 快递公司全称
+        type: string
+      sort:
+        description: 排序
+        type: integer
+    type: object
+  models.RoutineAccessToken:
+    properties:
+      accessToken:
+        description: openid
+        type: string
+      id:
+        description: 小程序access_token表ID
+        type: integer
+      stopTime:
+        description: 添加时间
+        type: integer
+    type: object
+  models.RoutineFormId:
+    properties:
+      formId:
+        description: 表单ID
+        type: string
+      id:
+        description: 表单ID表ID
+        type: integer
+      status:
+        description: 状态1 未使用 2不能使用
+        type: integer
+      stopTime:
+        description: 表单ID失效时间
+        type: integer
+      uid:
+        description: 用户uid
+        type: integer
+    type: object
+  models.RoutineQrcode:
+    properties:
+      addTime:
+        description: 添加时间
+        type: string
+      id:
+        description: 微信二维码ID
+        type: integer
+      page:
+        description: 小程序页面路径带参数
+        type: string
+      qrcodeUrl:
+        description: 小程序二维码路径
+        type: string
+      status:
+        description: 状态 0不可用 1可用
+        type: integer
+      thirdId:
+        description: 用户id
+        type: integer
+      thirdType:
+        description: 二维码类型 spread(用户推广) product_spread(产品推广)
+        type: string
+      urlTime:
+        description: 二维码添加时间
+        type: integer
+    type: object
+  models.RoutineTemplate:
+    properties:
+      addTime:
+        description: 添加时间
+        type: string
+      content:
+        description: 回复内容
+        type: string
+      id:
+        description: 模板id
+        type: integer
+      name:
+        description: 模板名
+        type: string
+      status:
+        description: 状态
+        type: integer
+      tempid:
+        description: 模板ID
+        type: string
+      tempkey:
+        description: 模板编号
+        type: string
+    type: object
+  models.StoreBargain:
+    properties:
+      addTime:
+        description: 添加时间
+        type: integer
+      bargainMaxPrice:
+        description: 用户每次砍价的最大金额
+        type: number
+      bargainMinPrice:
+        description: 用户每次砍价的最小金额
+        type: number
+      bargainNum:
+        description: 用户每次砍价的次数
+        type: integer
+      cost:
+        description: 成本价
+        type: number
+      description:
+        description: 砍价详情
+        type: string
+      giveIntegral:
+        description: 反多少积分
+        type: number
+      id:
+        description: 砍价产品ID
+        type: integer
+      image:
+        description: 砍价活动图片
+        type: string
+      images:
+        description: 砍价产品轮播图
+        type: string
+      info:
+        description: 砍价活动简介
+        type: string
+      isDel:
+        description: 是否删除 0未删除 1删除
+        type: integer
+      isHot:
+        description: 是否推荐0不推荐1推荐
+        type: integer
+      isPostage:
+        description: 是否包邮 0不包邮 1包邮
+        type: integer
+      look:
+        description: 砍价产品浏览量
+        type: integer
+      minPrice:
+        description: 砍价商品最低价
+        type: number
+      num:
+        description: 每次购买的砍价产品数量
+        type: integer
+      postage:
+        description: 邮费
+        type: number
+      price:
+        description: 砍价金额
+        type: number
+      productId:
+        description: 关联产品ID
+        type: integer
+      rule:
+        description: 砍价规则
+        type: string
+      sales:
+        description: 销量
+        type: integer
+      share:
+        description: 砍价产品分享量
+        type: integer
+      sort:
+        description: 排序
+        type: integer
+      startTime:
+        description: 砍价开启时间
+        type: integer
+      status:
+        description: 砍价状态 0(到砍价时间不自动开启)  1(到砍价时间自动开启时间)
+        type: integer
+      stock:
+        description: 库存
+        type: integer
+      stopTime:
+        description: 砍价结束时间
+        type: integer
+      storeName:
+        description: 砍价产品名称
+        type: string
+      title:
+        description: 砍价活动名称
+        type: string
+      unitName:
+        description: 单位名称
+        type: string
+    type: object
+  models.StoreBargainUser:
+    properties:
+      addTime:
+        description: 参与时间
+        type: integer
+      bargainId:
+        description: 砍价产品id
+        type: integer
+      bargainPrice:
+        description: 砍价金额
+        type: number
+      bargainPriceMin:
+        description: 砍价的最低价
+        type: number
+      id:
+        description: 用户参与砍价表ID
+        type: integer
+      isDel:
+        description: 是否取消
+        type: integer
+      price:
+        description: 砍掉的价格
+        type: number
+      status:
+        description: 状态 1参与中 2 活动结束参与失败 3活动结束参与成功
+        type: integer
+      uid:
+        description: 用户ID
+        type: integer
+    type: object
+  models.StoreBargainUserHelp:
+    properties:
+      addTime:
+        description: 添加时间
+        type: integer
+      bargainId:
+        description: 砍价产品ID
+        type: integer
+      bargainUserId:
+        description: 用户参与砍价表id
+        type: integer
+      id:
+        description: 砍价用户帮助表ID
+        type: integer
+      price:
+        description: 帮助砍价多少金额
+        type: number
+      uid:
+        description: 帮助的用户id
+        type: integer
+    type: object
+  models.StoreCart:
+    properties:
+      addTime:
+        description: 添加时间
+        type: integer
+      bargainId:
+        description: 砍价id
+        type: integer
+      cartNum:
+        description: 商品数量
+        type: integer
+      combinationId:
+        description: 拼团id
+        type: integer
+      id:
+        description: 购物车表ID
+        type: integer
+      isDel:
+        description: 是否删除
+        type: integer
+      isNew:
+        description: 是否为立即购买
+        type: integer
+      isPay:
+        description: 0 = 未购买 1 = 已购买
+        type: integer
+      productAttrUnique:
+        description: 商品属性
+        type: string
+      productId:
+        description: 商品ID
+        type: integer
+      seckillId:
+        description: 秒杀产品ID
+        type: integer
+      type:
+        description: 类型
+        type: string
+      uid:
+        description: 用户ID
+        type: integer
+    type: object
+  models.StoreCategory:
+    properties:
+      addTime:
+        description: 添加时间
+        type: integer
+      cateName:
+        description: 分类名称
+        type: string
+      id:
+        description: 商品分类表ID
+        type: integer
+      isShow:
+        description: 是否推荐
+        type: integer
+      pic:
+        description: 图标
+        type: string
+      pid:
+        description: 父id
+        type: integer
+      sort:
+        description: 排序
+        type: integer
+    type: object
+  models.StoreCombination:
+    properties:
+      addTime:
+        description: 添加时间
+        type: string
+      attr:
+        description: 活动属性
+        type: string
+      browse:
+        description: 浏览量
+        type: integer
+      combination:
+        type: integer
+      cost:
+        description: 拼图产品成本
+        type: integer
+      description:
+        description: 拼团内容
+        type: string
+      id:
+        type: integer
+      image:
+        description: 推荐图
+        type: string
+      images:
+        description: 轮播图
+        type: string
+      info:
+        description: 简介
+        type: string
+      isDel:
+        type: integer
+      isHost:
+        description: 推荐
+        type: integer
+      isPostage:
+        description: 是否包邮1是0否
+        type: integer
+      isShow:
+        description: 产品状态
+        type: integer
+      merId:
+        description: 商户id
+        type: integer
+      merUse:
+        description: 商户是否可用1可用0不可用
+        type: integer
+      people:
+        description: 参团人数
+        type: integer
+      postage:
+        description: 邮费
+        type: number
+      price:
+        description: 价格
+        type: number
+      productId:
+        description: 商品id
+        type: integer
+      sales:
+        description: 销量
+        type: integer
+      sort:
+        description: 排序
+        type: integer
+      startTime:
+        description: 拼团开始时间
+        type: integer
+      stock:
+        description: 库存
+        type: integer
+      stopTime:
+        description: 拼团结束时间
+        type: integer
+      title:
+        description: 活动标题
+        type: string
+      unitName:
+        description: 单位名
+        type: string
+    type: object
+  models.StoreCoupon:
+    properties:
+      addTime:
+        description: 兑换项目添加时间
+        type: integer
+      couponPrice:
+        description: 兑换的优惠券面值
+        type: number
+      couponTime:
+        description: 优惠券有效期限（单位：天）
+        type: integer
+      id:
+        description: 优惠券表ID
+        type: integer
+      integral:
+        description: 兑换消耗积分值
+        type: integer
+      isDel:
+        description: 是否删除
+        type: integer
+      sort:
+        description: 排序
+        type: integer
+      status:
+        description: 状态（0：关闭，1：开启）
+        type: integer
+      title:
+        description: 优惠券名称
+        type: string
+      useMinPrice:
+        description: 最低消费多少金额可用优惠券
+        type: number
+    type: object
+  models.StoreCouponIssue:
+    properties:
+      addTime:
+        description: 优惠券添加时间
+        type: integer
+      cid:
+        description: 优惠券ID
+        type: integer
+      endTime:
+        description: 优惠券领取结束时间
+        type: integer
+      id:
+        type: integer
+      isDel:
+        type: integer
+      isPermanent:
+        description: 是否无限张数
+        type: integer
+      remainCount:
+        description: 优惠券剩余领取数量
+        type: integer
+      startTime:
+        description: 优惠券领取开启时间
+        type: integer
+      status:
+        description: 1 正常 0 未开启 -1 已无效
+        type: integer
+      totalCount:
+        description: 优惠券领取数量
+        type: integer
+    type: object
+  models.StoreCouponUser:
+    properties:
+      addTime:
+        description: 优惠券创建时间
+        type: integer
+      cid:
+        description: 兑换的项目id
+        type: integer
+      couponPrice:
+        description: 优惠券的面值
+        type: number
+      couponTitle:
+        description: 优惠券名称
+        type: string
+      endTime:
+        description: 优惠券结束时间
+        type: integer
+      id:
+        description: 优惠券发放记录id
+        type: integer
+      isFail:
+        description: 是否有效
+        type: integer
+      status:
+        description: 状态（0：未使用，1：已使用, 2:已过期）
+        type: integer
+      type:
+        description: 获取方式
+        type: string
+      uid:
+        description: 优惠券所属用户
+        type: integer
+      useMinPrice:
+        description: 最低消费多少金额可用优惠券
+        type: number
+      useTime:
+        description: 使用时间
+        type: integer
+    type: object
+  models.StoreOrder:
+    properties:
+      addTime:
+        description: 创建时间
+        type: integer
+      backIntegral:
+        description: 给用户退了多少积分
+        type: number
+      bargainId:
+        description: 砍价id
+        type: integer
+      cartId:
+        description: 购物车id
+        type: string
+      combinationId:
+        description: 拼团产品id0一般产品
+        type: integer
+      cost:
+        description: 成本价
+        type: number
+      couponId:
+        description: 优惠券id
+        type: integer
+      couponPrice:
+        description: 优惠券金额
+        type: number
+      deductionPrice:
+        description: 抵扣金额
+        type: number
+      deliveryId:
+        description: 快递单号/手机号
+        type: string
+      deliveryName:
+        description: 快递名称/送货人姓名
+        type: string
+      deliveryType:
+        description: 发货类型
+        type: string
+      gainIntegral:
+        description: 消费赚取积分
+        type: number
+      id:
+        description: 订单ID
+        type: integer
+      isChannel:
+        description: 支付渠道(0微信公众号1微信小程序)
+        type: integer
+      isDel:
+        description: 是否删除
+        type: integer
+      isMerCheck:
+        type: integer
+      isSystemDel:
+        description: 后台管理员删除
+        type: integer
+      mark:
+        description: 备注
+        type: string
+      merId:
+        description: 商户ID
+        type: integer
+      orderId:
+        description: 订单号
+        type: string
+      paid:
+        description: 支付状态
+        type: integer
+      payPostage:
+        description: 支付邮费
+        type: number
+      payPrice:
+        description: 实际支付金额
+        type: number
+      payTime:
+        description: 支付时间
+        type: integer
+      payType:
+        description: 支付方式
+        type: string
+      pinkId:
+        description: 拼团id 0没有拼团
+        type: integer
+      realName:
+        description: 用户姓名
+        type: string
+      refundPrice:
+        description: 退款金额
+        type: number
+      refundReason:
+        description: 不退款的理由
+        type: string
+      refundReasonTime:
+        description: 退款时间
+        type: integer
+      refundReasonWap:
+        description: 前台退款原因
+        type: string
+      refundReasonWapExplain:
+        description: 退款用户说明
+        type: string
+      refundReasonWapImg:
+        description: 退款图片
+        type: string
+      refundStatus:
+        description: 0 未退款 1 申请中 2 已退款
+        type: integer
+      remark:
+        description: 管理员备注
+        type: string
+      seckillId:
+        description: 秒杀产品ID
+        type: integer
+      status:
+        description: '订单状态（-1 : 申请退款 -2 : 退货成功 0：待发货；1：待收货；2：已收货；3：待评价；-1：已退款）'
+        type: integer
+      totalNum:
+        description: 订单商品总数
+        type: integer
+      totalPostage:
+        description: 邮费
+        type: number
+      totalPrice:
+        description: 订单总价
+        type: number
+      uid:
+        description: 用户id
+        type: integer
+      unique:
+        description: 唯一id(md5加密)类似id
+        type: string
+      useIntegral:
+        description: 使用积分
+        type: number
+      userAddress:
+        description: 详细地址
+        type: string
+      userPhone:
+        description: 用户电话
+        type: string
+    type: object
+  models.StorePink:
+    properties:
+      addTime:
+        description: 开始时间
+        type: string
+      cid:
+        description: 拼团产品id
+        type: integer
+      id:
+        type: integer
+      isRefund:
+        description: 是否退款 0未退款 1已退款
+        type: integer
+      isTpl:
+        description: 是否发送模板消息0未发送1已发送
+        type: integer
+      kid:
+        description: 团长id 0为团长
+        type: integer
+      orderId:
+        description: 订单id 生成
+        type: string
+      orderIdKey:
+        description: 订单id  数据库
+        type: integer
+      people:
+        description: 拼图总人数
+        type: integer
+      pid:
+        description: 产品id
+        type: integer
+      price:
+        description: 拼团产品单价
+        type: number
+      status:
+        description: 状态1进行中2已完成3未完成
+        type: integer
+      stopTime:
+        type: string
+      totalNum:
+        description: 购买商品个数
+        type: integer
+      totalPrice:
+        description: 购买总金额
+        type: number
+      uid:
+        description: 用户id
+        type: integer
+    type: object
+  models.StoreProduct:
+    properties:
+      addTime:
+        description: 添加时间
+        type: integer
+      brand:
+        description: 品牌id
+        type: integer
+      browse:
+        description: 浏览量
+        type: integer
+      cateId:
+        description: 分类id
+        type: string
+      codePath:
+        description: 产品二维码地址(用户小程序海报)
+        type: string
+      cost:
+        description: 成本价
+        type: number
+      description:
+        description: 产品描述
+        type: string
+      ficti:
+        description: 虚拟销量
+        type: integer
+      giveIntegral:
+        description: 获得积分
+        type: number
+      id:
+        description: 商品id
+        type: integer
+      image:
+        description: 商品图片
+        type: string
+      isBargain:
+        description: 砍价状态 0未开启 1开启
+        type: integer
+      isBenefit:
+        description: 是否优惠
+        type: integer
+      isBest:
+        description: 是否精品
+        type: integer
+      isDel:
+        description: 是否删除
+        type: integer
+      isHot:
+        description: 是否热卖
+        type: integer
+      isNew:
+        description: 是否新品
+        type: integer
+      isPostage:
+        description: 是否包邮
+        type: integer
+      isSeckill:
+        description: 秒杀状态 0 未开启 1已开启
+        type: integer
+      isShow:
+        description: 状态（0：未上架，1：上架）
+        type: integer
+      keyword:
+        description: 关键字
+        type: string
+      merId:
+        description: 商户Id(0为总后台管理员创建,不为0的时候是商户后台创建)
+        type: integer
+      merUse:
+        description: 商户是否代理 0不可代理1可代理
+        type: integer
+      otPrice:
+        description: 市场价
+        type: number
+      postage:
+        description: 邮费
+        type: number
+      price:
+        description: 商品价格
+        type: number
+      sales:
+        description: 销量
+        type: integer
+      sliderImage:
+        description: 轮播图
+        type: string
+      sort:
+        description: 排序
+        type: integer
+      soureLink:
+        description: 淘宝、天猫、1688商品保存标识，避免商品重复入库
+        type: string
+      stock:
+        description: 库存
+        type: integer
+      storeCode:
+        description: 产品编码
+        type: string
+      storeInfo:
+        description: 商品简介
+        type: string
+      storeName:
+        description: 商品名称
+        type: string
+      unitName:
+        description: 单位名
+        type: string
+      vipPrice:
+        description: 会员价格
+        type: number
+    type: object
+  models.StoreProductCate:
+    properties:
+      addTime:
+        description: 添加时间
+        type: integer
+      cateId:
+        description: 分类id
+        type: integer
+      id:
+        type: integer
+      productId:
+        description: 产品id
+        type: integer
+    type: object
+  models.StoreProductReply:
+    properties:
+      addTime:
+        description: 评论时间
+        type: integer
+      comment:
+        description: 评论内容
+        type: string
+      id:
+        description: 评论ID
+        type: integer
+      isDel:
+        description: 0未删除1已删除
+        type: integer
+      isReply:
+        description: 0未回复1已回复
+        type: integer
+      merchantReplyContent:
+        description: 管理员回复内容
+        type: string
+      merchantReplyTime:
+        description: 管理员回复时间
+        type: integer
+      oid:
+        description: 订单ID
+        type: integer
+      pics:
+        description: 评论图片
+        type: string
+      productId:
+        description: 产品id
+        type: integer
+      productScore:
+        description: 商品分数
+        type: integer
+      replyType:
+        description: 某种商品类型(普通商品、秒杀商品）
+        type: string
+      serviceScore:
+        description: 服务分数
+        type: integer
+      uid:
+        description: 用户ID
+        type: integer
+      unique:
+        description: 唯一id
+        type: string
+    type: object
+  models.StoreSeckill:
+    properties:
+      addTime:
+        description: 添加时间
+        type: string
+      cost:
+        description: 成本
+        type: number
+      description:
+        description: 内容
+        type: string
+      giveIntegral:
+        description: 返多少积分
+        type: number
+      id:
+        description: 商品秒杀产品表id
+        type: integer
+      image:
+        description: 推荐图
+        type: string
+      images:
+        description: 轮播图
+        type: string
+      info:
+        description: 简介
+        type: string
+      isDel:
+        description: 删除 0未删除1已删除
+        type: integer
+      isHot:
+        description: 热门推荐
+        type: integer
+      isPostage:
+        description: 是否包邮
+        type: integer
+      isShow:
+        description: 显示
+        type: integer
+      num:
+        description: 最多秒杀几个
+        type: integer
+      otPrice:
+        description: 原价
+        type: number
+      postage:
+        description: 邮费
+        type: number
+      price:
+        description: 价格
+        type: number
+      productId:
+        description: 商品id
+        type: integer
+      sales:
+        description: 销量
+        type: integer
+      sort:
+        description: 排序
+        type: integer
+      startTime:
+        description: 开始时间
+        type: string
+      status:
+        description: 产品状态
+        type: integer
+      stock:
+        description: 库存
+        type: integer
+      stopTime:
+        description: 结束时间
+        type: string
+      title:
+        description: 活动标题
+        type: string
+      unitName:
+        description: 单位名
+        type: string
+    type: object
+  models.StoreService:
+    properties:
+      addTime:
+        description: 添加时间
+        type: integer
+      avatar:
+        description: 客服头像
+        type: string
+      id:
+        description: 客服id
+        type: integer
+      merId:
+        description: 商户id
+        type: integer
+      nickname:
+        description: 代理名称
+        type: string
+      notify:
+        description: 订单通知1开启0关闭
+        type: integer
+      status:
+        description: 0隐藏1显示
+        type: integer
+      uid:
+        description: 客服uid
+        type: integer
+    type: object
+  models.StoreServiceLog:
+    properties:
+      addTime:
+        description: 发送时间
+        type: integer
+      id:
+        description: 客服用户对话记录表ID
+        type: integer
+      merId:
+        description: 商户id
+        type: integer
+      msn:
+        description: 消息内容
+        type: string
+      remind:
+        description: 是否提醒过
+        type: integer
+      toUid:
+        description: 接收人uid
+        type: integer
+      type:
+        description: 是否已读（0：否；1：是；）
+        type: integer
+      uid:
+        description: 发送人uid
+        type: integer
+    type: object
+  models.StoreVisit:
+    properties:
+      addTime:
+        description: 添加时间
+        type: integer
+      cateId:
+        description: 产品分类ID
+        type: integer
+      content:
+        description: 备注描述
+        type: string
+      count:
+        description: 访问次数
+        type: integer
+      id:
+        type: integer
+      productId:
+        description: 产品ID
+        type: integer
+      productType:
+        description: 产品类型
+        type: string
+      type:
+        description: 产品类型
+        type: string
+      uid:
+        description: 用户ID
+        type: integer
+    type: object
+  models.SystemAdmin:
+    properties:
+      account:
+        description: 后台管理员账号
+        type: string
+      addTime:
+        description: 后台管理员添加时间
+        type: integer
+      id:
+        description: 后台管理员表ID
+        type: integer
+      isDel:
+        type: integer
+      lastIp:
+        description: 后台管理员最后一次登录ip
+        type: string
+      lastTime:
+        description: 后台管理员最后一次登录时间
+        type: integer
+      level:
+        description: 后台管理员级别
+        type: integer
+      loginCount:
+        description: 登录次数
+        type: integer
+      pwd:
+        description: 后台管理员密码
+        type: string
+      realName:
+        description: 后台管理员姓名
+        type: string
+      roles:
+        description: 后台管理员权限(menus_id)
+        type: string
+      status:
+        description: 后台管理员状态 1有效0无效
+        type: integer
+    type: object
+  models.SystemAttachmentCategory:
+    properties:
+      enname:
+        description: 分类目录
+        type: string
+      id:
+        type: integer
+      name:
+        description: 分类名称
+        type: string
+      pid:
+        description: 父级ID
+        type: integer
+    type: object
+  models.SystemConfig:
+    properties:
+      configTabId:
+        description: 配置分类id
+        type: integer
+      desc:
+        description: 配置简介
+        type: string
+      high:
+        description: 多行文框的高度
+        type: integer
+      id:
+        description: 配置id
+        type: integer
+      info:
+        description: 配置名称
+        type: string
+      menuName:
+        description: 字段名称
+        type: string
+      parameter:
+        description: 规则 单选框和多选框
+        type: string
+      required:
+        description: 规则
+        type: string
+      sort:
+        description: 排序
+        type: integer
+      status:
+        description: 是否隐藏
+        type: integer
+      type:
+        description: 类型(文本框,单选按钮...)
+        type: string
+      uploadType:
+        description: 上传文件格式1单图2多图3文件
+        type: integer
+      value:
+        description: 默认值
+        type: string
+      width:
+        description: 多行文本框的宽度
+        type: integer
+    type: object
+  models.SystemConfigTab:
+    properties:
+      engTitle:
+        description: 配置分类英文名称
+        type: string
+      icon:
+        description: 图标
+        type: string
+      id:
+        description: 配置分类id
+        type: integer
+      info:
+        description: 配置分类是否显示
+        type: integer
+      status:
+        description: 配置分类状态
+        type: integer
+      title:
+        description: 配置分类名称
+        type: string
+      type:
+        description: 配置类型
+        type: integer
+    type: object
+  models.SystemFile:
+    properties:
+      atime:
+        description: 上次访问时间
+        type: string
+      cthash:
+        description: 文件内容
+        type: string
+      ctime:
+        description: 上次改变时间
+        type: string
+      filename:
+        description: 文价名称
+        type: string
+      id:
+        description: 文件对比ID
+        type: integer
+      mtime:
+        description: 上次修改时间
+        type: string
+    type: object
+  models.SystemGroup:
+    properties:
+      configName:
+        description: 数据字段
+        type: string
+      fields:
+        description: 数据组字段以及类型（json数据）
+        type: string
+      id:
+        description: 组合数据ID
+        type: integer
+      info:
+        description: 数据提示
+        type: string
+      name:
+        description: 数据组名称
+        type: string
+    type: object
+  models.SystemGroupData:
+    properties:
+      addTime:
+        description: 添加数据时间
+        type: integer
+      gid:
+        description: 对应的数据组id
+        type: integer
+      id:
+        description: 组合数据详情ID
+        type: integer
+      sort:
+        description: 数据排序
+        type: integer
+      status:
+        description: 状态（1：开启；2：关闭；）
+        type: integer
+      value:
+        description: 数据组对应的数据值（json数据）
+        type: string
+    type: object
+  models.SystemLog:
+    properties:
+      addTime:
+        description: 操作时间
+        type: integer
+      adminId:
+        description: 管理员id
+        type: integer
+      adminName:
+        description: 管理员姓名
+        type: string
+      id:
+        description: 管理员操作记录ID
+        type: integer
+      ip:
+        description: 登录IP
+        type: string
+      merchantId:
+        description: 商户id
+        type: integer
+      method:
+        description: 访问类型
+        type: string
+      page:
+        description: 行为
+        type: string
+      path:
+        description: 链接
+        type: string
+      type:
+        description: 类型
+        type: string
+    type: object
+  models.SystemMenus:
+    properties:
+      access:
+        description: 子管理员是否可用
+        type: integer
+      action:
+        description: 方法名
+        type: string
+      controller:
+        description: 控制器
+        type: string
+      icon:
+        description: 图标
+        type: string
+      id:
+        description: 菜单ID
+        type: integer
+      isShow:
+        description: 是否显示
+        type: integer
+      menuName:
+        description: 按钮名
+        type: string
+      module:
+        description: 模块名
+        type: string
+      params:
+        description: 参数
+        type: string
+      pid:
+        description: 父级id
+        type: integer
+      sort:
+        description: 排序
+        type: integer
+    type: object
+  models.SystemNotice:
+    properties:
+      icon:
+        description: 图标
+        type: string
+      id:
+        description: 通知模板id
+        type: integer
+      pushAdmin:
+        description: 通知管理员id
+        type: string
+      status:
+        description: 状态
+        type: integer
+      tableTitle:
+        description: 通知数据
+        type: string
+      template:
+        description: 通知模板
+        type: string
+      title:
+        description: 通知标题
+        type: string
+      type:
+        description: 通知类型
+        type: string
+      url:
+        description: 链接
+        type: string
+    type: object
+  models.SystemNoticeAdmin:
+    properties:
+      addTime:
+        description: 通知时间
+        type: integer
+      adminId:
+        description: 通知的管理员
+        type: integer
+      id:
+        description: 通知记录ID
+        type: integer
+      isClick:
+        description: 点击次数
+        type: integer
+      isVisit:
+        description: 访问次数
+        type: integer
+      linkId:
+        description: 关联ID
+        type: integer
+      noticeType:
+        description: 通知类型
+        type: string
+      tableData:
+        description: 通知的数据
+        type: string
+      visitTime:
+        description: 访问时间
+        type: integer
+    type: object
+  models.SystemRole:
+    properties:
+      id:
+        description: 身份管理id
+        type: integer
+      level:
+        type: integer
+      roleName:
+        description: 身份管理名称
+        type: string
+      rules:
+        description: 身份管理权限(menus_id)
+        type: string
+      status:
+        description: 状态
+        type: integer
+    type: object
+  models.SystemUserLevel:
+    properties:
+      addTime:
+        description: 添加时间
+        type: integer
+      discount:
+        description: 享受折扣
+        type: number
+      explain:
+        description: 说明
+        type: string
+      grade:
+        description: 会员等级
+        type: integer
+      icon:
+        description: 会员图标
+        type: string
+      id:
+        type: integer
+      image:
+        description: 会员卡背景
+        type: string
+      isDel:
+        description: 是否删除.1=删除,0=未删除
+        type: integer
+      isForever:
+        description: 是否为永久会员
+        type: integer
+      isPay:
+        description: 是否购买,1=购买,0=不购买
+        type: integer
+      isShow:
+        description: 是否显示 1=显示,0=隐藏
+        type: integer
+      merId:
+        description: 商户id
+        type: integer
+      money:
+        description: 购买金额
+        type: number
+      name:
+        description: 会员名称
+        type: string
+      validDate:
+        description: 有效时间
+        type: integer
+    type: object
+  models.SystemUserTask:
+    properties:
+      addTime:
+        description: 新增时间
+        type: integer
+      id:
+        type: integer
+      illustrate:
+        description: 任务说明
+        type: string
+      isMust:
+        description: 是否务必达成任务,1务必达成,0=满足其一
+        type: integer
+      isShow:
+        description: 是否显示
+        type: integer
+      levelId:
+        description: 等级id
+        type: integer
+      name:
+        description: 任务名称
+        type: string
+      number:
+        description: 限定数
+        type: integer
+      realName:
+        description: 配置原名
+        type: string
+      sort:
+        description: 排序
+        type: integer
+      taskType:
+        description: 任务类型
+        type: string
+    type: object
+  models.Token:
+    properties:
+      addTime:
+        description: 添加时间
+        type: integer
+      id:
+        type: integer
+      randString:
+        description: 10位随机字符串
+        type: string
+      uid:
+        description: 用户uid
+        type: integer
+    type: object
+  models.User:
+    properties:
+      account:
+        description: 用户账号
+        type: string
+      addIp:
+        description: 添加ip
+        type: string
+      addTime:
+        description: 添加时间
+        type: integer
+      addres:
+        description: 详细地址
+        type: string
+      avatar:
+        description: 用户头像
+        type: string
+      birthday:
+        description: 生日
+        type: integer
+      cardId:
+        description: 身份证号码
+        type: string
+      cleanTime:
+        description: 等级清除时间为0没有清除过
+        type: integer
+      groupId:
+        description: 用户分组id
+        type: integer
+      integral:
+        description: 用户剩余积分
+        type: number
+      isPromoter:
+        description: 是否为推广员
+        type: integer
+      lastIp:
+        description: 最后一次登录ip
+        type: string
+      lastTime:
+        description: 最后一次登录时间
+        type: integer
+      level:
+        description: 等级
+        type: integer
+      mark:
+        description: 用户备注
+        type: string
+      nickname:
+        description: 用户昵称
+        type: string
+      nowMoney:
+        description: 用户余额
+        type: number
+      partnerId:
+        description: 合伙人id
+        type: integer
+      payCount:
+        description: 用户购买次数
+        type: integer
+      phone:
+        description: 手机号码
+        type: string
+      pwd:
+        description: 用户密码
+        type: string
+      realName:
+        description: 真实姓名
+        type: string
+      signNum:
+        description: 连续签到天数
+        type: integer
+      spreadCount:
+        description: 下级人数
+        type: integer
+      spreadTime:
+        description: 推广员关联时间
+        type: integer
+      spreadUid:
+        description: 推广元id
+        type: integer
+      status:
+        description: 1为正常，0为禁止
+        type: integer
+      uid:
+        description: 用户id
+        type: integer
+      userType:
+        description: 用户类型
+        type: string
+    type: object
+  models.UserAddress:
+    properties:
+      addTime:
+        description: 添加时间
+        type: integer
+      city:
+        description: 收货人所在市
+        type: string
+      detail:
+        description: 收货人详细地址
+        type: string
+      district:
+        description: 收货人所在区
+        type: string
+      id:
+        description: 用户地址id
+        type: integer
+      isDefault:
+        description: 是否默认
+        type: integer
+      isDel:
+        description: 是否删除
+        type: integer
+      latitude:
+        description: 纬度
+        type: string
+      longitude:
+        description: 经度
+        type: string
+      phone:
+        description: 收货人电话
+        type: string
+      postCode:
+        description: 邮编
+        type: integer
+      province:
+        description: 收货人所在省
+        type: string
+      realName:
+        description: 收货人姓名
+        type: string
+      uid:
+        description: 用户id
+        type: integer
+    type: object
+  models.UserBill:
+    properties:
+      addTime:
+        description: 添加时间
+        type: integer
+      balance:
+        description: 剩余
+        type: number
+      category:
+        description: 明细种类
+        type: string
+      id:
+        description: 用户账单id
+        type: integer
+      linkId:
+        description: 关联id
+        type: string
+      mark:
+        description: 备注
+        type: string
+      number:
+        description: 明细数字
+        type: number
+      pm:
+        description: 0 = 支出 1 = 获得
+        type: integer
+      status:
+        description: 0 = 带确定 1 = 有效 -1 = 无效
+        type: integer
+      title:
+        description: 账单标题
+        type: string
+      type:
+        description: 明细类型
+        type: string
+      uid:
+        description: 用户uid
+        type: integer
+    type: object
+  models.UserEnter:
+    properties:
+      addTime:
+        description: 添加时间
+        type: integer
+      address:
+        description: 商户详细地址
+        type: string
+      applyTime:
+        description: 审核时间
+        type: integer
+      charter:
+        description: 商户证书
+        type: string
+      city:
+        description: 商户所在市
+        type: string
+      district:
+        description: 商户所在区
+        type: string
+      failMessage:
+        description: 未通过原因
+        type: string
+      failTime:
+        description: 未通过时间
+        type: integer
+      id:
+        description: 商户申请ID
+        type: integer
+      isDel:
+        description: 是否删除
+        type: integer
+      isLock:
+        description: 0 = 开启 1= 关闭
+        type: integer
+      linkTel:
+        description: 商户电话
+        type: string
+      linkUser:
+        type: string
+      merchantName:
+        description: 商户名称
+        type: string
+      province:
+        description: 商户所在省
+        type: string
+      status:
+        description: -1 审核未通过 0未审核 1审核通过
+        type: integer
+      successTime:
+        description: 通过时间
+        type: integer
+      uid:
+        description: 用户ID
+        type: integer
+    type: object
+  models.UserExtract:
+    properties:
+      addTime:
+        description: 添加时间
+        type: integer
+      alipayCode:
+        description: 支付宝账号
+        type: string
+      balance:
+        type: number
+      bankAddress:
+        description: 开户地址
+        type: string
+      bankCode:
+        description: 银行卡
+        type: string
+      extractPrice:
+        description: 提现金额
+        type: number
+      extractType:
+        description: bank = 银行卡 alipay = 支付宝wx=微信
+        type: string
+      failMsg:
+        description: 无效原因
+        type: string
+      failTime:
+        type: integer
+      id:
+        type: integer
+      mark:
+        type: string
+      realName:
+        description: 名称
+        type: string
+      status:
+        description: -1 未通过 0 审核中 1 已提现
+        type: integer
+      uid:
+        type: integer
+      wechat:
+        description: 微信号
+        type: string
+    type: object
+  models.UserGroup:
+    properties:
+      groupName:
+        description: 用户分组名称
+        type: string
+      id:
+        type: integer
+    type: object
+  models.UserLevel:
+    properties:
+      addTime:
+        description: 添加时间
+        type: integer
+      discount:
+        description: 享受折扣
+        type: integer
+      grade:
+        description: 会员等级
+        type: integer
+      id:
+        type: integer
+      isDel:
+        description: 是否删除,0=未删除,1=删除
+        type: integer
+      isForever:
+        description: 是否永久
+        type: integer
+      levelId:
+        description: 等级vip
+        type: integer
+      mark:
+        description: 备注
+        type: string
+      merId:
+        description: 商户id
+        type: integer
+      remind:
+        description: 是否已通知
+        type: integer
+      status:
+        description: 0:禁止,1:正常
+        type: integer
+      uid:
+        description: 用户uid
+        type: integer
+      validTime:
+        description: 过期时间
+        type: integer
+    type: object
+  models.UserNotice:
+    properties:
+      addTime:
+        description: 通知消息发送的时间
+        type: integer
+      content:
+        description: 通知消息的内容
+        type: string
+      id:
+        type: integer
+      isSend:
+        description: 是否发送（0：未发送；1：已发送）
+        type: integer
+      sendTime:
+        description: 发送时间
+        type: integer
+      title:
+        description: 通知消息的标题信息
+        type: string
+      type:
+        description: 消息通知类型（1：系统消息；2：用户通知）
+        type: integer
+      uid:
+        description: 接收消息的用户id（类型：json数据）
+        type: string
+      user:
+        description: 发送人
+        type: string
+    type: object
+  models.UserNoticeSee:
+    properties:
+      addTime:
+        description: 查看通知的时间
+        type: integer
+      id:
+        type: integer
+      nid:
+        description: 查看的通知id
+        type: integer
+      uid:
+        description: 查看通知的用户id
+        type: integer
+    type: object
+  models.UserRecharge:
+    properties:
+      addTime:
+        description: 充值时间
+        type: integer
+      id:
+        type: integer
+      orderId:
+        description: 订单号
+        type: string
+      paid:
+        description: 是否充值
+        type: integer
+      payTime:
+        description: 充值支付时间
+        type: integer
+      price:
+        description: 充值金额
+        type: number
+      rechargeType:
+        description: 充值类型
+        type: string
+      refundPrice:
+        description: 退款金额
+        type: number
+      uid:
+        description: 充值用户UID
+        type: integer
+    type: object
+  models.UserSign:
+    properties:
+      addTime:
+        description: 添加时间
+        type: integer
+      balance:
+        description: 剩余积分
+        type: integer
+      id:
+        type: integer
+      number:
+        description: 获得积分
+        type: integer
+      title:
+        description: 签到说明
+        type: string
+      uid:
+        description: 用户uid
+        type: integer
+    type: object
+  models.UserTaskFinish:
+    properties:
+      addTime:
+        description: 添加时间
+        type: integer
+      id:
+        type: integer
+      status:
+        description: 是否有效
+        type: integer
+      taskId:
+        description: 任务id
+        type: integer
+      uid:
+        description: 用户id
+        type: integer
+    type: object
+  models.WechatMessage:
+    properties:
+      addTime:
+        description: 操作时间
+        type: integer
+      id:
+        description: 用户行为记录id
+        type: integer
+      openid:
+        description: 用户openid
+        type: string
+      result:
+        description: 操作详细记录
+        type: string
+      type:
+        description: 操作类型
         type: string
     type: object
 info:
   contact: {}
   license: {}
 paths:
-  /api/user/login:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: '{}'
-        in: body
-        name: param
-        required: true
-        schema:
-          $ref: '#/definitions/controllers.ReqLogin'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: '{"code":0,"data":{},"msg":"ok"}'
-          schema:
-            type: string
-      summary: 登录
-  /api/user/register:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: '{}'
-        in: body
-        name: param
-        required: true
-        schema:
-          $ref: '#/definitions/controllers.ReqLogin'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: '{"code":0,"data":{},"msg":"ok"}'
-          schema:
-            type: string
-      summary: 注册
-  /api/user/userlist:
+  /articleCategorys:
     get:
       parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
       - description: page
         in: query
         name: page
-        required: true
         type: integer
-      - description: limit
+      - description: pageSize
         in: query
-        name: limit
-        required: true
+        name: pageSize
         type: integer
-      - description: username
-        in: query
-        name: username
-        type: string
-      produces:
-      - application/json
       responses:
         "200":
-          description: '{"code":0,"data":{},"msg":"ok"}'
+          description: articleCategory array
+          schema:
+            items:
+              $ref: '#/definitions/models.ArticleCategory'
+            type: array
+      summary: List
+      tags:
+      - ArticleCategory
+    post:
+      parameters:
+      - description: ArticleCategory
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.ArticleCategory'
+      responses:
+        "200":
+          description: OK
           schema:
             type: string
-      summary: 查询用户列表
+      summary: Create
+      tags:
+      - ArticleCategory
+  /articleCategorys/{articleCategoryId}:
+    delete:
+      parameters:
+      - description: articleCategoryId
+        in: path
+        name: articleCategoryId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - ArticleCategory
+    get:
+      parameters:
+      - description: articleCategoryId
+        in: path
+        name: articleCategoryId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: articleCategory object
+          schema:
+            $ref: '#/definitions/models.ArticleCategory'
+      summary: Get
+      tags:
+      - ArticleCategory
+    patch:
+      parameters:
+      - description: articleCategory
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.ArticleCategory'
+      - description: articleCategoryId
+        in: path
+        name: articleCategoryId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - ArticleCategory
+    put:
+      parameters:
+      - description: articleCategory
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.ArticleCategory'
+      - description: articleCategoryId
+        in: path
+        name: articleCategoryId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - ArticleCategory
+  /articles:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: article array
+          schema:
+            items:
+              $ref: '#/definitions/models.Article'
+            type: array
+      summary: List
+      tags:
+      - Article
+    post:
+      parameters:
+      - description: Article
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.Article'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - Article
+  /articles/{articleId}:
+    delete:
+      parameters:
+      - description: articleId
+        in: path
+        name: articleId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - Article
+    get:
+      parameters:
+      - description: articleId
+        in: path
+        name: articleId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: article object
+          schema:
+            $ref: '#/definitions/models.Article'
+      summary: Get
+      tags:
+      - Article
+    patch:
+      parameters:
+      - description: article
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.Article'
+      - description: articleId
+        in: path
+        name: articleId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - Article
+    put:
+      parameters:
+      - description: article
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.Article'
+      - description: articleId
+        in: path
+        name: articleId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - Article
+  /expresss:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: express array
+          schema:
+            items:
+              $ref: '#/definitions/models.Express'
+            type: array
+      summary: List
+      tags:
+      - Express
+    post:
+      parameters:
+      - description: Express
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.Express'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - Express
+  /expresss/{expressId}:
+    delete:
+      parameters:
+      - description: expressId
+        in: path
+        name: expressId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - Express
+    get:
+      parameters:
+      - description: expressId
+        in: path
+        name: expressId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: express object
+          schema:
+            $ref: '#/definitions/models.Express'
+      summary: Get
+      tags:
+      - Express
+    patch:
+      parameters:
+      - description: express
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.Express'
+      - description: expressId
+        in: path
+        name: expressId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - Express
+    put:
+      parameters:
+      - description: express
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.Express'
+      - description: expressId
+        in: path
+        name: expressId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - Express
+  /routineAccessTokens:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: routineAccessToken array
+          schema:
+            items:
+              $ref: '#/definitions/models.RoutineAccessToken'
+            type: array
+      summary: List
+      tags:
+      - RoutineAccessToken
+    post:
+      parameters:
+      - description: RoutineAccessToken
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.RoutineAccessToken'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - RoutineAccessToken
+  /routineAccessTokens/{routineAccessTokenId}:
+    delete:
+      parameters:
+      - description: routineAccessTokenId
+        in: path
+        name: routineAccessTokenId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - RoutineAccessToken
+    get:
+      parameters:
+      - description: routineAccessTokenId
+        in: path
+        name: routineAccessTokenId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: routineAccessToken object
+          schema:
+            $ref: '#/definitions/models.RoutineAccessToken'
+      summary: Get
+      tags:
+      - RoutineAccessToken
+    patch:
+      parameters:
+      - description: routineAccessToken
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.RoutineAccessToken'
+      - description: routineAccessTokenId
+        in: path
+        name: routineAccessTokenId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - RoutineAccessToken
+    put:
+      parameters:
+      - description: routineAccessToken
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.RoutineAccessToken'
+      - description: routineAccessTokenId
+        in: path
+        name: routineAccessTokenId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - RoutineAccessToken
+  /routineFormIds:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: routineFormId array
+          schema:
+            items:
+              $ref: '#/definitions/models.RoutineFormId'
+            type: array
+      summary: List
+      tags:
+      - RoutineFormId
+    post:
+      parameters:
+      - description: RoutineFormId
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.RoutineFormId'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - RoutineFormId
+  /routineFormIds/{routineFormIdId}:
+    delete:
+      parameters:
+      - description: routineFormIdId
+        in: path
+        name: routineFormIdId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - RoutineFormId
+    get:
+      parameters:
+      - description: routineFormIdId
+        in: path
+        name: routineFormIdId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: routineFormId object
+          schema:
+            $ref: '#/definitions/models.RoutineFormId'
+      summary: Get
+      tags:
+      - RoutineFormId
+    patch:
+      parameters:
+      - description: routineFormId
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.RoutineFormId'
+      - description: routineFormIdId
+        in: path
+        name: routineFormIdId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - RoutineFormId
+    put:
+      parameters:
+      - description: routineFormId
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.RoutineFormId'
+      - description: routineFormIdId
+        in: path
+        name: routineFormIdId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - RoutineFormId
+  /routineQrcodes:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: routineQrcode array
+          schema:
+            items:
+              $ref: '#/definitions/models.RoutineQrcode'
+            type: array
+      summary: List
+      tags:
+      - RoutineQrcode
+    post:
+      parameters:
+      - description: RoutineQrcode
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.RoutineQrcode'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - RoutineQrcode
+  /routineQrcodes/{routineQrcodeId}:
+    delete:
+      parameters:
+      - description: routineQrcodeId
+        in: path
+        name: routineQrcodeId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - RoutineQrcode
+    get:
+      parameters:
+      - description: routineQrcodeId
+        in: path
+        name: routineQrcodeId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: routineQrcode object
+          schema:
+            $ref: '#/definitions/models.RoutineQrcode'
+      summary: Get
+      tags:
+      - RoutineQrcode
+    patch:
+      parameters:
+      - description: routineQrcode
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.RoutineQrcode'
+      - description: routineQrcodeId
+        in: path
+        name: routineQrcodeId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - RoutineQrcode
+    put:
+      parameters:
+      - description: routineQrcode
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.RoutineQrcode'
+      - description: routineQrcodeId
+        in: path
+        name: routineQrcodeId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - RoutineQrcode
+  /routineTemplates:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: routineTemplate array
+          schema:
+            items:
+              $ref: '#/definitions/models.RoutineTemplate'
+            type: array
+      summary: List
+      tags:
+      - RoutineTemplate
+    post:
+      parameters:
+      - description: RoutineTemplate
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.RoutineTemplate'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - RoutineTemplate
+  /routineTemplates/{routineTemplateId}:
+    delete:
+      parameters:
+      - description: routineTemplateId
+        in: path
+        name: routineTemplateId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - RoutineTemplate
+    get:
+      parameters:
+      - description: routineTemplateId
+        in: path
+        name: routineTemplateId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: routineTemplate object
+          schema:
+            $ref: '#/definitions/models.RoutineTemplate'
+      summary: Get
+      tags:
+      - RoutineTemplate
+    patch:
+      parameters:
+      - description: routineTemplate
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.RoutineTemplate'
+      - description: routineTemplateId
+        in: path
+        name: routineTemplateId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - RoutineTemplate
+    put:
+      parameters:
+      - description: routineTemplate
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.RoutineTemplate'
+      - description: routineTemplateId
+        in: path
+        name: routineTemplateId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - RoutineTemplate
+  /storeBargainUserHelps:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: storeBargainUserHelp array
+          schema:
+            items:
+              $ref: '#/definitions/models.StoreBargainUserHelp'
+            type: array
+      summary: List
+      tags:
+      - StoreBargainUserHelp
+    post:
+      parameters:
+      - description: StoreBargainUserHelp
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreBargainUserHelp'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - StoreBargainUserHelp
+  /storeBargainUserHelps/{storeBargainUserHelpId}:
+    delete:
+      parameters:
+      - description: storeBargainUserHelpId
+        in: path
+        name: storeBargainUserHelpId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - StoreBargainUserHelp
+    get:
+      parameters:
+      - description: storeBargainUserHelpId
+        in: path
+        name: storeBargainUserHelpId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: storeBargainUserHelp object
+          schema:
+            $ref: '#/definitions/models.StoreBargainUserHelp'
+      summary: Get
+      tags:
+      - StoreBargainUserHelp
+    patch:
+      parameters:
+      - description: storeBargainUserHelp
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreBargainUserHelp'
+      - description: storeBargainUserHelpId
+        in: path
+        name: storeBargainUserHelpId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - StoreBargainUserHelp
+    put:
+      parameters:
+      - description: storeBargainUserHelp
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreBargainUserHelp'
+      - description: storeBargainUserHelpId
+        in: path
+        name: storeBargainUserHelpId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - StoreBargainUserHelp
+  /storeBargainUsers:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: storeBargainUser array
+          schema:
+            items:
+              $ref: '#/definitions/models.StoreBargainUser'
+            type: array
+      summary: List
+      tags:
+      - StoreBargainUser
+    post:
+      parameters:
+      - description: StoreBargainUser
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreBargainUser'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - StoreBargainUser
+  /storeBargainUsers/{storeBargainUserId}:
+    delete:
+      parameters:
+      - description: storeBargainUserId
+        in: path
+        name: storeBargainUserId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - StoreBargainUser
+    get:
+      parameters:
+      - description: storeBargainUserId
+        in: path
+        name: storeBargainUserId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: storeBargainUser object
+          schema:
+            $ref: '#/definitions/models.StoreBargainUser'
+      summary: Get
+      tags:
+      - StoreBargainUser
+    patch:
+      parameters:
+      - description: storeBargainUser
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreBargainUser'
+      - description: storeBargainUserId
+        in: path
+        name: storeBargainUserId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - StoreBargainUser
+    put:
+      parameters:
+      - description: storeBargainUser
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreBargainUser'
+      - description: storeBargainUserId
+        in: path
+        name: storeBargainUserId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - StoreBargainUser
+  /storeBargains:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: storeBargain array
+          schema:
+            items:
+              $ref: '#/definitions/models.StoreBargain'
+            type: array
+      summary: List
+      tags:
+      - StoreBargain
+    post:
+      parameters:
+      - description: StoreBargain
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreBargain'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - StoreBargain
+  /storeBargains/{storeBargainId}:
+    delete:
+      parameters:
+      - description: storeBargainId
+        in: path
+        name: storeBargainId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - StoreBargain
+    get:
+      parameters:
+      - description: storeBargainId
+        in: path
+        name: storeBargainId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: storeBargain object
+          schema:
+            $ref: '#/definitions/models.StoreBargain'
+      summary: Get
+      tags:
+      - StoreBargain
+    patch:
+      parameters:
+      - description: storeBargain
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreBargain'
+      - description: storeBargainId
+        in: path
+        name: storeBargainId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - StoreBargain
+    put:
+      parameters:
+      - description: storeBargain
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreBargain'
+      - description: storeBargainId
+        in: path
+        name: storeBargainId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - StoreBargain
+  /storeCarts:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: storeCart array
+          schema:
+            items:
+              $ref: '#/definitions/models.StoreCart'
+            type: array
+      summary: List
+      tags:
+      - StoreCart
+    post:
+      parameters:
+      - description: StoreCart
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreCart'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - StoreCart
+  /storeCarts/{storeCartId}:
+    delete:
+      parameters:
+      - description: storeCartId
+        in: path
+        name: storeCartId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - StoreCart
+    get:
+      parameters:
+      - description: storeCartId
+        in: path
+        name: storeCartId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: storeCart object
+          schema:
+            $ref: '#/definitions/models.StoreCart'
+      summary: Get
+      tags:
+      - StoreCart
+    patch:
+      parameters:
+      - description: storeCart
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreCart'
+      - description: storeCartId
+        in: path
+        name: storeCartId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - StoreCart
+    put:
+      parameters:
+      - description: storeCart
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreCart'
+      - description: storeCartId
+        in: path
+        name: storeCartId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - StoreCart
+  /storeCategorys:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: storeCategory array
+          schema:
+            items:
+              $ref: '#/definitions/models.StoreCategory'
+            type: array
+      summary: List
+      tags:
+      - StoreCategory
+    post:
+      parameters:
+      - description: StoreCategory
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreCategory'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - StoreCategory
+  /storeCategorys/{storeCategoryId}:
+    delete:
+      parameters:
+      - description: storeCategoryId
+        in: path
+        name: storeCategoryId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - StoreCategory
+    get:
+      parameters:
+      - description: storeCategoryId
+        in: path
+        name: storeCategoryId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: storeCategory object
+          schema:
+            $ref: '#/definitions/models.StoreCategory'
+      summary: Get
+      tags:
+      - StoreCategory
+    patch:
+      parameters:
+      - description: storeCategory
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreCategory'
+      - description: storeCategoryId
+        in: path
+        name: storeCategoryId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - StoreCategory
+    put:
+      parameters:
+      - description: storeCategory
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreCategory'
+      - description: storeCategoryId
+        in: path
+        name: storeCategoryId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - StoreCategory
+  /storeCombinations:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: storeCombination array
+          schema:
+            items:
+              $ref: '#/definitions/models.StoreCombination'
+            type: array
+      summary: List
+      tags:
+      - StoreCombination
+    post:
+      parameters:
+      - description: StoreCombination
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreCombination'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - StoreCombination
+  /storeCombinations/{storeCombinationId}:
+    delete:
+      parameters:
+      - description: storeCombinationId
+        in: path
+        name: storeCombinationId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - StoreCombination
+    get:
+      parameters:
+      - description: storeCombinationId
+        in: path
+        name: storeCombinationId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: storeCombination object
+          schema:
+            $ref: '#/definitions/models.StoreCombination'
+      summary: Get
+      tags:
+      - StoreCombination
+    patch:
+      parameters:
+      - description: storeCombination
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreCombination'
+      - description: storeCombinationId
+        in: path
+        name: storeCombinationId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - StoreCombination
+    put:
+      parameters:
+      - description: storeCombination
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreCombination'
+      - description: storeCombinationId
+        in: path
+        name: storeCombinationId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - StoreCombination
+  /storeCouponIssues:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: storeCouponIssue array
+          schema:
+            items:
+              $ref: '#/definitions/models.StoreCouponIssue'
+            type: array
+      summary: List
+      tags:
+      - StoreCouponIssue
+    post:
+      parameters:
+      - description: StoreCouponIssue
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreCouponIssue'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - StoreCouponIssue
+  /storeCouponIssues/{storeCouponIssueId}:
+    delete:
+      parameters:
+      - description: storeCouponIssueId
+        in: path
+        name: storeCouponIssueId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - StoreCouponIssue
+    get:
+      parameters:
+      - description: storeCouponIssueId
+        in: path
+        name: storeCouponIssueId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: storeCouponIssue object
+          schema:
+            $ref: '#/definitions/models.StoreCouponIssue'
+      summary: Get
+      tags:
+      - StoreCouponIssue
+    patch:
+      parameters:
+      - description: storeCouponIssue
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreCouponIssue'
+      - description: storeCouponIssueId
+        in: path
+        name: storeCouponIssueId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - StoreCouponIssue
+    put:
+      parameters:
+      - description: storeCouponIssue
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreCouponIssue'
+      - description: storeCouponIssueId
+        in: path
+        name: storeCouponIssueId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - StoreCouponIssue
+  /storeCouponUsers:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: storeCouponUser array
+          schema:
+            items:
+              $ref: '#/definitions/models.StoreCouponUser'
+            type: array
+      summary: List
+      tags:
+      - StoreCouponUser
+    post:
+      parameters:
+      - description: StoreCouponUser
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreCouponUser'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - StoreCouponUser
+  /storeCouponUsers/{storeCouponUserId}:
+    delete:
+      parameters:
+      - description: storeCouponUserId
+        in: path
+        name: storeCouponUserId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - StoreCouponUser
+    get:
+      parameters:
+      - description: storeCouponUserId
+        in: path
+        name: storeCouponUserId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: storeCouponUser object
+          schema:
+            $ref: '#/definitions/models.StoreCouponUser'
+      summary: Get
+      tags:
+      - StoreCouponUser
+    patch:
+      parameters:
+      - description: storeCouponUser
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreCouponUser'
+      - description: storeCouponUserId
+        in: path
+        name: storeCouponUserId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - StoreCouponUser
+    put:
+      parameters:
+      - description: storeCouponUser
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreCouponUser'
+      - description: storeCouponUserId
+        in: path
+        name: storeCouponUserId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - StoreCouponUser
+  /storeCoupons:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: storeCoupon array
+          schema:
+            items:
+              $ref: '#/definitions/models.StoreCoupon'
+            type: array
+      summary: List
+      tags:
+      - StoreCoupon
+    post:
+      parameters:
+      - description: StoreCoupon
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreCoupon'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - StoreCoupon
+  /storeCoupons/{storeCouponId}:
+    delete:
+      parameters:
+      - description: storeCouponId
+        in: path
+        name: storeCouponId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - StoreCoupon
+    get:
+      parameters:
+      - description: storeCouponId
+        in: path
+        name: storeCouponId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: storeCoupon object
+          schema:
+            $ref: '#/definitions/models.StoreCoupon'
+      summary: Get
+      tags:
+      - StoreCoupon
+    patch:
+      parameters:
+      - description: storeCoupon
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreCoupon'
+      - description: storeCouponId
+        in: path
+        name: storeCouponId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - StoreCoupon
+    put:
+      parameters:
+      - description: storeCoupon
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreCoupon'
+      - description: storeCouponId
+        in: path
+        name: storeCouponId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - StoreCoupon
+  /storeOrders:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: storeOrder array
+          schema:
+            items:
+              $ref: '#/definitions/models.StoreOrder'
+            type: array
+      summary: List
+      tags:
+      - StoreOrder
+    post:
+      parameters:
+      - description: StoreOrder
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreOrder'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - StoreOrder
+  /storeOrders/{storeOrderId}:
+    delete:
+      parameters:
+      - description: storeOrderId
+        in: path
+        name: storeOrderId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - StoreOrder
+    get:
+      parameters:
+      - description: storeOrderId
+        in: path
+        name: storeOrderId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: storeOrder object
+          schema:
+            $ref: '#/definitions/models.StoreOrder'
+      summary: Get
+      tags:
+      - StoreOrder
+    patch:
+      parameters:
+      - description: storeOrder
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreOrder'
+      - description: storeOrderId
+        in: path
+        name: storeOrderId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - StoreOrder
+    put:
+      parameters:
+      - description: storeOrder
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreOrder'
+      - description: storeOrderId
+        in: path
+        name: storeOrderId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - StoreOrder
+  /storePinks:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: storePink array
+          schema:
+            items:
+              $ref: '#/definitions/models.StorePink'
+            type: array
+      summary: List
+      tags:
+      - StorePink
+    post:
+      parameters:
+      - description: StorePink
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StorePink'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - StorePink
+  /storePinks/{storePinkId}:
+    delete:
+      parameters:
+      - description: storePinkId
+        in: path
+        name: storePinkId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - StorePink
+    get:
+      parameters:
+      - description: storePinkId
+        in: path
+        name: storePinkId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: storePink object
+          schema:
+            $ref: '#/definitions/models.StorePink'
+      summary: Get
+      tags:
+      - StorePink
+    patch:
+      parameters:
+      - description: storePink
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StorePink'
+      - description: storePinkId
+        in: path
+        name: storePinkId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - StorePink
+    put:
+      parameters:
+      - description: storePink
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StorePink'
+      - description: storePinkId
+        in: path
+        name: storePinkId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - StorePink
+  /storeProductCates:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: storeProductCate array
+          schema:
+            items:
+              $ref: '#/definitions/models.StoreProductCate'
+            type: array
+      summary: List
+      tags:
+      - StoreProductCate
+    post:
+      parameters:
+      - description: StoreProductCate
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreProductCate'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - StoreProductCate
+  /storeProductCates/{storeProductCateId}:
+    delete:
+      parameters:
+      - description: storeProductCateId
+        in: path
+        name: storeProductCateId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - StoreProductCate
+    get:
+      parameters:
+      - description: storeProductCateId
+        in: path
+        name: storeProductCateId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: storeProductCate object
+          schema:
+            $ref: '#/definitions/models.StoreProductCate'
+      summary: Get
+      tags:
+      - StoreProductCate
+    patch:
+      parameters:
+      - description: storeProductCate
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreProductCate'
+      - description: storeProductCateId
+        in: path
+        name: storeProductCateId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - StoreProductCate
+    put:
+      parameters:
+      - description: storeProductCate
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreProductCate'
+      - description: storeProductCateId
+        in: path
+        name: storeProductCateId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - StoreProductCate
+  /storeProductReplys:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: storeProductReply array
+          schema:
+            items:
+              $ref: '#/definitions/models.StoreProductReply'
+            type: array
+      summary: List
+      tags:
+      - StoreProductReply
+    post:
+      parameters:
+      - description: StoreProductReply
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreProductReply'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - StoreProductReply
+  /storeProductReplys/{storeProductReplyId}:
+    delete:
+      parameters:
+      - description: storeProductReplyId
+        in: path
+        name: storeProductReplyId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - StoreProductReply
+    get:
+      parameters:
+      - description: storeProductReplyId
+        in: path
+        name: storeProductReplyId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: storeProductReply object
+          schema:
+            $ref: '#/definitions/models.StoreProductReply'
+      summary: Get
+      tags:
+      - StoreProductReply
+    patch:
+      parameters:
+      - description: storeProductReply
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreProductReply'
+      - description: storeProductReplyId
+        in: path
+        name: storeProductReplyId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - StoreProductReply
+    put:
+      parameters:
+      - description: storeProductReply
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreProductReply'
+      - description: storeProductReplyId
+        in: path
+        name: storeProductReplyId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - StoreProductReply
+  /storeProducts:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: storeProduct array
+          schema:
+            items:
+              $ref: '#/definitions/models.StoreProduct'
+            type: array
+      summary: List
+      tags:
+      - StoreProduct
+    post:
+      parameters:
+      - description: StoreProduct
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreProduct'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - StoreProduct
+  /storeProducts/{storeProductId}:
+    delete:
+      parameters:
+      - description: storeProductId
+        in: path
+        name: storeProductId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - StoreProduct
+    get:
+      parameters:
+      - description: storeProductId
+        in: path
+        name: storeProductId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: storeProduct object
+          schema:
+            $ref: '#/definitions/models.StoreProduct'
+      summary: Get
+      tags:
+      - StoreProduct
+    patch:
+      parameters:
+      - description: storeProduct
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreProduct'
+      - description: storeProductId
+        in: path
+        name: storeProductId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - StoreProduct
+    put:
+      parameters:
+      - description: storeProduct
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreProduct'
+      - description: storeProductId
+        in: path
+        name: storeProductId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - StoreProduct
+  /storeSeckills:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: storeSeckill array
+          schema:
+            items:
+              $ref: '#/definitions/models.StoreSeckill'
+            type: array
+      summary: List
+      tags:
+      - StoreSeckill
+    post:
+      parameters:
+      - description: StoreSeckill
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreSeckill'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - StoreSeckill
+  /storeSeckills/{storeSeckillId}:
+    delete:
+      parameters:
+      - description: storeSeckillId
+        in: path
+        name: storeSeckillId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - StoreSeckill
+    get:
+      parameters:
+      - description: storeSeckillId
+        in: path
+        name: storeSeckillId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: storeSeckill object
+          schema:
+            $ref: '#/definitions/models.StoreSeckill'
+      summary: Get
+      tags:
+      - StoreSeckill
+    patch:
+      parameters:
+      - description: storeSeckill
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreSeckill'
+      - description: storeSeckillId
+        in: path
+        name: storeSeckillId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - StoreSeckill
+    put:
+      parameters:
+      - description: storeSeckill
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreSeckill'
+      - description: storeSeckillId
+        in: path
+        name: storeSeckillId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - StoreSeckill
+  /storeServiceLogs:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: storeServiceLog array
+          schema:
+            items:
+              $ref: '#/definitions/models.StoreServiceLog'
+            type: array
+      summary: List
+      tags:
+      - StoreServiceLog
+    post:
+      parameters:
+      - description: StoreServiceLog
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreServiceLog'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - StoreServiceLog
+  /storeServiceLogs/{storeServiceLogId}:
+    delete:
+      parameters:
+      - description: storeServiceLogId
+        in: path
+        name: storeServiceLogId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - StoreServiceLog
+    get:
+      parameters:
+      - description: storeServiceLogId
+        in: path
+        name: storeServiceLogId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: storeServiceLog object
+          schema:
+            $ref: '#/definitions/models.StoreServiceLog'
+      summary: Get
+      tags:
+      - StoreServiceLog
+    patch:
+      parameters:
+      - description: storeServiceLog
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreServiceLog'
+      - description: storeServiceLogId
+        in: path
+        name: storeServiceLogId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - StoreServiceLog
+    put:
+      parameters:
+      - description: storeServiceLog
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreServiceLog'
+      - description: storeServiceLogId
+        in: path
+        name: storeServiceLogId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - StoreServiceLog
+  /storeServices:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: storeService array
+          schema:
+            items:
+              $ref: '#/definitions/models.StoreService'
+            type: array
+      summary: List
+      tags:
+      - StoreService
+    post:
+      parameters:
+      - description: StoreService
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreService'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - StoreService
+  /storeServices/{storeServiceId}:
+    delete:
+      parameters:
+      - description: storeServiceId
+        in: path
+        name: storeServiceId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - StoreService
+    get:
+      parameters:
+      - description: storeServiceId
+        in: path
+        name: storeServiceId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: storeService object
+          schema:
+            $ref: '#/definitions/models.StoreService'
+      summary: Get
+      tags:
+      - StoreService
+    patch:
+      parameters:
+      - description: storeService
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreService'
+      - description: storeServiceId
+        in: path
+        name: storeServiceId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - StoreService
+    put:
+      parameters:
+      - description: storeService
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreService'
+      - description: storeServiceId
+        in: path
+        name: storeServiceId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - StoreService
+  /storeVisits:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: storeVisit array
+          schema:
+            items:
+              $ref: '#/definitions/models.StoreVisit'
+            type: array
+      summary: List
+      tags:
+      - StoreVisit
+    post:
+      parameters:
+      - description: StoreVisit
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreVisit'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - StoreVisit
+  /storeVisits/{storeVisitId}:
+    delete:
+      parameters:
+      - description: storeVisitId
+        in: path
+        name: storeVisitId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - StoreVisit
+    get:
+      parameters:
+      - description: storeVisitId
+        in: path
+        name: storeVisitId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: storeVisit object
+          schema:
+            $ref: '#/definitions/models.StoreVisit'
+      summary: Get
+      tags:
+      - StoreVisit
+    patch:
+      parameters:
+      - description: storeVisit
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreVisit'
+      - description: storeVisitId
+        in: path
+        name: storeVisitId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - StoreVisit
+    put:
+      parameters:
+      - description: storeVisit
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.StoreVisit'
+      - description: storeVisitId
+        in: path
+        name: storeVisitId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - StoreVisit
+  /systemAdmins:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: systemAdmin array
+          schema:
+            items:
+              $ref: '#/definitions/models.SystemAdmin'
+            type: array
+      summary: List
+      tags:
+      - SystemAdmin
+    post:
+      parameters:
+      - description: SystemAdmin
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemAdmin'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - SystemAdmin
+  /systemAdmins/{systemAdminId}:
+    delete:
+      parameters:
+      - description: systemAdminId
+        in: path
+        name: systemAdminId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - SystemAdmin
+    get:
+      parameters:
+      - description: systemAdminId
+        in: path
+        name: systemAdminId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: systemAdmin object
+          schema:
+            $ref: '#/definitions/models.SystemAdmin'
+      summary: Get
+      tags:
+      - SystemAdmin
+    patch:
+      parameters:
+      - description: systemAdmin
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemAdmin'
+      - description: systemAdminId
+        in: path
+        name: systemAdminId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - SystemAdmin
+    put:
+      parameters:
+      - description: systemAdmin
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemAdmin'
+      - description: systemAdminId
+        in: path
+        name: systemAdminId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - SystemAdmin
+  /systemAttachmentCategorys:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: systemAttachmentCategory array
+          schema:
+            items:
+              $ref: '#/definitions/models.SystemAttachmentCategory'
+            type: array
+      summary: List
+      tags:
+      - SystemAttachmentCategory
+    post:
+      parameters:
+      - description: SystemAttachmentCategory
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemAttachmentCategory'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - SystemAttachmentCategory
+  /systemAttachmentCategorys/{systemAttachmentCategoryId}:
+    delete:
+      parameters:
+      - description: systemAttachmentCategoryId
+        in: path
+        name: systemAttachmentCategoryId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - SystemAttachmentCategory
+    get:
+      parameters:
+      - description: systemAttachmentCategoryId
+        in: path
+        name: systemAttachmentCategoryId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: systemAttachmentCategory object
+          schema:
+            $ref: '#/definitions/models.SystemAttachmentCategory'
+      summary: Get
+      tags:
+      - SystemAttachmentCategory
+    patch:
+      parameters:
+      - description: systemAttachmentCategory
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemAttachmentCategory'
+      - description: systemAttachmentCategoryId
+        in: path
+        name: systemAttachmentCategoryId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - SystemAttachmentCategory
+    put:
+      parameters:
+      - description: systemAttachmentCategory
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemAttachmentCategory'
+      - description: systemAttachmentCategoryId
+        in: path
+        name: systemAttachmentCategoryId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - SystemAttachmentCategory
+  /systemConfigTabs:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: systemConfigTab array
+          schema:
+            items:
+              $ref: '#/definitions/models.SystemConfigTab'
+            type: array
+      summary: List
+      tags:
+      - SystemConfigTab
+    post:
+      parameters:
+      - description: SystemConfigTab
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemConfigTab'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - SystemConfigTab
+  /systemConfigTabs/{systemConfigTabId}:
+    delete:
+      parameters:
+      - description: systemConfigTabId
+        in: path
+        name: systemConfigTabId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - SystemConfigTab
+    get:
+      parameters:
+      - description: systemConfigTabId
+        in: path
+        name: systemConfigTabId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: systemConfigTab object
+          schema:
+            $ref: '#/definitions/models.SystemConfigTab'
+      summary: Get
+      tags:
+      - SystemConfigTab
+    patch:
+      parameters:
+      - description: systemConfigTab
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemConfigTab'
+      - description: systemConfigTabId
+        in: path
+        name: systemConfigTabId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - SystemConfigTab
+    put:
+      parameters:
+      - description: systemConfigTab
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemConfigTab'
+      - description: systemConfigTabId
+        in: path
+        name: systemConfigTabId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - SystemConfigTab
+  /systemConfigs:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: systemConfig array
+          schema:
+            items:
+              $ref: '#/definitions/models.SystemConfig'
+            type: array
+      summary: List
+      tags:
+      - SystemConfig
+    post:
+      parameters:
+      - description: SystemConfig
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemConfig'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - SystemConfig
+  /systemConfigs/{systemConfigId}:
+    delete:
+      parameters:
+      - description: systemConfigId
+        in: path
+        name: systemConfigId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - SystemConfig
+    get:
+      parameters:
+      - description: systemConfigId
+        in: path
+        name: systemConfigId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: systemConfig object
+          schema:
+            $ref: '#/definitions/models.SystemConfig'
+      summary: Get
+      tags:
+      - SystemConfig
+    patch:
+      parameters:
+      - description: systemConfig
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemConfig'
+      - description: systemConfigId
+        in: path
+        name: systemConfigId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - SystemConfig
+    put:
+      parameters:
+      - description: systemConfig
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemConfig'
+      - description: systemConfigId
+        in: path
+        name: systemConfigId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - SystemConfig
+  /systemFiles:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: systemFile array
+          schema:
+            items:
+              $ref: '#/definitions/models.SystemFile'
+            type: array
+      summary: List
+      tags:
+      - SystemFile
+    post:
+      parameters:
+      - description: SystemFile
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemFile'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - SystemFile
+  /systemFiles/{systemFileId}:
+    delete:
+      parameters:
+      - description: systemFileId
+        in: path
+        name: systemFileId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - SystemFile
+    get:
+      parameters:
+      - description: systemFileId
+        in: path
+        name: systemFileId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: systemFile object
+          schema:
+            $ref: '#/definitions/models.SystemFile'
+      summary: Get
+      tags:
+      - SystemFile
+    patch:
+      parameters:
+      - description: systemFile
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemFile'
+      - description: systemFileId
+        in: path
+        name: systemFileId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - SystemFile
+    put:
+      parameters:
+      - description: systemFile
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemFile'
+      - description: systemFileId
+        in: path
+        name: systemFileId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - SystemFile
+  /systemGroupDatas:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: systemGroupData array
+          schema:
+            items:
+              $ref: '#/definitions/models.SystemGroupData'
+            type: array
+      summary: List
+      tags:
+      - SystemGroupData
+    post:
+      parameters:
+      - description: SystemGroupData
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemGroupData'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - SystemGroupData
+  /systemGroupDatas/{systemGroupDataId}:
+    delete:
+      parameters:
+      - description: systemGroupDataId
+        in: path
+        name: systemGroupDataId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - SystemGroupData
+    get:
+      parameters:
+      - description: systemGroupDataId
+        in: path
+        name: systemGroupDataId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: systemGroupData object
+          schema:
+            $ref: '#/definitions/models.SystemGroupData'
+      summary: Get
+      tags:
+      - SystemGroupData
+    patch:
+      parameters:
+      - description: systemGroupData
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemGroupData'
+      - description: systemGroupDataId
+        in: path
+        name: systemGroupDataId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - SystemGroupData
+    put:
+      parameters:
+      - description: systemGroupData
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemGroupData'
+      - description: systemGroupDataId
+        in: path
+        name: systemGroupDataId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - SystemGroupData
+  /systemGroups:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: systemGroup array
+          schema:
+            items:
+              $ref: '#/definitions/models.SystemGroup'
+            type: array
+      summary: List
+      tags:
+      - SystemGroup
+    post:
+      parameters:
+      - description: SystemGroup
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemGroup'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - SystemGroup
+  /systemGroups/{systemGroupId}:
+    delete:
+      parameters:
+      - description: systemGroupId
+        in: path
+        name: systemGroupId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - SystemGroup
+    get:
+      parameters:
+      - description: systemGroupId
+        in: path
+        name: systemGroupId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: systemGroup object
+          schema:
+            $ref: '#/definitions/models.SystemGroup'
+      summary: Get
+      tags:
+      - SystemGroup
+    patch:
+      parameters:
+      - description: systemGroup
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemGroup'
+      - description: systemGroupId
+        in: path
+        name: systemGroupId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - SystemGroup
+    put:
+      parameters:
+      - description: systemGroup
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemGroup'
+      - description: systemGroupId
+        in: path
+        name: systemGroupId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - SystemGroup
+  /systemLogs:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: systemLog array
+          schema:
+            items:
+              $ref: '#/definitions/models.SystemLog'
+            type: array
+      summary: List
+      tags:
+      - SystemLog
+    post:
+      parameters:
+      - description: SystemLog
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemLog'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - SystemLog
+  /systemLogs/{systemLogId}:
+    delete:
+      parameters:
+      - description: systemLogId
+        in: path
+        name: systemLogId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - SystemLog
+    get:
+      parameters:
+      - description: systemLogId
+        in: path
+        name: systemLogId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: systemLog object
+          schema:
+            $ref: '#/definitions/models.SystemLog'
+      summary: Get
+      tags:
+      - SystemLog
+    patch:
+      parameters:
+      - description: systemLog
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemLog'
+      - description: systemLogId
+        in: path
+        name: systemLogId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - SystemLog
+    put:
+      parameters:
+      - description: systemLog
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemLog'
+      - description: systemLogId
+        in: path
+        name: systemLogId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - SystemLog
+  /systemMenuss:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: systemMenus array
+          schema:
+            items:
+              $ref: '#/definitions/models.SystemMenus'
+            type: array
+      summary: List
+      tags:
+      - SystemMenus
+    post:
+      parameters:
+      - description: SystemMenus
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemMenus'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - SystemMenus
+  /systemMenuss/{systemMenusId}:
+    delete:
+      parameters:
+      - description: systemMenusId
+        in: path
+        name: systemMenusId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - SystemMenus
+    get:
+      parameters:
+      - description: systemMenusId
+        in: path
+        name: systemMenusId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: systemMenus object
+          schema:
+            $ref: '#/definitions/models.SystemMenus'
+      summary: Get
+      tags:
+      - SystemMenus
+    patch:
+      parameters:
+      - description: systemMenus
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemMenus'
+      - description: systemMenusId
+        in: path
+        name: systemMenusId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - SystemMenus
+    put:
+      parameters:
+      - description: systemMenus
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemMenus'
+      - description: systemMenusId
+        in: path
+        name: systemMenusId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - SystemMenus
+  /systemNoticeAdmins:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: systemNoticeAdmin array
+          schema:
+            items:
+              $ref: '#/definitions/models.SystemNoticeAdmin'
+            type: array
+      summary: List
+      tags:
+      - SystemNoticeAdmin
+    post:
+      parameters:
+      - description: SystemNoticeAdmin
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemNoticeAdmin'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - SystemNoticeAdmin
+  /systemNoticeAdmins/{systemNoticeAdminId}:
+    delete:
+      parameters:
+      - description: systemNoticeAdminId
+        in: path
+        name: systemNoticeAdminId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - SystemNoticeAdmin
+    get:
+      parameters:
+      - description: systemNoticeAdminId
+        in: path
+        name: systemNoticeAdminId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: systemNoticeAdmin object
+          schema:
+            $ref: '#/definitions/models.SystemNoticeAdmin'
+      summary: Get
+      tags:
+      - SystemNoticeAdmin
+    patch:
+      parameters:
+      - description: systemNoticeAdmin
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemNoticeAdmin'
+      - description: systemNoticeAdminId
+        in: path
+        name: systemNoticeAdminId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - SystemNoticeAdmin
+    put:
+      parameters:
+      - description: systemNoticeAdmin
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemNoticeAdmin'
+      - description: systemNoticeAdminId
+        in: path
+        name: systemNoticeAdminId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - SystemNoticeAdmin
+  /systemNotices:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: systemNotice array
+          schema:
+            items:
+              $ref: '#/definitions/models.SystemNotice'
+            type: array
+      summary: List
+      tags:
+      - SystemNotice
+    post:
+      parameters:
+      - description: SystemNotice
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemNotice'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - SystemNotice
+  /systemNotices/{systemNoticeId}:
+    delete:
+      parameters:
+      - description: systemNoticeId
+        in: path
+        name: systemNoticeId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - SystemNotice
+    get:
+      parameters:
+      - description: systemNoticeId
+        in: path
+        name: systemNoticeId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: systemNotice object
+          schema:
+            $ref: '#/definitions/models.SystemNotice'
+      summary: Get
+      tags:
+      - SystemNotice
+    patch:
+      parameters:
+      - description: systemNotice
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemNotice'
+      - description: systemNoticeId
+        in: path
+        name: systemNoticeId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - SystemNotice
+    put:
+      parameters:
+      - description: systemNotice
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemNotice'
+      - description: systemNoticeId
+        in: path
+        name: systemNoticeId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - SystemNotice
+  /systemRoles:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: systemRole array
+          schema:
+            items:
+              $ref: '#/definitions/models.SystemRole'
+            type: array
+      summary: List
+      tags:
+      - SystemRole
+    post:
+      parameters:
+      - description: SystemRole
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemRole'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - SystemRole
+  /systemRoles/{systemRoleId}:
+    delete:
+      parameters:
+      - description: systemRoleId
+        in: path
+        name: systemRoleId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - SystemRole
+    get:
+      parameters:
+      - description: systemRoleId
+        in: path
+        name: systemRoleId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: systemRole object
+          schema:
+            $ref: '#/definitions/models.SystemRole'
+      summary: Get
+      tags:
+      - SystemRole
+    patch:
+      parameters:
+      - description: systemRole
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemRole'
+      - description: systemRoleId
+        in: path
+        name: systemRoleId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - SystemRole
+    put:
+      parameters:
+      - description: systemRole
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemRole'
+      - description: systemRoleId
+        in: path
+        name: systemRoleId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - SystemRole
+  /systemUserLevels:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: systemUserLevel array
+          schema:
+            items:
+              $ref: '#/definitions/models.SystemUserLevel'
+            type: array
+      summary: List
+      tags:
+      - SystemUserLevel
+    post:
+      parameters:
+      - description: SystemUserLevel
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemUserLevel'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - SystemUserLevel
+  /systemUserLevels/{systemUserLevelId}:
+    delete:
+      parameters:
+      - description: systemUserLevelId
+        in: path
+        name: systemUserLevelId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - SystemUserLevel
+    get:
+      parameters:
+      - description: systemUserLevelId
+        in: path
+        name: systemUserLevelId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: systemUserLevel object
+          schema:
+            $ref: '#/definitions/models.SystemUserLevel'
+      summary: Get
+      tags:
+      - SystemUserLevel
+    patch:
+      parameters:
+      - description: systemUserLevel
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemUserLevel'
+      - description: systemUserLevelId
+        in: path
+        name: systemUserLevelId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - SystemUserLevel
+    put:
+      parameters:
+      - description: systemUserLevel
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemUserLevel'
+      - description: systemUserLevelId
+        in: path
+        name: systemUserLevelId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - SystemUserLevel
+  /systemUserTasks:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: systemUserTask array
+          schema:
+            items:
+              $ref: '#/definitions/models.SystemUserTask'
+            type: array
+      summary: List
+      tags:
+      - SystemUserTask
+    post:
+      parameters:
+      - description: SystemUserTask
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemUserTask'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - SystemUserTask
+  /systemUserTasks/{systemUserTaskId}:
+    delete:
+      parameters:
+      - description: systemUserTaskId
+        in: path
+        name: systemUserTaskId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - SystemUserTask
+    get:
+      parameters:
+      - description: systemUserTaskId
+        in: path
+        name: systemUserTaskId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: systemUserTask object
+          schema:
+            $ref: '#/definitions/models.SystemUserTask'
+      summary: Get
+      tags:
+      - SystemUserTask
+    patch:
+      parameters:
+      - description: systemUserTask
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemUserTask'
+      - description: systemUserTaskId
+        in: path
+        name: systemUserTaskId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - SystemUserTask
+    put:
+      parameters:
+      - description: systemUserTask
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.SystemUserTask'
+      - description: systemUserTaskId
+        in: path
+        name: systemUserTaskId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - SystemUserTask
+  /tokens:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: token array
+          schema:
+            items:
+              $ref: '#/definitions/models.Token'
+            type: array
+      summary: List
+      tags:
+      - Token
+    post:
+      parameters:
+      - description: Token
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.Token'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - Token
+  /tokens/{tokenId}:
+    delete:
+      parameters:
+      - description: tokenId
+        in: path
+        name: tokenId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - Token
+    get:
+      parameters:
+      - description: tokenId
+        in: path
+        name: tokenId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: token object
+          schema:
+            $ref: '#/definitions/models.Token'
+      summary: Get
+      tags:
+      - Token
+    patch:
+      parameters:
+      - description: token
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.Token'
+      - description: tokenId
+        in: path
+        name: tokenId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - Token
+    put:
+      parameters:
+      - description: token
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.Token'
+      - description: tokenId
+        in: path
+        name: tokenId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - Token
+  /userAddresss:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: userAddress array
+          schema:
+            items:
+              $ref: '#/definitions/models.UserAddress'
+            type: array
+      summary: List
+      tags:
+      - UserAddress
+    post:
+      parameters:
+      - description: UserAddress
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserAddress'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - UserAddress
+  /userAddresss/{userAddressId}:
+    delete:
+      parameters:
+      - description: userAddressId
+        in: path
+        name: userAddressId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - UserAddress
+    get:
+      parameters:
+      - description: userAddressId
+        in: path
+        name: userAddressId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: userAddress object
+          schema:
+            $ref: '#/definitions/models.UserAddress'
+      summary: Get
+      tags:
+      - UserAddress
+    patch:
+      parameters:
+      - description: userAddress
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserAddress'
+      - description: userAddressId
+        in: path
+        name: userAddressId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - UserAddress
+    put:
+      parameters:
+      - description: userAddress
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserAddress'
+      - description: userAddressId
+        in: path
+        name: userAddressId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - UserAddress
+  /userBills:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: userBill array
+          schema:
+            items:
+              $ref: '#/definitions/models.UserBill'
+            type: array
+      summary: List
+      tags:
+      - UserBill
+    post:
+      parameters:
+      - description: UserBill
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserBill'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - UserBill
+  /userBills/{userBillId}:
+    delete:
+      parameters:
+      - description: userBillId
+        in: path
+        name: userBillId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - UserBill
+    get:
+      parameters:
+      - description: userBillId
+        in: path
+        name: userBillId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: userBill object
+          schema:
+            $ref: '#/definitions/models.UserBill'
+      summary: Get
+      tags:
+      - UserBill
+    patch:
+      parameters:
+      - description: userBill
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserBill'
+      - description: userBillId
+        in: path
+        name: userBillId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - UserBill
+    put:
+      parameters:
+      - description: userBill
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserBill'
+      - description: userBillId
+        in: path
+        name: userBillId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - UserBill
+  /userEnters:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: userEnter array
+          schema:
+            items:
+              $ref: '#/definitions/models.UserEnter'
+            type: array
+      summary: List
+      tags:
+      - UserEnter
+    post:
+      parameters:
+      - description: UserEnter
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserEnter'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - UserEnter
+  /userEnters/{userEnterId}:
+    delete:
+      parameters:
+      - description: userEnterId
+        in: path
+        name: userEnterId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - UserEnter
+    get:
+      parameters:
+      - description: userEnterId
+        in: path
+        name: userEnterId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: userEnter object
+          schema:
+            $ref: '#/definitions/models.UserEnter'
+      summary: Get
+      tags:
+      - UserEnter
+    patch:
+      parameters:
+      - description: userEnter
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserEnter'
+      - description: userEnterId
+        in: path
+        name: userEnterId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - UserEnter
+    put:
+      parameters:
+      - description: userEnter
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserEnter'
+      - description: userEnterId
+        in: path
+        name: userEnterId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - UserEnter
+  /userExtracts:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: userExtract array
+          schema:
+            items:
+              $ref: '#/definitions/models.UserExtract'
+            type: array
+      summary: List
+      tags:
+      - UserExtract
+    post:
+      parameters:
+      - description: UserExtract
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserExtract'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - UserExtract
+  /userExtracts/{userExtractId}:
+    delete:
+      parameters:
+      - description: userExtractId
+        in: path
+        name: userExtractId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - UserExtract
+    get:
+      parameters:
+      - description: userExtractId
+        in: path
+        name: userExtractId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: userExtract object
+          schema:
+            $ref: '#/definitions/models.UserExtract'
+      summary: Get
+      tags:
+      - UserExtract
+    patch:
+      parameters:
+      - description: userExtract
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserExtract'
+      - description: userExtractId
+        in: path
+        name: userExtractId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - UserExtract
+    put:
+      parameters:
+      - description: userExtract
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserExtract'
+      - description: userExtractId
+        in: path
+        name: userExtractId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - UserExtract
+  /userGroups:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: userGroup array
+          schema:
+            items:
+              $ref: '#/definitions/models.UserGroup'
+            type: array
+      summary: List
+      tags:
+      - UserGroup
+    post:
+      parameters:
+      - description: UserGroup
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserGroup'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - UserGroup
+  /userGroups/{userGroupId}:
+    delete:
+      parameters:
+      - description: userGroupId
+        in: path
+        name: userGroupId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - UserGroup
+    get:
+      parameters:
+      - description: userGroupId
+        in: path
+        name: userGroupId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: userGroup object
+          schema:
+            $ref: '#/definitions/models.UserGroup'
+      summary: Get
+      tags:
+      - UserGroup
+    patch:
+      parameters:
+      - description: userGroup
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserGroup'
+      - description: userGroupId
+        in: path
+        name: userGroupId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - UserGroup
+    put:
+      parameters:
+      - description: userGroup
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserGroup'
+      - description: userGroupId
+        in: path
+        name: userGroupId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - UserGroup
+  /userLevels:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: userLevel array
+          schema:
+            items:
+              $ref: '#/definitions/models.UserLevel'
+            type: array
+      summary: List
+      tags:
+      - UserLevel
+    post:
+      parameters:
+      - description: UserLevel
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserLevel'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - UserLevel
+  /userLevels/{userLevelId}:
+    delete:
+      parameters:
+      - description: userLevelId
+        in: path
+        name: userLevelId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - UserLevel
+    get:
+      parameters:
+      - description: userLevelId
+        in: path
+        name: userLevelId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: userLevel object
+          schema:
+            $ref: '#/definitions/models.UserLevel'
+      summary: Get
+      tags:
+      - UserLevel
+    patch:
+      parameters:
+      - description: userLevel
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserLevel'
+      - description: userLevelId
+        in: path
+        name: userLevelId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - UserLevel
+    put:
+      parameters:
+      - description: userLevel
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserLevel'
+      - description: userLevelId
+        in: path
+        name: userLevelId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - UserLevel
+  /userNoticeSees:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: userNoticeSee array
+          schema:
+            items:
+              $ref: '#/definitions/models.UserNoticeSee'
+            type: array
+      summary: List
+      tags:
+      - UserNoticeSee
+    post:
+      parameters:
+      - description: UserNoticeSee
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserNoticeSee'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - UserNoticeSee
+  /userNoticeSees/{userNoticeSeeId}:
+    delete:
+      parameters:
+      - description: userNoticeSeeId
+        in: path
+        name: userNoticeSeeId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - UserNoticeSee
+    get:
+      parameters:
+      - description: userNoticeSeeId
+        in: path
+        name: userNoticeSeeId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: userNoticeSee object
+          schema:
+            $ref: '#/definitions/models.UserNoticeSee'
+      summary: Get
+      tags:
+      - UserNoticeSee
+    patch:
+      parameters:
+      - description: userNoticeSee
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserNoticeSee'
+      - description: userNoticeSeeId
+        in: path
+        name: userNoticeSeeId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - UserNoticeSee
+    put:
+      parameters:
+      - description: userNoticeSee
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserNoticeSee'
+      - description: userNoticeSeeId
+        in: path
+        name: userNoticeSeeId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - UserNoticeSee
+  /userNotices:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: userNotice array
+          schema:
+            items:
+              $ref: '#/definitions/models.UserNotice'
+            type: array
+      summary: List
+      tags:
+      - UserNotice
+    post:
+      parameters:
+      - description: UserNotice
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserNotice'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - UserNotice
+  /userNotices/{userNoticeId}:
+    delete:
+      parameters:
+      - description: userNoticeId
+        in: path
+        name: userNoticeId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - UserNotice
+    get:
+      parameters:
+      - description: userNoticeId
+        in: path
+        name: userNoticeId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: userNotice object
+          schema:
+            $ref: '#/definitions/models.UserNotice'
+      summary: Get
+      tags:
+      - UserNotice
+    patch:
+      parameters:
+      - description: userNotice
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserNotice'
+      - description: userNoticeId
+        in: path
+        name: userNoticeId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - UserNotice
+    put:
+      parameters:
+      - description: userNotice
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserNotice'
+      - description: userNoticeId
+        in: path
+        name: userNoticeId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - UserNotice
+  /userRecharges:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: userRecharge array
+          schema:
+            items:
+              $ref: '#/definitions/models.UserRecharge'
+            type: array
+      summary: List
+      tags:
+      - UserRecharge
+    post:
+      parameters:
+      - description: UserRecharge
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserRecharge'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - UserRecharge
+  /userRecharges/{userRechargeId}:
+    delete:
+      parameters:
+      - description: userRechargeId
+        in: path
+        name: userRechargeId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - UserRecharge
+    get:
+      parameters:
+      - description: userRechargeId
+        in: path
+        name: userRechargeId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: userRecharge object
+          schema:
+            $ref: '#/definitions/models.UserRecharge'
+      summary: Get
+      tags:
+      - UserRecharge
+    patch:
+      parameters:
+      - description: userRecharge
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserRecharge'
+      - description: userRechargeId
+        in: path
+        name: userRechargeId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - UserRecharge
+    put:
+      parameters:
+      - description: userRecharge
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserRecharge'
+      - description: userRechargeId
+        in: path
+        name: userRechargeId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - UserRecharge
+  /userSigns:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: userSign array
+          schema:
+            items:
+              $ref: '#/definitions/models.UserSign'
+            type: array
+      summary: List
+      tags:
+      - UserSign
+    post:
+      parameters:
+      - description: UserSign
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserSign'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - UserSign
+  /userSigns/{userSignId}:
+    delete:
+      parameters:
+      - description: userSignId
+        in: path
+        name: userSignId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - UserSign
+    get:
+      parameters:
+      - description: userSignId
+        in: path
+        name: userSignId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: userSign object
+          schema:
+            $ref: '#/definitions/models.UserSign'
+      summary: Get
+      tags:
+      - UserSign
+    patch:
+      parameters:
+      - description: userSign
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserSign'
+      - description: userSignId
+        in: path
+        name: userSignId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - UserSign
+    put:
+      parameters:
+      - description: userSign
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserSign'
+      - description: userSignId
+        in: path
+        name: userSignId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - UserSign
+  /userTaskFinishs:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: userTaskFinish array
+          schema:
+            items:
+              $ref: '#/definitions/models.UserTaskFinish'
+            type: array
+      summary: List
+      tags:
+      - UserTaskFinish
+    post:
+      parameters:
+      - description: UserTaskFinish
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserTaskFinish'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - UserTaskFinish
+  /userTaskFinishs/{userTaskFinishId}:
+    delete:
+      parameters:
+      - description: userTaskFinishId
+        in: path
+        name: userTaskFinishId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - UserTaskFinish
+    get:
+      parameters:
+      - description: userTaskFinishId
+        in: path
+        name: userTaskFinishId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: userTaskFinish object
+          schema:
+            $ref: '#/definitions/models.UserTaskFinish'
+      summary: Get
+      tags:
+      - UserTaskFinish
+    patch:
+      parameters:
+      - description: userTaskFinish
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserTaskFinish'
+      - description: userTaskFinishId
+        in: path
+        name: userTaskFinishId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - UserTaskFinish
+    put:
+      parameters:
+      - description: userTaskFinish
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserTaskFinish'
+      - description: userTaskFinishId
+        in: path
+        name: userTaskFinishId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - UserTaskFinish
+  /users:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: user array
+          schema:
+            items:
+              $ref: '#/definitions/models.User'
+            type: array
+      summary: List
+      tags:
+      - User
+    post:
+      parameters:
+      - description: User
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - User
+  /users/{userId}:
+    delete:
+      parameters:
+      - description: userId
+        in: path
+        name: userId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - User
+    get:
+      parameters:
+      - description: userId
+        in: path
+        name: userId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: user object
+          schema:
+            $ref: '#/definitions/models.User'
+      summary: Get
+      tags:
+      - User
+    patch:
+      parameters:
+      - description: user
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      - description: userId
+        in: path
+        name: userId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - User
+    put:
+      parameters:
+      - description: user
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      - description: userId
+        in: path
+        name: userId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - User
+  /wechatMessages:
+    get:
+      parameters:
+      - description: query, ?query=age:>:21,name:like:%jason%
+        in: query
+        name: query
+        type: string
+      - description: order, ?order=age:desc,created_at:asc
+        in: query
+        name: order
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: wechatMessage array
+          schema:
+            items:
+              $ref: '#/definitions/models.WechatMessage'
+            type: array
+      summary: List
+      tags:
+      - WechatMessage
+    post:
+      parameters:
+      - description: WechatMessage
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.WechatMessage'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create
+      tags:
+      - WechatMessage
+  /wechatMessages/{wechatMessageId}:
+    delete:
+      parameters:
+      - description: wechatMessageId
+        in: path
+        name: wechatMessageId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete
+      tags:
+      - WechatMessage
+    get:
+      parameters:
+      - description: wechatMessageId
+        in: path
+        name: wechatMessageId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: wechatMessage object
+          schema:
+            $ref: '#/definitions/models.WechatMessage'
+      summary: Get
+      tags:
+      - WechatMessage
+    patch:
+      parameters:
+      - description: wechatMessage
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.WechatMessage'
+      - description: wechatMessageId
+        in: path
+        name: wechatMessageId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Patch
+      tags:
+      - WechatMessage
+    put:
+      parameters:
+      - description: wechatMessage
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.WechatMessage'
+      - description: wechatMessageId
+        in: path
+        name: wechatMessageId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put
+      tags:
+      - WechatMessage
 swagger: "2.0"

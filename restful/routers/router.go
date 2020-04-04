@@ -5,7 +5,7 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 
-	"goshop/restful/controllers"
+	//"goshop/restful/controllers"
 
 	_ "goshop/restful/docs"
 )
@@ -15,9 +15,11 @@ func Routers() *gin.Engine {
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-	api := r.Group("/api")
-	api.POST("/user/login", controllers.Login)
-	api.POST("/user/register", controllers.Register)
-	api.GET("/user/userlist", controllers.UserList)
+	// api := r.Group("/api")
+	// api.POST("/user/login", controllers.Login)
+	// api.POST("/user/register", controllers.Register)
+	// api.GET("/user/userlist", controllers.UserList)
+
+	GenRouters(r)
 	return r
 }

@@ -15,14 +15,15 @@ import (
 
 	"goshop/restful/common"
 	"goshop/restful/config"
-	"goshop/restful/models"
+	//"goshop/restful/models"
 	"goshop/restful/routers"
 )
 
 func main() {
-	db := common.Init()
+	common.Init()
+	//db := common.Init()
 
-	db.AutoMigrate(&models.Address{}, &models.Item{}, &models.ItemDesc{}, &models.Order{}, &models.Role{}, &models.User{})
+	//db.AutoMigrate(&models.Address{}, &models.Item{}, &models.ItemDesc{}, &models.Order{}, &models.Role{}, &models.User{})
 
 	s := &http.Server{
 		Addr:           ":" + config.ServerConf.Port,

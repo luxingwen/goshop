@@ -2,9 +2,10 @@ package common
 
 import (
 	"fmt"
-	"log"
+
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	log "github.com/sirupsen/logrus"
 
 	"goshop/restful/config"
 )
