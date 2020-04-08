@@ -15,9 +15,11 @@ import (
 
 var engine *xorm.Engine
 
+var cPath, mPath, rPath = "./gen_controller/", "./gen_model/", "./gen_router/"
+
 func main() {
 	var err error
-	engine, err = xorm.NewEngine("mysql", "root:root@tcp(localhost:3306)/crmeb_hh?charset=utf8")
+	engine, err = xorm.NewEngine("mysql", "root:mysql57@tcp(localhost:8300)/gostore?charset=utf8")
 
 	if err != nil {
 		log.Fatal(err)
@@ -99,7 +101,14 @@ func genStruct(table *schemas.Table) {
 
 	filename := "gen_" + name + ".go"
 
-	f, err := os.Create("gen/" + filename)
+	if _, err := os.Stat(mPath); err != nil {
+		err = os.MkdirAll(mPath, os.ModePerm)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	f, err := os.Create(mPath + filename)
 	if err != nil {
 		panic(err)
 	}
@@ -124,7 +133,15 @@ func genController(table *schemas.Table) {
 	tpls = strings.Replace(tpls, "{{ModelName}}", structName, -1)
 
 	filename := "gen_" + name + ".go"
-	f, err := os.Create("gen_controllers/" + filename)
+
+	if _, err := os.Stat(cPath); err != nil {
+		err = os.MkdirAll(cPath, os.ModePerm)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	f, err := os.Create(cPath + filename)
 	if err != nil {
 		panic(err)
 	}
@@ -155,7 +172,14 @@ func genMainRouter(str string) {
 	tpls = strings.Replace(tpls, "{{RoutersTpls}}", str, -1)
 
 	filename := "gen_router.go"
-	f, err := os.Create("gen_router/" + filename)
+	if _, err := os.Stat(rPath); err != nil {
+		err = os.MkdirAll(rPath, os.ModePerm)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	f, err := os.Create(rPath + filename)
 	if err != nil {
 		panic(err)
 	}
