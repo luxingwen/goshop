@@ -6,6 +6,10 @@ build: export GO111MODULE=on
 build:
 	go build -o restful/bin/goshop-restful restful/main.go
 
+build-run: build
+	cd restful && ./bin/goshop-restful
+
+
 
 build-swag:
 	cd restful && swag init
@@ -14,6 +18,9 @@ build-swag:
 
 build-swag-run: build-swag
 	cd restful && ./bin/goshop-restful
+
+
+
 
 
 test:
