@@ -27,6 +27,13 @@ func Routers() *gin.Engine {
 		api.GET("/my_naviga", indexController.MyNaviga)
 	}
 
+	store := api.Group("/store")
+	storeCategoryController := controllers.StoreCategoryController{}
+	{
+		store.GET("/pid_cate", storeCategoryController.PidByCategory)
+		store.GET("/product_category", storeCategoryController.GetProductCategory)
+	}
+
 	GenRouters(r)
 	return r
 }
