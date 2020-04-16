@@ -16,6 +16,13 @@ func (storeCategory *StoreCategory) PidByCategory(pid int) (r []*StoreCategory, 
 	return
 }
 
+func (storeCategory *StoreCategory) PidBySidList(pid int) (r []*StoreCategory, err error) {
+	db := common.GetDB()
+
+	err = db.Select("id, cate_name, pid").Where("pid = ?", pid).Find(&r).Error
+	return
+}
+
 // 获取一级和二级分类
 func (storeCategory *StoreCategory) GetProductCategory() (r []map[string]interface{}, err error) {
 	db := common.GetDB()
