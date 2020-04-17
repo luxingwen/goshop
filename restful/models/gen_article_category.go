@@ -68,3 +68,11 @@ func (articleCategory *ArticleCategory) Get() (*ArticleCategory, error) {
 	err := common.GetDB().Find(&articleCategory).Error
 	return articleCategory, err
 }
+
+func (articleCategory *ArticleCategory) GetArticleCategory() (r []*ArticleCategory, err error) {
+	db := common.GetDB()
+
+	db = db.Select("id, title").Where("hidden = ? AND is_del = ? AND status = ? AND pid = ?", 0, 0, 1, 0)
+	err = db.Find(&r).Error
+	return
+}

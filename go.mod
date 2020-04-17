@@ -20,6 +20,7 @@ require (
 	github.com/jinzhu/configor v1.1.1 // indirect
 	github.com/jinzhu/copier v0.0.0-20190924061706-b57f9002281a // indirect
 	github.com/jinzhu/gorm v1.9.11
+	github.com/medivhzhan/weapp/v2 v2.0.2
 	github.com/microcosm-cc/bluemonday v1.0.2 // indirect
 	github.com/mrjones/oauth v0.0.0-20190623134757-126b35219450 // indirect
 	github.com/qor/admin v0.0.0-20191211090149-7b936172cf06 // indirect

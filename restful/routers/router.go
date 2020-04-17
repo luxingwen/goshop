@@ -22,10 +22,13 @@ func Routers() *gin.Engine {
 
 	api := r.Group("/api")
 	indexController := controllers.IndexController{}
+	loginController := controllers.LoginController{}
 	{
 		api.GET("/index", indexController.Index)
 		api.GET("/my_naviga", indexController.MyNaviga)
 		api.GET("/index_groom_list/:typ", indexController.GetIndexGroomList)
+		api.POST("/login", loginController.Login)
+		api.POST("/setCode", loginController.SetCode)
 	}
 
 	store := api.Group("/store")
