@@ -1,12 +1,17 @@
 package controllers
 
 import (
+	"errors"
 	"fmt"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/medivhzhan/weapp/v2"
 
 	"goshop/restful/config"
+
+	"goshop/libs/cache"
+	"goshop/libs/utils"
 
 	"encoding/json"
 )
@@ -35,11 +40,36 @@ func (ctl *LoginController) Login(c *gin.Context) {
 		return
 	}
 
-	// res, err := weapp.DecryptUserInfo("session-key", "raw-data", "encrypted-date", "signature", "iv")
-	// if err != nil {
-	// 	// 处理一般错误信息
-	// 	return
-	// }
+	sessionKey, ok := cache.Get(mdata["cache_key"])
+
+	if !ok {
+		handleErr(c, errors.New("没有找到sessionkey"))
+		return
+	}
+
+	encryptedData := mdata["encryptedData"].(string)
+	rawData := mdata["rawData"].(string)
+	sign := mdata["signature"].(string)
+	iv := mdata["iv"].(string)
+
+	res, err := weapp.DecryptUserInfo(sessionKey.(string), rawData, encryptedData, sign, iv)
+	if err != nil {
+		// 处理一般错误信息
+		fmt.Println("res err:", err)
+		handleErr(c, err)
+		return
+	}
+
+	b1, err := json.Marshal(res)
+
+	if err != nil {
+		handleErr(c, err)
+		return
+	}
+
+	wechatUser := &models.WechatUser{}
+
+	fmt.Println("b1:", string(b1))
 
 	fmt.Println(string(b))
 	handleOk(c, "ok")
@@ -76,6 +106,13 @@ func (ctl *LoginController) SetCode(c *gin.Context) {
 		return
 	}
 
+	cacheKey := fmt.Sprintf("api_code_%s_%d", req.Code, time.Now().Unix())
+	cacheKey = utils.Md5(cacheKey)
+	cache.Put(cacheKey, res.SessionKey, 86400)
+
+	mdata := make(map[string]interface{}, 0)
+	mdata["cache_key"] = cacheKey
+
 	b, err := json.Marshal(res)
 	if err != nil {
 		handleErr(c, err)
@@ -83,6 +120,6 @@ func (ctl *LoginController) SetCode(c *gin.Context) {
 	}
 
 	fmt.Println("set_code:", string(b))
-	handleOk(c, "ok")
+	handleOk(c, mdata)
 
 }
