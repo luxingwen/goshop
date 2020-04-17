@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"time"
@@ -8,12 +9,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/medivhzhan/weapp/v2"
 
-	"goshop/restful/config"
-
 	"goshop/libs/cache"
 	"goshop/libs/utils"
-
-	"encoding/json"
+	"goshop/restful/config"
+	"goshop/restful/models"
 )
 
 type LoginController struct {
@@ -69,7 +68,79 @@ func (ctl *LoginController) Login(c *gin.Context) {
 
 	wechatUser := &models.WechatUser{}
 
+	wechatUser.RoutineOpenid = res.OpenID
+	wechatUser.Nickname = res.Nickname
+	wechatUser.Sex = res.Gender
+	wechatUser.Province = res.Province
+	wechatUser.Language = res.Language
+	wechatUser.Country = res.Country
+	wechatUser.City = res.City
+	wechatUser.Headimgurl = res.Avatar
+	wechatUser.Unionid = res.UnionID
+	wechatUser.UserType = "routine"
+	wechatUser.SessionKey = sessionKey.(string)
+
+	rWechatUser, err := wechatUser.GetByRoutineOpenid(res.OpenID)
+	if err != nil && err.Error() == "record not found" {
+		wechatUser.AddTime = int(time.Now().Unix())
+
+		err = wechatUser.Insert()
+		if err != nil {
+			fmt.Println("插入微信用户失败:", err)
+			handleErr(c, err)
+			return
+		}
+
+		user := &models.User{}
+
+		user.Account = fmt.Sprintf("xw_%d%d", wechatUser.Uid, time.Now().Unix())
+
+		user.Pwd = utils.Md5("lxw123456")
+		user.Nickname = wechatUser.Nickname
+		user.Avatar = wechatUser.Headimgurl
+
+		user.Uid = wechatUser.Uid
+		user.AddTime = wechatUser.AddTime
+		user.LastTime = int(time.Now().Unix())
+
+		user.AddIp = c.ClientIP()
+		user.LastIp = c.ClientIP()
+		user.UserType = wechatUser.UserType
+
+		err = user.Insert()
+		if err != nil {
+			fmt.Println("插入用户失败:", err)
+			handleErr(c, err)
+			return
+		}
+
+	}
+	wechatUser.Uid = rWechatUser.Uid
+
+	err = wechatUser.Update()
+	if err != nil {
+		fmt.Println("更新微信用户失败:", wechatUser)
+		handleErr(c, err)
+		return
+	}
+
+	user := &models.User{}
+
+	user.Uid = wechatUser.Uid
+	user.Nickname = wechatUser.Nickname
+	user.Avatar = wechatUser.Headimgurl
+	user.LastIp = c.ClientIP()
+	user.LastTime = int(time.Now().Unix())
+
+	err = user.Update()
+	if err != nil {
+		handleErr(c, err)
+		return
+	}
+
 	fmt.Println("b1:", string(b1))
+
+	//@todo 获取是否有扫码进小程序
 
 	fmt.Println(string(b))
 	handleOk(c, "ok")

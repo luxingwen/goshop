@@ -82,3 +82,10 @@ func (wechatUser *WechatUser) Get() (*WechatUser, error) {
 	err := common.GetDB().Find(&wechatUser).Error
 	return wechatUser, err
 }
+
+func (wechatUser *WechatUser) GetByRoutineOpenid(openId string) (r *WechatUser, err error) {
+	db := common.GetDB()
+	r = new(WechatUser)
+	err = db.Where("routine_openid = ?", openId).First(&r).Error
+	return
+}
