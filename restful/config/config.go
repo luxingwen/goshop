@@ -9,7 +9,7 @@ import (
 var (
 	ServerConf = &ServerConfig{}
 	MySqlConf  = &MySqlConfig{}
-	WxConf     = &WxConf{}
+	WxConf     = &WxConfig{}
 )
 
 type ServerConfig struct {

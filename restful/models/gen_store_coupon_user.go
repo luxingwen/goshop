@@ -70,3 +70,20 @@ func (storeCouponUser *StoreCouponUser) Get() (*StoreCouponUser, error) {
 	err := common.GetDB().Find(&storeCouponUser).Error
 	return storeCouponUser, err
 }
+
+type MyStoreCoupon struct {
+	Id          int     `gorm:"column:id" json:"id"`                     //优惠券发放记录id
+	Cid         int     `gorm:"column:cid" json:"cid"`                   //兑换的项目id
+	Uid         int     `gorm:"column:uid" json:"uid"`                   //优惠券所属用户
+	CouponTitle string  `gorm:"column:coupon_title" json:"coupon_time"`  //优惠券名称
+	CouponPrice float64 `gorm:"column:coupon_price" json:"coupon_price"` //优惠券的面值
+	AddTime     int     `gorm:"column:add_time"`                         //优惠券创建时间
+	EndTime     int     `gorm:"column:end_time"`                         //优惠券结束时间
+	Msg         int     `json:"msg"`
+}
+
+func (storeCouponUser *StoreCouponUser) MyStoreCoupon(uid int) {
+
+	// db := common.GetDB()
+
+}

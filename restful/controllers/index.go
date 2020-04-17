@@ -391,3 +391,110 @@ func (crtl *IndexController) MyNaviga(c *gin.Context) {
 	handleOk(c, mdata)
 
 }
+
+//获取首页推荐不同类型产品的轮播图和产品
+func (crtl *IndexController) GetIndexGroomList(c *gin.Context) {
+	typStr := c.Param("typ")
+
+	typ, err := strconv.Atoi(typStr)
+	if err != nil {
+		handleErr(c, err)
+		return
+	}
+
+	name := "routine_home_bast_banner"
+
+	if typ == 2 {
+		name = "routine_home_hot_banner"
+	}
+	if typ == 3 {
+		name = "routine_home_new_banner"
+	}
+	if typ == 4 {
+		name = "routine_home_benefit_banner"
+	}
+
+	systemGroup := &models.SystemGroup{}
+
+	err = systemGroup.GetByConfigName(name)
+	if err != nil {
+		handleErr(c, err)
+		return
+	}
+
+	ids := []int{systemGroup.Id}
+
+	systemGroupData := &models.SystemGroupData{}
+
+	sGroupDataList, err := systemGroupData.ListByGids(ids)
+
+	if err != nil {
+		handleErr(c, err)
+		return
+	}
+
+	branners := make([]interface{}, 0)
+	for _, item := range sGroupDataList {
+		itemdata := make(map[string]interface{}, 0)
+		itemdata["id"] = item.Id
+		valMap := make(map[string]map[string]string, 0)
+		err := json.Unmarshal([]byte(item.Value), &valMap)
+		if err != nil {
+			handleErr(c, err)
+			return
+		}
+
+		comment := valMap["comment"]
+		itemdata["comment"] = comment["value"]
+
+		img := valMap["img"]
+		itemdata["img"] = img["value"]
+
+		branners = append(branners, itemdata)
+	}
+
+	mdata := make(map[string]interface{}, 0)
+
+	mdata["branner"] = branners
+
+	storeProduct := &models.StoreProduct{}
+
+	if typ == 1 {
+		bestProductList, err := storeProduct.GetBestProduct(100, 0)
+		if err != nil {
+			handleErr(c, err)
+			return
+		}
+
+		mdata["list"] = bestProductList
+	}
+
+	if typ == 2 {
+		likeInfoList, err := storeProduct.GetHotProduct(100, 0)
+		if err != nil {
+			handleErr(c, err)
+			return
+		}
+		mdata["list"] = likeInfoList
+	}
+
+	if typ == 3 {
+		firstLists, err := storeProduct.GetNewProduct(100)
+		if err != nil {
+			handleErr(c, err)
+			return
+		}
+		mdata["list"] = firstLists
+	}
+
+	if typ == 4 {
+		benefitList, err := storeProduct.GetBenefitProduct(100)
+		if err != nil {
+			handleErr(c, err)
+			return
+		}
+		mdata["list"] = benefitList
+	}
+	handleOk(c, mdata)
+
+}

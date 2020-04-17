@@ -25,6 +25,7 @@ func Routers() *gin.Engine {
 	{
 		api.GET("/index", indexController.Index)
 		api.GET("/my_naviga", indexController.MyNaviga)
+		api.GET("/index_groom_list/:typ", indexController.GetIndexGroomList)
 	}
 
 	store := api.Group("/store")
