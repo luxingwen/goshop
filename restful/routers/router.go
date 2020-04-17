@@ -34,6 +34,7 @@ func Routers() *gin.Engine {
 		store.GET("/pid_cate", storeCategoryController.PidByCategory)
 		store.GET("/product_category", storeCategoryController.GetProductCategory)
 		store.GET("/product_list", storeProductController.ProductList)
+		store.GET("/goods_search", storeProductController.GoodsSearch)
 	}
 
 	GenRouters(r)

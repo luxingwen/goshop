@@ -200,9 +200,45 @@ func (storeProduct *StoreProduct) GetProductList(req *ReqStoreProductQuery) (r [
 
 	offset := limit * page
 
-	err = db.Offset(offset).Limit(limit).Order("ID ASC").Find(&r).Count(&count).Error
+	err = db.Offset(offset).Limit(limit).Find(&r).Count(&count).Error
 	return
 
 	// @todo 设置会员的价格
+
+}
+
+type ReqGoodsSearch struct {
+	Query
+	Keyword string `form:"keyword" json:"keyword"`
+}
+
+// 分类搜索
+func (storeProduct *StoreProduct) GetSearchStorePage(req *ReqGoodsSearch, uid int) (r []*ResProduct, count int, err error) {
+	db := common.GetDB().Table(storeProduct.TableName())
+
+	req.Keyword = strings.TrimSpace(req.Keyword)
+	if req.Keyword != "" {
+		db = db.Where("(keyword LIKE %%?%% OR store_name LIKE %%?%%", req.Keyword, req.Keyword)
+	}
+
+	db = db.Select("id,store_name,cate_id,image,ficti as sales,price,stock")
+	db = db.Where("is_del = ? AND is_show = ? AND mer_id = ?", 0, 1, 0)
+
+	limit := 10
+	page := 0
+
+	if req.Page > 0 {
+		page = req.Page - 1
+	}
+	if req.PageNum > 0 {
+		limit = req.PageNum
+	}
+
+	offset := limit * page
+
+	err = db.Offset(offset).Limit(limit).Find(&r).Count(&count).Error
+	return
+
+	// @Todo 设置会员的价格
 
 }
