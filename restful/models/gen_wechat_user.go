@@ -50,7 +50,7 @@ func (wechatUser *WechatUser) Patch() error {
 }
 
 func (wechatUser *WechatUser) Update() error {
-	err := common.GetDB().Save(wechatUser).Error
+	err := common.GetDB().Model(wechatUser).Update(wechatUser).Error
 	return err
 }
 
@@ -88,4 +88,9 @@ func (wechatUser *WechatUser) GetByRoutineOpenid(openId string) (r *WechatUser, 
 	r = new(WechatUser)
 	err = db.Where("routine_openid = ?", openId).First(&r).Error
 	return
+}
+
+func (wechatUser *WechatUser) UpdateByUid(uid int) (err error) {
+	err = common.GetDB().Model(wechatUser).Where("uid = ?", uid).Update(wechatUser).Error
+	return err
 }

@@ -63,3 +63,17 @@ func (storeProductRelation *StoreProductRelation) Get() (*StoreProductRelation, 
 	err := common.GetDB().Find(&storeProductRelation).Error
 	return storeProductRelation, err
 }
+
+// 获取用户收藏的所有产品的个数
+func (storeProductRelation *StoreProductRelation) GetUserIdCollect(uid int) (count int, err error) {
+	db := common.GetDB()
+	err = db.Table(storeProductRelation.TableName()).Where("uid = ? AND type = ?", uid, "collect").Count(&count).Error
+	return
+}
+
+// 获取用户点赞所有产品的个数
+func (storeProductRelation *StoreProductRelation) GetUserIdLike(uid int) (count int, err error) {
+	db := common.GetDB()
+	err = db.Table(storeProductRelation.TableName()).Where("uid = ? AND type = ?", uid, "like").Count(&count).Error
+	return
+}

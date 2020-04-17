@@ -104,3 +104,77 @@ func (storeOrder *StoreOrder) Get() (*StoreOrder, error) {
 	err := common.GetDB().Find(&storeOrder).Error
 	return storeOrder, err
 }
+
+func (storeOrder *StoreOrder) GetOrderStatusNum(uid int) (r map[string]int, err error) {
+	var (
+		noBuy            int
+		noPostageNoPink  int
+		noPostageYesPink int
+		noPostage        int
+		noTake           int
+		noReply          int
+		noPink           int
+		noRefund         int
+	)
+
+	db := common.GetDB()
+
+	err = db.Table(storeOrder.TableName()).Where("uid = ? AND paid = ? AND is_del = ? pay_type <> ?", uid, 0, 0, "offline").Count(&noBuy).Error
+	if err != nil {
+		return
+	}
+
+	err = db.Table(storeOrder.TableName()).Where("uid = ? AND paid = ? AND pink_id = ? AND is_del = ? status = ? AND pay_type <> ?", uid, 1, 0, 0, 0, "offline").Count(&noPostageNoPink).Error
+
+	if err != nil {
+		return
+	}
+
+	noPostage = noPostageNoPink + noPostageYesPink
+
+	storePink := &StorePink{}
+	err = db.Raw("SELECT count(*) FROM "+storeOrder.TableName()+" o LEFT JOIN "+storePink.TableName()+" p ON o.pink_id = p.id WHERE p.status = ? AND o.paid = ? AND o.is_del = ? AND o.status = ? AND o.pay_type = ?", 2, 1, 0, 0, "offline").Scan(&noPostageYesPink).Error
+	if err != nil {
+		return
+	}
+
+	err = db.Table(storeOrder.TableName()).Where("uid = ? AND paid = ? AND is_del = ? AND status = ? AND pay_type <> ?", uid, 1, 0, 1, "offline").Count(&noTake).Error
+	if err != nil {
+		return
+	}
+
+	err = db.Table(storeOrder.TableName()).Where("uid = ? AND paid = ? AND is_del = ? AND status = ?", uid, 1, 0, 0, 2).Count(&noReply).Error
+	if err != nil {
+		return
+	}
+
+	err = db.Raw("SELECT count(*) FROM "+storeOrder.TableName()+" o LEFT JOIN "+storePink.TableName()+" p ON p.id = o.pink_id WHERE p.status = ? AND o.paid = ? AND o.is_del = ? AND o.status = ? AND o.pay_type <> ?", 1, 1, 0, 0, "offline").Scan(&noPink).Error
+	if err != nil {
+		return
+	}
+
+	err = db.Table(storeOrder.TableName()).Where("uid = ? AND paid = ? AND is_del = ? AND refund_status IN(?)", uid, 1, 0, []int{1, 2}).Count(&noRefund).Error
+	if err != nil {
+		return
+	}
+
+	r = make(map[string]int, 0)
+
+	r["noBuy"] = noBuy
+	r["noPostageNoPink"] = noPostageNoPink
+	r["noPostageYesPink"] = noPostageYesPink
+	r["noPostage"] = noPostage
+	r["noTake"] = noTake
+	r["noReply"] = noReply
+	r["noPink"] = noPink
+	r["noRefund"] = noRefund
+
+	return
+}
+
+// 累计消费
+func (storeOrder *StoreOrder) GetOrderStatusSum(uid int) (count int, err error) {
+	db := common.GetDB()
+	err = db.Table(storeOrder.TableName()).Select("sum(pay_price)").Where("uid = ? AND is_del = ? AND paid = ? ", uid, 0, 1).Scan(&count).Error
+	return
+}

@@ -11,6 +11,7 @@ import (
 
 	"goshop/libs/cache"
 	"goshop/libs/utils"
+	"goshop/restful/common"
 	"goshop/restful/config"
 	"goshop/restful/models"
 )
@@ -50,6 +51,8 @@ func (ctl *LoginController) Login(c *gin.Context) {
 	rawData := mdata["rawData"].(string)
 	sign := mdata["signature"].(string)
 	iv := mdata["iv"].(string)
+	code := mdata["code"].(float64)
+	spid := mdata["spid"].(float64)
 
 	res, err := weapp.DecryptUserInfo(sessionKey.(string), rawData, encryptedData, sign, iv)
 	if err != nil {
@@ -102,6 +105,7 @@ func (ctl *LoginController) Login(c *gin.Context) {
 		user.Uid = wechatUser.Uid
 		user.AddTime = wechatUser.AddTime
 		user.LastTime = int(time.Now().Unix())
+		user.Status = 1
 
 		user.AddIp = c.ClientIP()
 		user.LastIp = c.ClientIP()
@@ -114,36 +118,68 @@ func (ctl *LoginController) Login(c *gin.Context) {
 			return
 		}
 
-	}
-	wechatUser.Uid = rWechatUser.Uid
+	} else {
+		wechatUser.Uid = rWechatUser.Uid
 
-	err = wechatUser.Update()
+		err = wechatUser.UpdateByUid(wechatUser.Uid)
+		if err != nil {
+			fmt.Println("更新微信用户失败:", wechatUser)
+			handleErr(c, err)
+			return
+		}
+
+		user := &models.User{}
+
+		user.Uid = wechatUser.Uid
+		user.Nickname = wechatUser.Nickname
+		user.Avatar = wechatUser.Headimgurl
+		user.LastIp = c.ClientIP()
+		user.LastTime = int(time.Now().Unix())
+
+		err = user.UpdateByUid(wechatUser.Uid)
+		if err != nil {
+			handleErr(c, err)
+			return
+		}
+	}
+
+	mdata = make(map[string]interface{}, 0)
+
+	err = json.Unmarshal(b1, &mdata)
 	if err != nil {
-		fmt.Println("更新微信用户失败:", wechatUser)
+		handleErr(c, err)
+		return
+	}
+
+	mdata["session_key"] = sessionKey.(string)
+
+	mdata["uid"] = wechatUser.Uid
+
+	token, err := common.GenerateToken(wechatUser.Uid, wechatUser.RoutineOpenid)
+	if err != nil {
 		handleErr(c, err)
 		return
 	}
 
 	user := &models.User{}
-
-	user.Uid = wechatUser.Uid
-	user.Nickname = wechatUser.Nickname
-	user.Avatar = wechatUser.Headimgurl
-	user.LastIp = c.ClientIP()
-	user.LastTime = int(time.Now().Unix())
-
-	err = user.Update()
+	ruser, err := user.Get()
 	if err != nil {
 		handleErr(c, err)
 		return
 	}
+
+	mdata["status"] = ruser.Status
+	mdata["code"] = code
+
+	mdata["token"] = token
+	mdata["spid"] = spid
 
 	fmt.Println("b1:", string(b1))
 
 	//@todo 获取是否有扫码进小程序
 
 	fmt.Println(string(b))
-	handleOk(c, "ok")
+	handleOk(c, mdata)
 
 }
 

@@ -3,6 +3,8 @@ package models
 
 import (
 	"goshop/restful/common"
+
+	"time"
 )
 
 //优惠券发放记录表
@@ -77,13 +79,33 @@ type MyStoreCoupon struct {
 	Uid         int     `gorm:"column:uid" json:"uid"`                   //优惠券所属用户
 	CouponTitle string  `gorm:"column:coupon_title" json:"coupon_time"`  //优惠券名称
 	CouponPrice float64 `gorm:"column:coupon_price" json:"coupon_price"` //优惠券的面值
-	AddTime     int     `gorm:"column:add_time"`                         //优惠券创建时间
-	EndTime     int     `gorm:"column:end_time"`                         //优惠券结束时间
+	AddTime     int     `gorm:"column:add_time" json:"add_time"`         //优惠券创建时间
+	EndTime     int     `gorm:"column:end_time" json:"end_time"`         //优惠券结束时间
 	Msg         int     `json:"msg"`
 }
 
-func (storeCouponUser *StoreCouponUser) MyStoreCoupon(uid int) {
+func (storeCouponUser *StoreCouponUser) CheckInvalidCoupon() (err error) {
+	db := common.GetDB()
+	return db.Table(storeCouponUser.TableName()).Update("status", 2).Where("end_time < ? AND status = ?", time.Now().Unix(), 0).Error
+}
 
-	// db := common.GetDB()
+func (storeCouponUser *StoreCouponUser) MyStoreCoupon(uid int) (r []*MyStoreCoupon, err error) {
 
+	db := common.GetDB()
+
+	err = db.Table(storeCouponUser.TableName()).Where("uid = ? AND status = ?", uid, 0).Order("is_fail ASC, status ASC, add_time DESC").Find(&r).Error
+	return
+
+}
+
+// 获取用户可用优惠券数量
+func (storeCouponUser *StoreCouponUser) GetUserValidCouponCount(uid int) (count int, err error) {
+	err = storeCouponUser.CheckInvalidCoupon()
+	if err != nil {
+		return
+	}
+	db := common.GetDB()
+
+	err = db.Table(storeCouponUser.TableName()).Where("uid = ? AND status = ?", uid, 0).Count(&count).Error
+	return
 }

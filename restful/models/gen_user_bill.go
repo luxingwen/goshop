@@ -70,3 +70,18 @@ func (userBill *UserBill) Get() (*UserBill, error) {
 	err := common.GetDB().Find(&userBill).Error
 	return userBill, err
 }
+
+//获取总佣金
+func (userBill *UserBill) GetBrokerage(uid int) (count float64, err error) {
+	db := common.GetDB()
+
+	err = db.Table(userBill.TableName()).Select("sum(number)").Where("uid = ? AND category = ? AND type = ? AND pm = ? AND status = ?", uid, "now_money", "brokerage", 1, 1).Scan(&count).Error
+	return
+}
+
+// 累计充值
+func (userBill *UserBill) GetRecharge(uid int) (count float64, err error) {
+	db := common.GetDB()
+	err = db.Table(userBill.TableName()).Select("sum(number)").Where("uid = ? AND category = ? AND type = ? AND pm AND status = ?", uid, "now_money", "recharge", 1, 1).Scan(&count).Error
+	return
+}

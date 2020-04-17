@@ -13,18 +13,18 @@ import (
 var jwtSecret = []byte("secret-key")
 
 type Claims struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
+	Uid    int    `json:"uid"`
+	OpenId string `json:"openId"`
 	jwt.StandardClaims
 }
 
-func GenerateToken(username, password string) (string, error) {
+func GenerateToken(uid int, openId string) (string, error) {
 	nowTime := time.Now()
 	expireTime := nowTime.Add(3 * time.Hour)
 
 	claims := Claims{
-		username,
-		password,
+		uid,
+		openId,
 		jwt.StandardClaims{
 			ExpiresAt: expireTime.Unix(),
 			Issuer:    "lxw-goshop",
@@ -41,13 +41,11 @@ func ParseToken(token string) (*Claims, error) {
 	tokenClaims, err := jwt.ParseWithClaims(token, &Claims{}, func(token *jwt.Token) (interface{}, error) {
 		return jwtSecret, nil
 	})
-
 	if tokenClaims != nil {
 		if claims, ok := tokenClaims.Claims.(*Claims); ok && tokenClaims.Valid {
 			return claims, nil
 		}
 	}
-
 	return nil, err
 }
 

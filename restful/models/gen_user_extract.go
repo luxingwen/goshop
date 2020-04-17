@@ -73,3 +73,13 @@ func (userExtract *UserExtract) Get() (*UserExtract, error) {
 	err := common.GetDB().Find(&userExtract).Error
 	return userExtract, err
 }
+
+// 累计提现
+func (userExtract *UserExtract) UserExtractTotalPrice(uid int) (count float64, err error) {
+	db := common.GetDB()
+	err = db.Table(userExtract.TableName()).Select("sum(extract_price)").Where("uid = ? AND status = ?", uid, 1).Scan(&count).Error
+	if err.Error() == "record not found" {
+		return 0, nil
+	}
+	return
+}
