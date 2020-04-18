@@ -30,6 +30,7 @@ func Routers() *gin.Engine {
 		api.GET("/index_groom_list/:typ", indexController.GetIndexGroomList)
 		api.POST("/login", loginController.Login)
 		api.POST("/setCode", loginController.SetCode)
+		api.GET("/system_group_data_value/:name", indexController.SystemGroupDataValue)
 	}
 
 	store := api.Group("/store")
@@ -42,7 +43,7 @@ func Routers() *gin.Engine {
 		store.GET("/goods_search", storeProductController.GoodsSearch)
 	}
 
-	GenRouters(r)
+	//GenRouters(r)
 
 	userController := controllers.UserController{}
 	userG := api.Group("/user").Use(common.JWT())

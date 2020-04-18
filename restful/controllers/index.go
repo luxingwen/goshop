@@ -498,3 +498,52 @@ func (crtl *IndexController) GetIndexGroomList(c *gin.Context) {
 	handleOk(c, mdata)
 
 }
+
+func (crtl *IndexController) SystemGroupDataValue(c *gin.Context) {
+
+	name := c.Param("name")
+	systemGroup := &models.SystemGroup{}
+	err := systemGroup.GetByConfigName(name)
+	if err != nil {
+		handleErr(c, err)
+		return
+	}
+
+	ids := []int{systemGroup.Id}
+
+	systemGroupData := &models.SystemGroupData{}
+
+	sGroupDataList, err := systemGroupData.ListByGids(ids)
+
+	if err != nil {
+		handleErr(c, err)
+		return
+	}
+	mdata := make(map[string]interface{}, 0)
+
+	if name == "sign_day_num" {
+		sdayNums := make([]interface{}, 0)
+		for _, item := range sGroupDataList {
+			itemdata := make(map[string]interface{}, 0)
+			itemdata["id"] = item.Id
+			valMap := make(map[string]map[string]string, 0)
+			err := json.Unmarshal([]byte(item.Value), &valMap)
+			if err != nil {
+				handleErr(c, err)
+				return
+			}
+
+			day := valMap["day"]
+			itemdata["day"] = day["value"]
+
+			sign_num := valMap["sign_num"]
+			itemdata["sign_num"] = sign_num["value"]
+
+			sdayNums = append(sdayNums, itemdata)
+		}
+		mdata["sign_day_num"] = sdayNums
+	}
+
+	handleOk(c, mdata)
+
+}
