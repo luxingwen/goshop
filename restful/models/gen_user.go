@@ -88,6 +88,12 @@ func (user *User) Get() (*User, error) {
 	return user, err
 }
 
+func (user *User) GetByUid(uid int) (r *User, err error) {
+	r = new(User)
+	err = common.GetDB().Model(user).Where("uid = ?", uid).First(&r).Error
+	return
+}
+
 func (user *User) UpdateByUid(uid int) (err error) {
 	err = common.GetDB().Model(user).Where("uid = ?", uid).Update(user).Error
 	return err

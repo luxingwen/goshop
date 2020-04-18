@@ -5,6 +5,7 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 
+	"goshop/restful/common"
 	"goshop/restful/controllers"
 
 	_ "goshop/restful/docs"
@@ -42,5 +43,11 @@ func Routers() *gin.Engine {
 	}
 
 	GenRouters(r)
+
+	userController := controllers.UserController{}
+	userG := api.Group("/user").Use(common.JWT())
+	{
+		userG.GET("/my", userController.My)
+	}
 	return r
 }

@@ -75,13 +75,37 @@ func (userBill *UserBill) Get() (*UserBill, error) {
 func (userBill *UserBill) GetBrokerage(uid int) (count float64, err error) {
 	db := common.GetDB()
 
-	err = db.Table(userBill.TableName()).Select("sum(number)").Where("uid = ? AND category = ? AND type = ? AND pm = ? AND status = ?", uid, "now_money", "brokerage", 1, 1).Scan(&count).Error
+	rows, err := db.Table(userBill.TableName()).Select("sum(number)").Where("uid = ? AND category = ? AND type = ? AND pm = ? AND status = ?", uid, "now_money", "brokerage", 1, 1).Rows()
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		rows.Scan(&count)
+	}
 	return
 }
 
 // 累计充值
 func (userBill *UserBill) GetRecharge(uid int) (count float64, err error) {
 	db := common.GetDB()
-	err = db.Table(userBill.TableName()).Select("sum(number)").Where("uid = ? AND category = ? AND type = ? AND pm AND status = ?", uid, "now_money", "recharge", 1, 1).Scan(&count).Error
+	rows, err := db.Table(userBill.TableName()).Select("sum(number)").Where("uid = ? AND category = ? AND type = ? AND pm = ? AND status = ?", uid, "now_money", "recharge", 1, 1).Rows()
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		rows.Scan(&count)
+	}
+	return
+}
+
+func (userBill *UserBill) GetSystemAdd(uid int) (count float64, err error) {
+	db := common.GetDB()
+	rows, err := db.Table(userBill.TableName()).Select("sum(number)").Where("uid = ? AND category = ? AND type = ? AND pm = ? AND status = ?", uid, "now_money", "system_add", 1, 1).Rows()
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		rows.Scan(&count)
+	}
 	return
 }

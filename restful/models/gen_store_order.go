@@ -119,43 +119,54 @@ func (storeOrder *StoreOrder) GetOrderStatusNum(uid int) (r map[string]int, err 
 
 	db := common.GetDB()
 
-	err = db.Table(storeOrder.TableName()).Where("uid = ? AND paid = ? AND is_del = ? pay_type <> ?", uid, 0, 0, "offline").Count(&noBuy).Error
+	err = db.Table(storeOrder.TableName()).Where("uid = ? AND paid = ? AND is_del = ? AND pay_type <> ?", uid, 0, 0, "offline").Count(&noBuy).Error
 	if err != nil {
 		return
 	}
 
-	err = db.Table(storeOrder.TableName()).Where("uid = ? AND paid = ? AND pink_id = ? AND is_del = ? status = ? AND pay_type <> ?", uid, 1, 0, 0, 0, "offline").Count(&noPostageNoPink).Error
+	err = db.Table(storeOrder.TableName()).Where("uid = ? AND paid = ? AND pink_id = ? AND is_del = ? AND status = ? AND pay_type <> ?", uid, 1, 0, 0, 0, "offline").Count(&noPostageNoPink).Error
 
 	if err != nil {
 		return
+	}
+
+	storePink := &StorePink{}
+	rows, err := db.Raw("SELECT count(*) FROM "+storeOrder.TableName()+" o LEFT JOIN "+storePink.TableName()+" p ON o.pink_id = p.id WHERE p.status = ? AND o.paid = ? AND o.is_del = ? AND o.status = ? AND o.pay_type = ?", 2, 1, 0, 0, "offline").Rows()
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		rows.Scan(&noPostageYesPink)
 	}
 
 	noPostage = noPostageNoPink + noPostageYesPink
-
-	storePink := &StorePink{}
-	err = db.Raw("SELECT count(*) FROM "+storeOrder.TableName()+" o LEFT JOIN "+storePink.TableName()+" p ON o.pink_id = p.id WHERE p.status = ? AND o.paid = ? AND o.is_del = ? AND o.status = ? AND o.pay_type = ?", 2, 1, 0, 0, "offline").Scan(&noPostageYesPink).Error
-	if err != nil {
-		return
-	}
 
 	err = db.Table(storeOrder.TableName()).Where("uid = ? AND paid = ? AND is_del = ? AND status = ? AND pay_type <> ?", uid, 1, 0, 1, "offline").Count(&noTake).Error
 	if err != nil {
 		return
 	}
 
-	err = db.Table(storeOrder.TableName()).Where("uid = ? AND paid = ? AND is_del = ? AND status = ?", uid, 1, 0, 0, 2).Count(&noReply).Error
+	err = db.Table(storeOrder.TableName()).Where("uid = ? AND paid = ? AND is_del = ? AND status = ?", uid, 1, 0, 2).Count(&noReply).Error
 	if err != nil {
 		return
 	}
 
-	err = db.Raw("SELECT count(*) FROM "+storeOrder.TableName()+" o LEFT JOIN "+storePink.TableName()+" p ON p.id = o.pink_id WHERE p.status = ? AND o.paid = ? AND o.is_del = ? AND o.status = ? AND o.pay_type <> ?", 1, 1, 0, 0, "offline").Scan(&noPink).Error
+	rows, err = db.Raw("SELECT count(*) FROM "+storeOrder.TableName()+" o LEFT JOIN "+storePink.TableName()+" p ON p.id = o.pink_id WHERE p.status = ? AND o.paid = ? AND o.is_del = ? AND o.status = ? AND o.pay_type <> ?", 1, 1, 0, 0, "offline").Rows()
 	if err != nil {
 		return
 	}
 
-	err = db.Table(storeOrder.TableName()).Where("uid = ? AND paid = ? AND is_del = ? AND refund_status IN(?)", uid, 1, 0, []int{1, 2}).Count(&noRefund).Error
+	for rows.Next() {
+		rows.Scan(&noPink)
+	}
+
+	rows, err = db.Table(storeOrder.TableName()).Select("count(*)").Where("uid = ? AND paid = ? AND is_del = ? AND refund_status IN(?)", uid, 1, 0, []int{1, 2}).Rows()
 	if err != nil {
 		return
+	}
+
+	for rows.Next() {
+		rows.Scan(&noRefund)
 	}
 
 	r = make(map[string]int, 0)
@@ -173,8 +184,27 @@ func (storeOrder *StoreOrder) GetOrderStatusNum(uid int) (r map[string]int, err 
 }
 
 // 累计消费
-func (storeOrder *StoreOrder) GetOrderStatusSum(uid int) (count int, err error) {
+func (storeOrder *StoreOrder) GetOrderStatusSum(uid int) (count float64, err error) {
 	db := common.GetDB()
-	err = db.Table(storeOrder.TableName()).Select("sum(pay_price)").Where("uid = ? AND is_del = ? AND paid = ? ", uid, 0, 1).Scan(&count).Error
+	rows, err := db.Table(storeOrder.TableName()).Select("sum(pay_price)").Where("uid = ? AND is_del = ? AND paid = ? ", uid, 0, 1).Rows()
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		rows.Scan(&count)
+	}
+	return
+}
+
+// 获取余额支付的金额
+func (storeOrder *StoreOrder) GetOrderStatusYueSum(uid int) (count float64, err error) {
+	db := common.GetDB()
+	rows, err := db.Table(storeOrder.TableName()).Select("sum(pay_price)").Where("uid = ? AND is_del = ? AND pay_type = ? AND paid = ?", uid, 0, "yue", 1).Rows()
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		rows.Scan(&count)
+	}
 	return
 }

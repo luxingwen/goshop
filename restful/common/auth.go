@@ -68,6 +68,8 @@ func JWT() gin.HandlerFunc {
 			} else if time.Now().Unix() > claims.ExpiresAt {
 				code = 2
 			}
+			c.Set("uid", claims.Uid)
+
 		}
 
 		if code != 0 {
