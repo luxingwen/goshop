@@ -7,14 +7,14 @@ import (
 
 //商品属性值表
 type StoreProductAttrValue struct {
-	ProductId int     `gorm:"column:product_id"` //商品ID
-	Suk       string  `gorm:"column:suk"`        //商品属性索引值 (attr_value|attr_value[|....])
-	Stock     int     `gorm:"column:stock"`      //属性对应的库存
-	Sales     int     `gorm:"column:sales"`      //销量
-	Price     float64 `gorm:"column:price"`      //属性金额
-	Image     string  `gorm:"column:image"`      //图片
-	Unique    string  `gorm:"column:unique"`     //唯一值
-	Cost      float64 `gorm:"column:cost"`       //成本价
+	ProductId int     `gorm:"column:product_id" json:"product_id"` //商品ID
+	Suk       string  `gorm:"column:suk" json:"suk"`               //商品属性索引值 (attr_value|attr_value[|....])
+	Stock     int     `gorm:"column:stock" json:"stock"`           //属性对应的库存
+	Sales     int     `gorm:"column:sales" json:"sales"`           //销量
+	Price     float64 `gorm:"column:price" json:"price"`           //属性金额
+	Image     string  `gorm:"column:image" json:"image"`           //图片
+	Unique    string  `gorm:"column:unique" json:"unique"`         //唯一值
+	Cost      float64 `gorm:"column:cost" json:"cost"`             //成本价
 
 }
 
@@ -65,4 +65,10 @@ func (storeProductAttrValue *StoreProductAttrValue) List(rawQuery string, rawOrd
 func (storeProductAttrValue *StoreProductAttrValue) Get() (*StoreProductAttrValue, error) {
 	err := common.GetDB().Find(&storeProductAttrValue).Error
 	return storeProductAttrValue, err
+}
+
+func (storeProductAttrValue *StoreProductAttrValue) ListByProductId(id int) (r []*StoreProductAttrValue, err error) {
+	db := common.GetDB()
+	err = db.Where("product_id = ?", id).Find(&r).Error
+	return
 }

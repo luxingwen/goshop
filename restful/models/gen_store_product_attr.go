@@ -61,3 +61,9 @@ func (storeProductAttr *StoreProductAttr) Get() (*StoreProductAttr, error) {
 	err := common.GetDB().Find(&storeProductAttr).Error
 	return storeProductAttr, err
 }
+
+func (storeProductAttr *StoreProductAttr) GetByProductId(id int) (err error) {
+	db := common.GetDB()
+	err = db.Where("product_id = ?", id).First(&storeProductAttr).Error
+	return
+}

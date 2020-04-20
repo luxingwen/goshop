@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"strconv"
+
 	"goshop/restful/models"
 
 	"github.com/gin-gonic/gin"
@@ -45,4 +47,21 @@ func (crtl *StoreProductController) GoodsSearch(c *gin.Context) {
 	mdata["list"] = list
 	mdata["count"] = count
 	handleOk(c, mdata)
+}
+
+func (crtl *StoreProductController) Details(c *gin.Context) {
+	idStr := c.Param("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		handleErr(c, err)
+		return
+	}
+
+	storeProduct := &models.StoreProduct{}
+	data, err := storeProduct.GetById(id)
+	if err != nil {
+		handleErr(c, err)
+		return
+	}
+	handleOk(c, data)
 }

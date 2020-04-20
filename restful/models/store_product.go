@@ -126,13 +126,13 @@ type ReqStoreProductQuery struct {
 }
 
 type ResProduct struct {
-	Id        int     `gorm:"column:id"`         //商品id
-	StoreName string  `gorm:"column:store_name"` //商品名称
-	CateId    string  `gorm:"column:cate_id"`    //分类id
-	Image     string  `gorm:"column:image"`      //商品图片
-	Sales     float64 `gorm:"column:sales"`
-	Price     float64 `gorm:"column:price"` //商品价格
-	Stock     int     `gorm:"column:stock"` //库存
+	Id        int     `gorm:"column:id" json:"id"`                 //商品id
+	StoreName string  `gorm:"column:store_name" json:"store_name"` //商品名称
+	CateId    string  `gorm:"column:cate_id" json:"cate_id"`       //分类id
+	Image     string  `gorm:"column:image" json:"image"`           //商品图片
+	Sales     float64 `gorm:"column:sales" json:"sales"`
+	Price     float64 `gorm:"column:price" json:"price"` //商品价格
+	Stock     int     `gorm:"column:stock" json:"stock"` //库存
 }
 
 func (storeProduct *StoreProduct) GetProductList(req *ReqStoreProductQuery) (r []*ResProduct, count int, err error) {
