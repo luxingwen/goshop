@@ -27,6 +27,7 @@ func Routers() *gin.Engine {
 	loginController := controllers.LoginController{}
 	{
 		api.GET("/index", indexController.Index)
+		api.GET("/logo_url", indexController.GetLogoUrl)
 		api.GET("/my_naviga", indexController.MyNaviga)
 		api.GET("/index_groom_list/:typ", indexController.GetIndexGroomList)
 		api.POST("/login", loginController.Login)
@@ -37,6 +38,7 @@ func Routers() *gin.Engine {
 	store := api.Group("/store")
 	storeCategoryController := controllers.StoreCategoryController{}
 	storeProductController := controllers.StoreProductController{}
+	storeCartController := controllers.StoreCartController{}
 	{
 		store.GET("/pid_cate", storeCategoryController.PidByCategory)
 		store.GET("/product_category", storeCategoryController.GetProductCategory)
@@ -45,6 +47,7 @@ func Routers() *gin.Engine {
 		store.GET("/goods_search", storeProductController.GoodsSearch)
 		store.GET("/product/:id", storeProductController.Details)
 		store.GET("/product_collect/:id", storeProductController.ProductCollect)
+		store.GET("/cart_num", storeCartController.GetCartNum)
 	}
 
 	couponsController := controllers.CouponsController{}

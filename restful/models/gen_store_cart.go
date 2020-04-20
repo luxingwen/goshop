@@ -71,3 +71,9 @@ func (storeCart *StoreCart) Get() (*StoreCart, error) {
 	err := common.GetDB().Find(&storeCart).Error
 	return storeCart, err
 }
+
+func (storeCart *StoreCart) GetUserCartNum(uid int, typ string) (count int, err error) {
+	db := common.GetDB().Table(storeCart.TableName())
+	err = db.Where("uid = ? AND type = ? AND is_pay = ? AND is_del = ? AND is_new = ?", uid, typ, 0, 0, 0).Count(&count).Error
+	return
+}

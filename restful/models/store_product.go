@@ -8,15 +8,15 @@ import (
 
 // $info['bastList'] = StoreProduct::getBestProduct('id,image,store_name,cate_id,price,ot_price,IFNULL(sales,0) + IFNULL(ficti,0) as sales,unit_name,sort',$bastNumber,$this->uid);//TODO 精品推荐个数
 type BestStoreProduct struct {
-	Id        int     `gorm:"column:id" json:"id"`                //商品id
-	Image     string  `gorm:"column:image" json:"image"`          //商品图片
-	StoreName string  `gorm:"column:store_name" json:"storeName"` //商品名称
-	CateId    string  `gorm:"column:cate_id" json:"cateId"`       //分类id
-	Price     float64 `gorm:"column:price" json:"price"`          //商品价格
-	OtPrice   float64 `gorm:"column:ot_price" json:"otPrice"`     //市场价
-	UnitName  string  `gorm:"column:unit_name" json:"unitName"`   //单位名
-	Stock     int     `gorm:"column:stock" json:"stock"`          //库存
-	Sort      int     `gorm:"column:sort" json:"sort"`            //排序
+	Id        int     `gorm:"column:id" json:"id"`                 //商品id
+	Image     string  `gorm:"column:image" json:"image"`           //商品图片
+	StoreName string  `gorm:"column:store_name" json:"store_name"` //商品名称
+	CateId    string  `gorm:"column:cate_id" json:"cate_id"`       //分类id
+	Price     float64 `gorm:"column:price" json:"price"`           //商品价格
+	OtPrice   float64 `gorm:"column:ot_price" json:"ot_price"`     //市场价
+	UnitName  string  `gorm:"column:unit_name" json:"unit_name"`   //单位名
+	Stock     int     `gorm:"column:stock" json:"stock"`           //库存
+	Sort      int     `gorm:"column:sort" json:"sort"`             //排序
 	Sales     float64 `gorm:"column:sales" json:"sales"`
 }
 

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"strconv"
+	"strings"
 
 	"goshop/restful/models"
 
@@ -331,6 +332,24 @@ func (crtl *IndexController) Index(c *gin.Context) {
 	// @todo  $couponList=StoreCouponIssue::getIssueCouponList($this->uid,3);
 	// 优惠券
 
+	requery := new(models.Query)
+	requery.PageNum = 3
+
+	var uid int
+	uidT, ok := c.Get("uid")
+	if ok {
+		uid = uidT.(int)
+
+	}
+
+	storeCouponIssue := &models.StoreCouponIssue{}
+	couponList, err := storeCouponIssue.GetIssueCouponList(uid, requery)
+	if err != nil {
+		handleErr(c, err)
+		return
+	}
+	mdata["couponList"] = couponList
+
 	handleOk(c, mdata)
 }
 
@@ -544,6 +563,50 @@ func (crtl *IndexController) SystemGroupDataValue(c *gin.Context) {
 		mdata["sign_day_num"] = sdayNums
 	}
 
+	handleOk(c, mdata)
+
+}
+
+// @Todo
+func (crtl *IndexController) GetFormId(c *gin.Context) {
+	formId := c.DefaultQuery("formId", "")
+	if formId == "" {
+		_ = formId
+	}
+	handleOk(c, "ok")
+}
+
+// 获取授权登陆logo
+func (crtl *IndexController) GetLogoUrl(c *gin.Context) {
+	systemConfig := &models.SystemConfig{}
+	s1, err := systemConfig.GetByMenuName("routine_logo")
+	if err != nil {
+		handleErr(c, err)
+		return
+	}
+	var logo string
+	err = json.Unmarshal([]byte(s1.Value), &logo)
+	if err != nil {
+		return
+	}
+
+	if !strings.HasPrefix(logo, "http") {
+		s2, err := systemConfig.GetByMenuName("site_url")
+		if err != nil {
+			handleErr(c, err)
+			return
+		}
+		var siteUrl string
+		err = json.Unmarshal([]byte(s2.Value), &siteUrl)
+		if err != nil {
+			handleErr(c, err)
+			return
+		}
+		logo = siteUrl + logo
+	}
+
+	mdata := make(map[string]string, 0)
+	mdata["logo_url"] = logo
 	handleOk(c, mdata)
 
 }

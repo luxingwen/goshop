@@ -156,3 +156,21 @@ func (crtl *UserController) My(c *gin.Context) {
 	handleOk(c, mdata)
 
 }
+
+func (ctl *UserController) MyUserInfo(c *gin.Context) {
+	uidT, ok := c.Get("uid")
+	if !ok {
+		handleErr(c, errors.New("无效的uid"))
+		return
+	}
+	uid := uidT.(int)
+
+	user := &models.User{}
+	ruser, err := user.GetByUid(uid)
+	if err != nil {
+		handleErr(c, err)
+		return
+	}
+	_ = ruser
+	// @todo
+}

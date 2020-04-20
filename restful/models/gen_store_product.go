@@ -175,6 +175,9 @@ func (storeProduct *StoreProduct) GetById(id int) (r *ResProductInfo, err error)
 	mAttrs := make([]map[string]interface{}, 0)
 	if storeProductAttr != nil {
 		for _, item := range strings.Split(storeProductAttr.AttrValues, ",") {
+			if item == "" {
+				continue
+			}
 			itemdata := make(map[string]interface{}, 0)
 			itemdata["attr"] = item
 			itemdata["check"] = false
