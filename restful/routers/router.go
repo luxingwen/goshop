@@ -22,6 +22,7 @@ func Routers() *gin.Engine {
 	// api.GET("/user/userlist", controllers.UserList)
 
 	api := r.Group("/api")
+	api.Use(common.JWTNoMust())
 	indexController := controllers.IndexController{}
 	loginController := controllers.LoginController{}
 	{
@@ -40,11 +41,20 @@ func Routers() *gin.Engine {
 		store.GET("/pid_cate", storeCategoryController.PidByCategory)
 		store.GET("/product_category", storeCategoryController.GetProductCategory)
 		store.GET("/product_list", storeProductController.ProductList)
+		store.GET("/hot_products", storeProductController.HotProductList)
 		store.GET("/goods_search", storeProductController.GoodsSearch)
 		store.GET("/product/:id", storeProductController.Details)
+		store.GET("/product_collect/:id", storeProductController.ProductCollect)
 	}
 
-	//GenRouters(r)
+	couponsController := controllers.CouponsController{}
+
+	conpon := api.Group("/coupon")
+	{
+		conpon.GET("/issue_coupon_list", couponsController.IssueCouponList)
+	}
+
+	// GenRouters(r)
 
 	userController := controllers.UserController{}
 	userG := api.Group("/user").Use(common.JWT())

@@ -86,3 +86,23 @@ func JWT() gin.HandlerFunc {
 		c.Next()
 	}
 }
+
+// 不需要强制验证
+func JWTNoMust() gin.HandlerFunc {
+	return func(c *gin.Context) {
+
+		token := c.Query("token")
+		if token == "" {
+			token = c.GetHeader("X-Token")
+			if token == "" {
+				c.Set("uid", 0)
+			}
+		}
+		claims, err := ParseToken(token)
+		if err == nil && claims != nil {
+			c.Set("uid", claims.Uid)
+		}
+
+		c.Next()
+	}
+}

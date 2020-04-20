@@ -77,3 +77,20 @@ func (storeProductRelation *StoreProductRelation) GetUserIdLike(uid int) (count 
 	err = db.Table(storeProductRelation.TableName()).Where("uid = ? AND type = ?", uid, "like").Count(&count).Error
 	return
 }
+
+// 是否有关联
+func (storeProductRelation *StoreProductRelation) IsProductRelation(productId int, uid int, typ string) (r bool, err error) {
+	db := common.GetDB()
+	rows, err := db.Table(storeProductRelation.TableName()).Select("count(*)").Where("uid = ? AND product_id = ? AND type = ?", uid, productId, typ).Rows()
+	if err != nil {
+		return
+	}
+	count := 0
+	for rows.Next() {
+		rows.Scan(&count)
+	}
+	if count > 0 {
+		return true, nil
+	}
+	return
+}

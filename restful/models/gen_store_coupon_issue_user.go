@@ -61,3 +61,15 @@ func (storeCouponIssueUser *StoreCouponIssueUser) Get() (*StoreCouponIssueUser, 
 	err := common.GetDB().Find(&storeCouponIssueUser).Error
 	return storeCouponIssueUser, err
 }
+
+func (storeCouponIssueUser *StoreCouponIssueUser) GetByUidIssueCouponIds(uid int, issueUserIds []int) (r []*StoreCouponIssueUser, err error) {
+	if len(issueUserIds) <= 0 {
+		return
+	}
+	db := common.GetDB()
+	err = db.Table(storeCouponIssueUser.TableName()).Where("uid = ? AND issue_coupon_id IN(?)", uid, issueUserIds).Find(&r).Error
+	if err != nil && err.Error() == "record not found" {
+		return r, nil
+	}
+	return
+}

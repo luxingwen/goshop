@@ -242,3 +242,28 @@ func (storeProduct *StoreProduct) GetSearchStorePage(req *ReqGoodsSearch, uid in
 	// @Todo 设置会员的价格
 
 }
+
+// 热卖产品
+func (storeProduct *StoreProduct) GetHotProductLoading(req *ReqGoodsSearch) (r []*ResProduct, count int, err error) {
+	db := common.GetDB().Table(storeProduct.TableName())
+	db = db.Select("id,image,store_name,cate_id,price,unit_name,sort")
+	limit := 10
+	page := 0
+
+	if req.Page > 0 {
+		page = req.Page - 1
+	}
+	if req.PageNum > 0 {
+		limit = req.PageNum
+	}
+
+	offset := limit * page
+
+	err = db.Where("is_hot = ? AND is_del = ? AND mer_id = ? AND stock > ? AND is_show = ?", 1, 0, 0, 0, 1).Order("sort DESC, id DESC").
+		Offset(offset).Limit(limit).Find(&r).Count(&count).Error
+	if err != nil {
+		return
+	}
+	return
+
+}
