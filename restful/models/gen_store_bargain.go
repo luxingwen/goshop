@@ -3,6 +3,8 @@ package models
 
 import (
 	"goshop/restful/common"
+
+	"time"
 )
 
 //砍价表
@@ -88,4 +90,32 @@ func (storeBargain *StoreBargain) List(rawQuery string, rawOrder string, offset 
 func (storeBargain *StoreBargain) Get() (*StoreBargain, error) {
 	err := common.GetDB().Find(&storeBargain).Error
 	return storeBargain, err
+}
+
+type ResStoreBargain struct {
+	Id          int     `gorm:"column:id" json:"id"`                 //砍价产品ID
+	ProductId   int     `gorm:"column:product_id" json:"product_id"` //关联产品ID
+	Title       string  `gorm:"column:title" json:"title"`           //砍价活动名称
+	Image       string  `gorm:"column:image" json:"image"`           //砍价活动图片
+	Stock       int     `gorm:"column:stock" json:"stock"`           //库存
+	StoreName   string  `gorm:"column:store_name" json:"store_name"` //砍价产品名称
+	Price       float64 `gorm:"column:price" json:"price"`           //砍价金额
+	MinPrice    float64 `gorm:"column:min_price" json:"min_price"`   //砍价商品最低价
+	PeopleCount int     `json:"people"`
+}
+
+func (storeBargain *StoreBargain) GetList(req *Query) (r []*ResStoreBargain, err error) {
+	nowTime := time.Now().Unix()
+	db := common.GetDB()
+
+	err = db.Select("id,product_id,title,price,min_price,image").Where("is_del = ? AND status = ？ AND start_time < ? AND stop_time > ?", 0, 1, nowTime, nowTime).Scan(&r).Error
+	if err != nil {
+		return
+	}
+	// ids := make([]int, 0)
+	// for _, item := range r {
+	// 	ids = append(ids, item.Id)
+	// }
+	return
+
 }

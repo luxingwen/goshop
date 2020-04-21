@@ -3,6 +3,8 @@ package models
 
 import (
 	"goshop/restful/common"
+
+	"time"
 )
 
 //商品点赞和收藏表
@@ -91,6 +93,84 @@ func (storeProductRelation *StoreProductRelation) IsProductRelation(productId in
 	}
 	if count > 0 {
 		return true, nil
+	}
+	return
+}
+
+// 取消 点赞 收藏
+func (storeProductRelation *StoreProductRelation) UnProductRelation(uid, id int, relationType, category string) (err error) {
+	if id <= 0 {
+		return
+	}
+	db := common.GetDB()
+	err = db.Table(storeProductRelation.TableName()).Where("uid = ? AND product_id = ? AND type = ? AND category = ?", uid, id, relationType, category).Delete(StoreProductRelation{}).Error
+	return
+}
+
+// 添加收藏
+func (storeProductRelation *StoreProductRelation) ProductRelation(uid, id int, relationType, category string) (err error) {
+	storeProductRelation.Uid = uid
+	storeProductRelation.ProductId = id
+	storeProductRelation.Type = relationType
+	storeProductRelation.Category = category
+	storeProductRelation.AddTime = int(time.Now().Unix())
+
+	db := common.GetDB()
+	err = db.Create(storeProductRelation).Error
+
+	return
+}
+
+//
+type UserCollectProduct struct {
+	Id        int     `gorm:"column:id" json:"id"`                 //商品id
+	Image     string  `gorm:"column:image" json:"image"`           //商品图片
+	StoreName string  `gorm:"column:store_name" json:"store_name"` //商品名称
+	Price     float64 `gorm:"column:price" json:"price"`           //商品价格
+	OtPrice   float64 `gorm:"column:ot_price" json:"ot_price"`     //市场价
+	Sales     int     `gorm:"column:sales" json:"sales"`           //销量
+	IsShow    int     `gorm:"column:is_show" json:"is_show"`       //状态（0：未上架，1：上架）
+	IsFail    int     `json:"is_fail"`
+}
+
+// 获取某个用户收藏的产品
+func (storeProductRelation *StoreProductRelation) GetUserCollectProduct(uid int, req *Query) (r []*UserCollectProduct, err error) {
+	if uid <= 0 {
+		return
+	}
+
+	storeProduct := &StoreProduct{}
+	db := common.GetDB()
+	limit := 10
+	page := 0
+
+	if req.Page > 0 {
+		page = req.Page - 1
+	}
+	if req.PageNum > 0 {
+		limit = req.PageNum
+	}
+
+	offset := limit * page
+
+	list := make([]*UserCollectProduct, 0)
+
+	err = db.Raw("SELECT B.id,B.store_name,B.price,B.ot_price,B.sales,B.image,B.is_del,B.is_show FROM "+storeProductRelation.TableName()+
+		" A LEFT JOIN "+storeProduct.TableName()+" B ON A.product_id = B.id WHERE A.uid = ? AND A.type = ?"+
+		" AND A.category = ? ORDER BY A.add_time DESC LIMIT ?, ? ", uid, "collect", "product", offset, limit).Scan(&list).Error
+	if err != nil {
+		return
+	}
+
+	r = make([]*UserCollectProduct, 0)
+
+	for _, item := range list {
+		if item.Id > 0 {
+			if item.IsShow > 0 && item.IsShow > 0 {
+				item.IsFail = 1
+			}
+			r = append(r, item)
+		}
 	}
 	return
 }

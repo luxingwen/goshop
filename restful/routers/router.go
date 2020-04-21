@@ -48,6 +48,18 @@ func Routers() *gin.Engine {
 		store.GET("/product/:id", storeProductController.Details)
 		store.GET("/product_collect/:id", storeProductController.ProductCollect)
 		store.GET("/cart_num", storeCartController.GetCartNum)
+		store.DELETE("/uncollect_product/:id", storeProductController.UncollectProduct)
+		store.POST("/collect_product/:id", storeProductController.CollectProduct)
+		store.GET("/user_collect_product", storeProductController.GetUserCollectProduct)
+
+	}
+
+	pink := api.Group("/pink")
+
+	pinkController := controllers.PinkController{}
+
+	{
+		pink.GET("/combination_list", pinkController.CombinationList)
 	}
 
 	couponsController := controllers.CouponsController{}
@@ -63,6 +75,7 @@ func Routers() *gin.Engine {
 	userG := api.Group("/user").Use(common.JWT())
 	{
 		userG.GET("/my", userController.My)
+		userG.GET("/my_user_info", userController.MyUserInfo)
 	}
 	return r
 }

@@ -171,6 +171,10 @@ func (ctl *UserController) MyUserInfo(c *gin.Context) {
 		handleErr(c, err)
 		return
 	}
-	_ = ruser
+
+	// @Todo 是否统计签到
+	// @Todo 是否统计积分使用情况
+	handleOk(c, ruser)
+	//_ = ruser
 	// @todo
 }
