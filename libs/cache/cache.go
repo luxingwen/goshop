@@ -2,8 +2,13 @@ package cache
 
 import (
 	"container/list"
+	"fmt"
 	"sync"
 	"time"
+
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
+	log "github.com/sirupsen/logrus"
 )
 
 type Cache struct {
@@ -37,10 +42,25 @@ func (lru *Cache) Get(key interface{}) (val interface{}, ok bool) {
 		}
 		lru.removeElement(item)
 	}
-	return nil, false
+
+	mcache := &Mcache{}
+	r, err := mcache.GetByKey(key)
+	if err != nil {
+		return nil, false
+	}
+	if r.Expired < time.Now().Unix() {
+		return nil, false
+	}
+
+	return r.Value, true
 }
 
 func (lru *Cache) Put(key interface{}, value interface{}, expired int64) {
+	mcache := &Mcache{Key: key, Value: value, Expired: expired + time.Now().Unix()}
+	err := mcache.Insert()
+	if err != nil {
+		log.Error("mcache insert err:", err)
+	}
 	if item0, ok := lru.items.Load(key); ok {
 		item := item0.(*list.Element)
 		lru.entryList.MoveToFront(item)
@@ -104,4 +124,50 @@ func Get(key interface{}) (r interface{}, flag bool) {
 
 func Put(key interface{}, value interface{}, expired int64) {
 	defaultCache.Put(key, value, expired)
+}
+
+var db *gorm.DB
+
+// Opening a database and save the reference to `Database` struct.
+func Init(username, pwd, host, port, dbname string) *gorm.DB {
+	log.Info("init db")
+	server := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True", username, pwd, host, port, dbname)
+
+	db0, err := gorm.Open("mysql", server)
+	if err != nil {
+		fmt.Println("db err: ", err)
+	}
+	db0.DB().SetMaxIdleConns(10)
+	db0.LogMode(true)
+	db = db0
+	db.AutoMigrate(&Mcache{})
+	return db
+}
+
+//
+type Mcache struct {
+	gorm.Model
+	Key     interface{} `gorm:"column:key;type:varchar(75);unique_index"`
+	Value   interface{} `gorm:"column:value;type:text"`
+	Expired int64       `gorm:"column:expired"`
+}
+
+func (Mcache) TableName() string {
+	return "m_cache"
+}
+
+func (m *Mcache) GetByKey(key interface{}) (r *Mcache, err error) {
+	r = new(Mcache)
+	err = db.Where("`m_cache`.`key` = ?", key).First(&r).Error
+	return
+}
+
+func (m *Mcache) Insert() (err error) {
+	_, err = m.GetByKey(m.Key)
+	if err != nil && err.Error() == "record not found" {
+		err = db.Create(m).Error
+		return
+	}
+	err = db.Table(m.TableName()).Where("id = ? AND key = ?", m.ID, m.Key).Update(m).Error
+	return
 }

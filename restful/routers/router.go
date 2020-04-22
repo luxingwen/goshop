@@ -54,12 +54,21 @@ func Routers() *gin.Engine {
 
 	}
 
+	//	 拼团
 	pink := api.Group("/pink")
 
 	pinkController := controllers.PinkController{}
 
 	{
 		pink.GET("/combination_list", pinkController.CombinationList)
+	}
+
+	// 	砍价
+	bargain := api.Group("/bargain")
+
+	bargainController := controllers.BargainController{}
+	{
+		bargain.GET("/bargain_list", bargainController.GetBargainList)
 	}
 
 	couponsController := controllers.CouponsController{}

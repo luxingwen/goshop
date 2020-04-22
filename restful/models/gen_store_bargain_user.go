@@ -67,3 +67,16 @@ func (storeBargainUser *StoreBargainUser) Get() (*StoreBargainUser, error) {
 	err := common.GetDB().Find(&storeBargainUser).Error
 	return storeBargainUser, err
 }
+
+// 根据砍价产品编号获取正在参与人的编号
+func (storeBargainUser *StoreBargainUser) GetUserIdList(bargainId int) (r []*StoreBargainUser, err error) {
+	if bargainId <= 0 {
+		return
+	}
+	db := common.GetDB()
+	err = db.Select("uid, id").Where("status = ? AND bargain_id = ?", 1, bargainId).Scan(&r).Error
+	if err != nil {
+		return
+	}
+	return
+}

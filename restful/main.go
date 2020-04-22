@@ -17,10 +17,13 @@ import (
 	"goshop/restful/config"
 	//"goshop/restful/models"
 	"goshop/restful/routers"
+
+	"goshop/libs/cache"
 )
 
 func main() {
 	common.Init()
+	cache.Init(config.MySqlConf.UserName, config.MySqlConf.PassWd, config.MySqlConf.Host, config.MySqlConf.Port, config.MySqlConf.DbName)
 	//db := common.Init()
 
 	//db.AutoMigrate(&models.Address{}, &models.Item{}, &models.ItemDesc{}, &models.Order{}, &models.Role{}, &models.User{})

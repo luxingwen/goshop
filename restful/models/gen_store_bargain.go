@@ -108,14 +108,36 @@ func (storeBargain *StoreBargain) GetList(req *Query) (r []*ResStoreBargain, err
 	nowTime := time.Now().Unix()
 	db := common.GetDB()
 
-	err = db.Select("id,product_id,title,price,min_price,image").Where("is_del = ? AND status = ？ AND start_time < ? AND stop_time > ?", 0, 1, nowTime, nowTime).Scan(&r).Error
+	limit := 10
+	page := 0
+
+	if req.Page > 0 {
+		page = req.Page - 1
+	}
+	if req.PageNum > 0 {
+		limit = req.PageNum
+	}
+
+	offset := limit * page
+
+	err = db.Table(storeBargain.TableName()).Select("id,product_id,title,price,min_price,image").Where("is_del = ? AND status = ? AND start_time < ? AND stop_time > ?", 0, 1, nowTime, nowTime).
+		Offset(offset).Limit(limit).Scan(&r).Error
 	if err != nil {
 		return
 	}
-	// ids := make([]int, 0)
-	// for _, item := range r {
-	// 	ids = append(ids, item.Id)
-	// }
+
+	storeBargainUser := &StoreBargainUser{}
+	for _, item := range r {
+		list, err := storeBargainUser.GetUserIdList(item.Id)
+		if err != nil && err.Error() != "record not found" {
+			return r, err
+		}
+		if list == nil {
+			continue
+		}
+		item.PeopleCount = len(list)
+	}
+
 	return
 
 }
