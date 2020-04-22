@@ -81,7 +81,8 @@ type MyStoreCoupon struct {
 	CouponPrice float64 `gorm:"column:coupon_price" json:"coupon_price"` //优惠券的面值
 	AddTime     int     `gorm:"column:add_time" json:"add_time"`         //优惠券创建时间
 	EndTime     int     `gorm:"column:end_time" json:"end_time"`         //优惠券结束时间
-	Msg         int     `json:"msg"`
+	Msg         string  `json:"_msg"`
+	Type        int     `json:"_type"`
 }
 
 func (storeCouponUser *StoreCouponUser) CheckInvalidCoupon() (err error) {
@@ -107,5 +108,97 @@ func (storeCouponUser *StoreCouponUser) GetUserValidCouponCount(uid int) (count 
 	db := common.GetDB()
 
 	err = db.Table(storeCouponUser.TableName()).Where("uid = ? AND status = ?", uid, 0).Count(&count).Error
+	return
+}
+
+//获取用户优惠券（全部）
+func (storeCouponUser *StoreCouponUser) GetUserAllCoupon(uid int) (r []*MyStoreCoupon, err error) {
+	storeCouponUser.CheckInvalidCoupon()
+
+	db := common.GetDB()
+	list := make([]*StoreCouponUser, 0)
+	err = db.Table(storeCouponUser.TableName()).Where("uid = ?", uid).Order("is_fail ASC,status ASC,add_time DESC").Find(&list).Error
+	if err != nil {
+		return
+	}
+	return storeCouponUser.tidyCouponList(list), nil
+}
+
+// 获取用户优惠券（未使用）
+func (storeCouponUser *StoreCouponUser) GetUserValidCoupon(uid int) (r []*MyStoreCoupon, err error) {
+	storeCouponUser.CheckInvalidCoupon()
+
+	db := common.GetDB()
+	list := make([]*StoreCouponUser, 0)
+	err = db.Table(storeCouponUser.TableName()).Where("uid = ? AND status = ?", uid, 0).Order("is_fail ASC,status ASC,add_time DESC").Find(&list).Error
+	if err != nil {
+		return
+	}
+	return storeCouponUser.tidyCouponList(list), nil
+}
+
+// 获取用户优惠券（已经使用)
+func (storeCouponUser *StoreCouponUser) GetUserAlreadyUsedCoupon(uid int) (r []*MyStoreCoupon, err error) {
+	storeCouponUser.CheckInvalidCoupon()
+
+	db := common.GetDB()
+	list := make([]*StoreCouponUser, 0)
+	err = db.Table(storeCouponUser.TableName()).Where("uid = ? AND status = ?", uid, 1).Order("is_fail ASC,status ASC,add_time DESC").Find(&list).Error
+	if err != nil {
+		return
+	}
+	return storeCouponUser.tidyCouponList(list), nil
+}
+
+// 获取用户优惠券（已过期）
+func (storeCouponUser *StoreCouponUser) GetUserBeOverdueCoupon(uid int) (r []*MyStoreCoupon, err error) {
+	storeCouponUser.CheckInvalidCoupon()
+
+	db := common.GetDB()
+	list := make([]*StoreCouponUser, 0)
+	err = db.Table(storeCouponUser.TableName()).Where("uid = ? AND status = ?", uid, 2).Order("is_fail ASC,status ASC,add_time DESC").Find(&list).Error
+	if err != nil {
+		return
+	}
+	return storeCouponUser.tidyCouponList(list), nil
+}
+
+//
+func (storeCouponUser *StoreCouponUser) tidyCouponList(list []*StoreCouponUser) (r []*MyStoreCoupon) {
+	nowTime := int(time.Now().Unix())
+	for _, item := range list {
+		itemData := &MyStoreCoupon{
+			Id:          item.Id,
+			Cid:         item.Cid,
+			Uid:         item.Uid,
+			CouponTitle: item.CouponTitle,
+			CouponPrice: item.CouponPrice,
+			AddTime:     item.AddTime,
+			EndTime:     item.EndTime,
+		}
+		if item.IsFail > 0 {
+			itemData.Type = 0
+			itemData.Msg = "已失效"
+		} else if item.Status == 1 {
+			itemData.Type = 0
+			itemData.Msg = "已使用"
+		} else if item.Status == 2 {
+			itemData.Type = 0
+			itemData.Msg = "已过期"
+		} else if item.AddTime > nowTime || item.EndTime < nowTime {
+			itemData.Type = 0
+			itemData.Msg = "已过期"
+		} else {
+			if item.AddTime+86400 > nowTime {
+				itemData.Type = 2
+				itemData.Msg = "可使用"
+			} else {
+				itemData.Type = 2
+				itemData.Msg = "可使用"
+			}
+		}
+		r = append(r, itemData)
+
+	}
 	return
 }

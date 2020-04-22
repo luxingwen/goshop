@@ -192,3 +192,23 @@ func (storeCombination *StoreCombination) GetAll(req *Query) (r []*ResStoreCombi
 
 	return
 }
+
+// 获取是否有拼团产品
+func (storeCombination *StoreCombination) GetPinkIsOpen() (r bool, err error) {
+	nowTime := time.Now().Unix()
+	db := common.GetDB()
+	var count int
+	storeProduct := &StoreProduct{}
+	rows, err := db.Raw("SELECT count(*) FROM "+storeCombination.TableName()+" c LEFT JOIN "+storeProduct.TableName()+" s ON "+
+		"s.id=c.product_id WHERE c.is_show = ? AND c.is_del = ? AND c.start_time < ? AND c.stop_time > ?", 1, 0, nowTime, nowTime).Rows()
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		rows.Scan(&count)
+	}
+	if count > 0 {
+		return true, nil
+	}
+	return
+}

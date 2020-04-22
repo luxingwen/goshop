@@ -174,3 +174,14 @@ func (storeProductRelation *StoreProductRelation) GetUserCollectProduct(uid int,
 	}
 	return
 }
+
+// 收藏产品删除
+func (storeProductRelation *StoreProductRelation) UserCollectProductDel(uid, productId int) (err error) {
+	db := common.GetDB()
+	err = db.Table(storeProductRelation.TableName()).Where("uid = ? AND product_id = ?", uid, productId).Delete(storeProductRelation).Error
+	if err != nil {
+		return
+	}
+	return
+	//return storeProductRelation.GetUserCollectProduct(uid, &Query{Page: 1, PageNum: 20})
+}

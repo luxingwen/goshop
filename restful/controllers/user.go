@@ -178,3 +178,48 @@ func (ctl *UserController) MyUserInfo(c *gin.Context) {
 	//_ = ruser
 	// @todo
 }
+
+// 获取活动是否存在
+func (ctl *UserController) GetActivity(c *gin.Context) {
+	storeBargain := &models.StoreBargain{}
+	isBargin, err := storeBargain.ValidBargain(0)
+	if err != nil {
+		handleErr(c, err)
+		return
+	}
+	storeCombination := &models.StoreCombination{}
+	isPink, err := storeCombination.GetPinkIsOpen()
+	if err != nil {
+		handleErr(c, err)
+		return
+	}
+	mdata := make(map[string]interface{}, 0)
+	mdata["is_bargin"] = isBargin
+	mdata["is_pink"] = isPink
+	mdata["is_seckill"] = false
+	handleOk(c, mdata)
+}
+
+// 用户地址列表
+func (ctl *UserController) UserAddressList(c *gin.Context) {
+	uidT, ok := c.Get("uid")
+	if !ok {
+		handleErr(c, errors.New("无效的uid"))
+		return
+	}
+	uid := uidT.(int)
+
+	req := new(models.Query)
+	err := c.ShouldBindQuery(&req)
+	if err != nil {
+		return
+	}
+
+	userAddress := &models.UserAddress{}
+	list, err := userAddress.GetUserValidAddressList(uid, req)
+	if err != nil {
+		return
+	}
+	handleOk(c, list)
+
+}

@@ -51,6 +51,7 @@ func Routers() *gin.Engine {
 		store.DELETE("/uncollect_product/:id", storeProductController.UncollectProduct)
 		store.POST("/collect_product/:id", storeProductController.CollectProduct)
 		store.GET("/user_collect_product", storeProductController.GetUserCollectProduct)
+		store.DELETE("/user_collect_product_del/:id", storeProductController.UserCollectProductDel)
 
 	}
 
@@ -76,6 +77,7 @@ func Routers() *gin.Engine {
 	conpon := api.Group("/coupon")
 	{
 		conpon.GET("/issue_coupon_list", couponsController.IssueCouponList)
+		conpon.GET("/use_coupons/:typ", couponsController.GetUseCoupons)
 	}
 
 	// GenRouters(r)
@@ -85,6 +87,8 @@ func Routers() *gin.Engine {
 	{
 		userG.GET("/my", userController.My)
 		userG.GET("/my_user_info", userController.MyUserInfo)
+		userG.GET("/activity", userController.GetActivity)
+		userG.GET("/user_address_list", userController.UserAddressList)
 	}
 	return r
 }

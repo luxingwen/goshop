@@ -204,3 +204,34 @@ func (ctl *StoreProductController) CollectProduct(c *gin.Context) {
 	handleOk(c, "收藏成功")
 
 }
+
+// 收藏产品删除
+func (ctl *StoreProductController) UserCollectProductDel(c *gin.Context) {
+	uidT, ok := c.Get("uid")
+	if !ok {
+		handleErr(c, errors.New("无效的uid"))
+		return
+	}
+	uid := uidT.(int)
+	fmt.Println("uid ==> ", uid)
+	if uid <= 0 {
+		handleErr(c, errors.New("无效的uid"))
+		return
+	}
+
+	idStr := c.Param("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		handleErr(c, err)
+		return
+	}
+
+	storeProductRelation := &models.StoreProductRelation{}
+	err = storeProductRelation.UserCollectProductDel(uid, id)
+	if err != nil {
+		handleErr(c, err)
+		return
+	}
+
+	handleOk(c, "取消收藏成功")
+}

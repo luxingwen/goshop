@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"strconv"
 	"strings"
@@ -564,6 +565,19 @@ func (crtl *IndexController) SystemGroupDataValue(c *gin.Context) {
 	}
 
 	handleOk(c, mdata)
+
+}
+
+// 获取系统配置
+// @Todo
+
+func (crtl *IndexController) GetSystemConfigValue(c *gin.Context) {
+	name := c.Param("name")
+	if name == "" {
+		handleErr(c, errors.New("缺少参数"))
+		return
+	}
+	_ = name
 
 }
 

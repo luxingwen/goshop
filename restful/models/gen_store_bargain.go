@@ -141,3 +141,22 @@ func (storeBargain *StoreBargain) GetList(req *Query) (r []*ResStoreBargain, err
 	return
 
 }
+
+// 判断砍价产品是否开启
+func (storeBargain *StoreBargain) ValidBargain(bargainId int) (r bool, err error) {
+	db := common.GetDB().Table(storeBargain.TableName())
+	nowTime := time.Now().Unix()
+	if bargainId > 0 {
+		db = db.Where("id = ?", bargainId)
+	}
+
+	var count int
+	err = db.Where("is_del = ? AND status = ? AND start_time < ? AND stop_time > ?", 0, 1, nowTime, nowTime).Count(&count).Error
+	if err != nil {
+		return
+	}
+	if count > 0 {
+		return true, nil
+	}
+	return
+}
