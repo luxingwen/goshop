@@ -56,7 +56,8 @@ func (lru *Cache) Get(key interface{}) (val interface{}, ok bool) {
 }
 
 func (lru *Cache) Put(key interface{}, value interface{}, expired int64) {
-	mcache := &Mcache{Key: key, Value: value, Expired: expired + time.Now().Unix()}
+
+	mcache := &Mcache{Key: key, Value: value.(string), Expired: expired + time.Now().Unix()}
 	err := mcache.Insert()
 	if err != nil {
 		log.Error("mcache insert err:", err)
@@ -148,7 +149,7 @@ func Init(username, pwd, host, port, dbname string) *gorm.DB {
 type Mcache struct {
 	gorm.Model
 	Key     interface{} `gorm:"column:key;type:varchar(75);unique_index"`
-	Value   interface{} `gorm:"column:value;type:text"`
+	Value   string      `gorm:"column:value;type:text"`
 	Expired int64       `gorm:"column:expired"`
 }
 

@@ -11,9 +11,11 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 
 	"goshop/restful/common"
+
 	"goshop/restful/config"
 	//"goshop/restful/models"
 	"goshop/restful/routers"
@@ -28,6 +30,7 @@ func main() {
 
 	//db.AutoMigrate(&models.Address{}, &models.Item{}, &models.ItemDesc{}, &models.Order{}, &models.Role{}, &models.User{})
 
+	gin.SetMode(gin.DebugMode)
 	s := &http.Server{
 		Addr:           ":" + config.ServerConf.Port,
 		Handler:        routers.Routers(),
@@ -39,4 +42,5 @@ func main() {
 	if err := s.ListenAndServe(); err != nil {
 		log.Fatal(err)
 	}
+
 }

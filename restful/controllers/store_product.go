@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"errors"
+	"fmt"
 	"strconv"
 
 	"goshop/restful/models"
@@ -180,6 +181,7 @@ func (ctl *StoreProductController) CollectProduct(c *gin.Context) {
 		return
 	}
 	uid := uidT.(int)
+	fmt.Println("uid ==> ", uid)
 	if uid <= 0 {
 		handleErr(c, errors.New("无效的uid"))
 		return
