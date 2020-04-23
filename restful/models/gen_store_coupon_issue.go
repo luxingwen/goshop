@@ -4,6 +4,8 @@ package models
 import (
 	"goshop/restful/common"
 
+	"errors"
+	"fmt"
 	"time"
 )
 
@@ -71,6 +73,12 @@ func (storeCouponIssue *StoreCouponIssue) Get() (*StoreCouponIssue, error) {
 	return storeCouponIssue, err
 }
 
+func (storeCouponIssue *StoreCouponIssue) GetById(id int) (r *StoreCouponIssue, err error) {
+	r = new(StoreCouponIssue)
+	err = common.GetDB().Where("id = ?", id).First(&r).Error
+	return storeCouponIssue, err
+}
+
 type IssueCoupon struct {
 	Id          int     `gorm:"column:id" json:"id"`                       //
 	Cid         int     `gorm:"column:cid" json:"cid"`                     //优惠券ID
@@ -127,4 +135,38 @@ func (storeCouponIssue *StoreCouponIssue) GetIssueCouponList(uid int, req *Query
 	}
 	r = list
 	return
+}
+
+// 优惠券领取
+func (storeCouponIssue *StoreCouponIssue) IssueUserCoupon(id, uid int) (err error) {
+	rstoreCouponIssue, err := storeCouponIssue.GetById(id)
+	if err != nil {
+		err = errors.New("领取的优惠劵已领完或已过期")
+		return
+	}
+
+	storeCouponIssueUser := &StoreCouponIssueUser{}
+	rstoreCouponIssueUser, err := storeCouponIssueUser.GetByUser(uid, id)
+	if err == nil && rstoreCouponIssueUser != nil {
+		err = errors.New("已经领取过该优惠券")
+		return
+	}
+
+	fmt.Println("remain count = ", rstoreCouponIssue.RemainCount)
+
+	if rstoreCouponIssue.RemainCount <= 0 && rstoreCouponIssue.IsPermanent == 0 {
+		err = errors.New("抱歉优惠卷已经领取完了！")
+		return
+	}
+
+	err = storeCouponIssueUser.AddUserCoupon(uid, id)
+	if err != nil {
+		return
+	}
+	if rstoreCouponIssue.TotalCount > 0 {
+		rstoreCouponIssue.RemainCount -= 1
+		err = common.GetDB().Table(storeCouponIssue.TableName()).Where("id = ?", id).Update("remain_count", rstoreCouponIssue.RemainCount).Error
+	}
+	return
+
 }

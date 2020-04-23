@@ -19,3 +19,7 @@ func (ctl *AuthApiController) GetCartNum(c *gin.Context) {
 	uid := uidT.(int)
 	_ = uid
 }
+
+func (ctl *AuthApiController) GetCartList(c *gin.Context) {
+
+}

@@ -3,6 +3,8 @@ package models
 
 import (
 	"goshop/restful/common"
+
+	"time"
 )
 
 //优惠券前台用户领取记录表
@@ -71,5 +73,23 @@ func (storeCouponIssueUser *StoreCouponIssueUser) GetByUidIssueCouponIds(uid int
 	if err != nil && err.Error() == "record not found" {
 		return r, nil
 	}
+	return
+}
+
+// 根据用户获取
+func (storeCouponIssueUser *StoreCouponIssueUser) GetByUser(uid, couponId int) (r *StoreCouponIssueUser, err error) {
+	db := common.GetDB()
+	r = new(StoreCouponIssueUser)
+	err = db.Table(storeCouponIssueUser.TableName()).Where("uid = ? AND issue_coupon_id = ?", uid, couponId).First(&r).Error
+	return
+}
+
+func (storeCouponIssueUser *StoreCouponIssueUser) AddUserCoupon(uid, cid int) (err error) {
+	item := &StoreCouponIssueUser{
+		Uid:           uid,
+		IssueCouponId: cid,
+		AddTime:       int(time.Now().Unix()),
+	}
+	err = common.GetDB().Table(storeCouponIssueUser.TableName()).Create(item).Error
 	return
 }

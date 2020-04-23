@@ -3,6 +3,7 @@ package controllers
 import (
 	"errors"
 	"fmt"
+	"strconv"
 
 	"goshop/restful/models"
 
@@ -84,4 +85,29 @@ func (ctl *CouponsController) GetUseCoupons(c *gin.Context) {
 	}
 	handleOk(c, list)
 	return
+}
+
+//领取优惠券
+func (ctl *CouponsController) UserGetCoupon(c *gin.Context) {
+	uidT, ok := c.Get("uid")
+	if !ok {
+		handleErr(c, errors.New("无效的uid"))
+		return
+	}
+	uid := uidT.(int)
+
+	couposeId := c.Param("id")
+	id, err := strconv.Atoi(couposeId)
+	if err != nil {
+		handleErr(c, err)
+		return
+	}
+
+	storeCouponIssue := &models.StoreCouponIssue{}
+	err = storeCouponIssue.IssueUserCoupon(id, uid)
+	if err != nil {
+		handleErr(c, err)
+		return
+	}
+	handleOk(c, "ok")
 }

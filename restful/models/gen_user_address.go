@@ -73,6 +73,43 @@ func (userAddress *UserAddress) Get() (*UserAddress, error) {
 	return userAddress, err
 }
 
+func (userAddress *UserAddress) GetById(id int) (r *UserAddress, err error) {
+	db := common.GetDB()
+	r = new(UserAddress)
+	err = db.Table(userAddress.TableName()).Where("id = ?", id).First(&r).Error
+	return
+}
+
+func (userAddress *UserAddress) GetUserAddress(id, uid int) (r *UserAddress, err error) {
+	db := common.GetDB()
+	r = new(UserAddress)
+	err = db.Table(userAddress.TableName()).Where("id = ? AND uid = ? AND is_del = ?", id, uid, 0).First(&r).Error
+	return
+}
+
+func (userAddress *UserAddress) UpdateById(id int) error {
+	err := common.GetDB().Table(userAddress.TableName()).Where("id = ?", id).Update(userAddress).Error
+	return err
+}
+
+// 设置默认地址
+func (userAddress *UserAddress) SetDefaultAddress(id int, uid int) (err error) {
+	db := common.GetDB().Table(userAddress.TableName())
+	err = db.Where("uid = ?", uid).Update("is_default", 0).Error
+	if err != nil {
+		return
+	}
+	err = db.Where("uid = ? AND id = ?", uid, id).Update("is_default", 1).Error
+	return
+}
+
+// 删除地址
+func (userAddress *UserAddress) RemoveUserAddress(id int, uid int) (err error) {
+	db := common.GetDB().Table(userAddress.TableName())
+	err = db.Where("uid = ? AND id = ?", uid, id).Update("is_del", 1).Error
+	return
+}
+
 func (userAddress *UserAddress) GetUserValidAddressList(uid int, req *Query) (r []*UserAddress, err error) {
 	db := common.GetDB().Model(userAddress)
 	limit := 10

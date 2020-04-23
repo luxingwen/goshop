@@ -5,8 +5,10 @@ import (
 	// "goshop/restful/common"
 	"goshop/restful/models"
 	// "goshop/libs/errcode"
+	//"encoding/json"
 	"errors"
 	"fmt"
+	"strconv"
 )
 
 type ReqLogin struct {
@@ -221,5 +223,147 @@ func (ctl *UserController) UserAddressList(c *gin.Context) {
 		return
 	}
 	handleOk(c, list)
+}
+
+// 修改收货地址
+func (ctl *UserController) EditUserAddress(c *gin.Context) {
+	uidT, ok := c.Get("uid")
+	if !ok {
+		handleErr(c, errors.New("无效的uid"))
+		return
+	}
+	uid := uidT.(int)
+	mReq := make(map[string]interface{}, 0)
+	err := c.ShouldBind(&mReq)
+	if err != nil {
+		return
+	}
+
+	address := mReq["address"].(map[string]interface{})
+	detail := mReq["detail"].(string)
+	var id int
+	if v, ok := mReq["id"].(float64); ok {
+		id = int(v)
+	}
+	if v, ok := mReq["id"].(string); ok {
+		id, _ = strconv.Atoi(v)
+	}
+	iSDefault := int(mReq["is_default"].(float64))
+	phone := mReq["phone"].(string)
+	realName := mReq["real_name"].(string)
+
+	city := address["city"].(string)
+	district := address["district"].(string)
+	province := address["province"].(string)
+
+	userAddress := &models.UserAddress{
+		Uid:       uid,
+		RealName:  realName,
+		Phone:     phone,
+		Province:  province,
+		City:      city,
+		District:  district,
+		Detail:    detail,
+		IsDefault: iSDefault,
+		Id:        id,
+	}
+	if id > 0 {
+		_, err := userAddress.GetById(id)
+		if err != nil {
+			userAddress.Id = 0
+			err = userAddress.Insert()
+			if err != nil {
+				handleErr(c, err)
+				return
+			}
+		} else {
+			err = userAddress.UpdateById(id)
+			if err != nil {
+				handleErr(c, err)
+				return
+			}
+		}
+		return
+	}
+
+	err = userAddress.Insert()
+	if err != nil {
+		handleErr(c, err)
+		return
+	}
+
+	handleOk(c, "ok")
+}
+
+// 设置默认地址
+func (ctl *UserController) SetUserDefaultAddress(c *gin.Context) {
+	uidT, ok := c.Get("uid")
+	if !ok {
+		handleErr(c, errors.New("无效的uid"))
+		return
+	}
+	uid := uidT.(int)
+
+	addressId := c.Param("id")
+	id, err := strconv.Atoi(addressId)
+	if err != nil {
+		handleErr(c, err)
+		return
+	}
+
+	userAddress := &models.UserAddress{}
+	err = userAddress.SetDefaultAddress(id, uid)
+	if err != nil {
+		return
+	}
+	handleOk(c, "ok")
+}
+
+// 删除地址
+func (ctl *UserController) RemoveUserAddress(c *gin.Context) {
+	uidT, ok := c.Get("uid")
+	if !ok {
+		handleErr(c, errors.New("无效的uid"))
+		return
+	}
+	uid := uidT.(int)
+
+	addressId := c.Param("id")
+	id, err := strconv.Atoi(addressId)
+	if err != nil {
+		handleErr(c, err)
+		return
+	}
+
+	userAddress := &models.UserAddress{}
+	err = userAddress.RemoveUserAddress(id, uid)
+	if err != nil {
+		return
+	}
+	handleOk(c, "ok")
+}
+
+// 获取一条用户地址
+func (ctl *UserController) GetUserAddress(c *gin.Context) {
+	uidT, ok := c.Get("uid")
+	if !ok {
+		handleErr(c, errors.New("无效的uid"))
+		return
+	}
+	uid := uidT.(int)
+
+	addressId := c.Param("id")
+	id, err := strconv.Atoi(addressId)
+	if err != nil {
+		handleErr(c, err)
+		return
+	}
+	userAddress := &models.UserAddress{}
+	r, err := userAddress.GetUserAddress(id, uid)
+	if err != nil {
+		handleErr(c, err)
+		return
+	}
+	handleOk(c, r)
 
 }

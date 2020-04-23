@@ -78,6 +78,7 @@ func Routers() *gin.Engine {
 	{
 		conpon.GET("/issue_coupon_list", couponsController.IssueCouponList)
 		conpon.GET("/use_coupons/:typ", couponsController.GetUseCoupons)
+		conpon.POST("/user_get_coupon/:id", couponsController.UserGetCoupon)
 	}
 
 	// GenRouters(r)
@@ -89,6 +90,11 @@ func Routers() *gin.Engine {
 		userG.GET("/my_user_info", userController.MyUserInfo)
 		userG.GET("/activity", userController.GetActivity)
 		userG.GET("/user_address_list", userController.UserAddressList)
+		userG.POST("/edit_user_address", userController.EditUserAddress)
+		userG.PUT("/set_user_default_address/:id", userController.SetUserDefaultAddress)
+		userG.DELETE("/remove_user_address/:id", userController.RemoveUserAddress)
+		userG.GET("/user_address/:id", userController.GetUserAddress)
 	}
+
 	return r
 }
