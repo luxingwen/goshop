@@ -98,6 +98,21 @@ func (storeProduct *StoreProduct) Get() (*StoreProduct, error) {
 	return storeProduct, err
 }
 
+func (storeProduct *StoreProduct) GetProductStock(productId int, uniqueId string) (count int, err error) {
+	if uniqueId == "" {
+		db := common.GetDB().Model(storeProduct)
+		err = db.Where("id = ?", productId).Scan(&storeProduct).Error
+		if err != nil {
+			return 0, err
+		}
+		count = storeProduct.Stock
+		return
+	}
+
+	storeProductAttrValue := &StoreProductAttrValue{}
+	return storeProductAttrValue.UniqueByStock(uniqueId)
+}
+
 type ResProductInfo struct {
 	MerId        int                      `json:"mer_id"` //商户Id(0为总后台管理员创建,不为0的时候是商户后台创建)
 	PriceName    string                   `json:"priceName"`

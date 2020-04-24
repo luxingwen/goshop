@@ -72,3 +72,13 @@ func (storeProductAttrValue *StoreProductAttrValue) ListByProductId(id int) (r [
 	err = db.Where("product_id = ?", id).Find(&r).Error
 	return
 }
+
+func (storeProductAttrValue *StoreProductAttrValue) UniqueByStock(unique string) (count int, err error) {
+	db := common.GetDB().Table(storeProductAttrValue.TableName())
+	err = db.Where("unique = ?", unique).Scan(&storeProductAttrValue).Error
+	if err != nil {
+		return
+	}
+	count = storeProductAttrValue.Stock
+	return
+}

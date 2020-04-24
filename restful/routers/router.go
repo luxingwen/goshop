@@ -38,7 +38,7 @@ func Routers() *gin.Engine {
 	store := api.Group("/store")
 	storeCategoryController := controllers.StoreCategoryController{}
 	storeProductController := controllers.StoreProductController{}
-	storeCartController := controllers.StoreCartController{}
+	//storeCartController := controllers.StoreCartController{}
 	{
 		store.GET("/pid_cate", storeCategoryController.PidByCategory)
 		store.GET("/product_category", storeCategoryController.GetProductCategory)
@@ -47,11 +47,12 @@ func Routers() *gin.Engine {
 		store.GET("/goods_search", storeProductController.GoodsSearch)
 		store.GET("/product/:id", storeProductController.Details)
 		store.GET("/product_collect/:id", storeProductController.ProductCollect)
-		store.GET("/cart_num", storeCartController.GetCartNum)
+		//store.GET("/cart_num", storeCartController.GetCartNum)
 		store.DELETE("/uncollect_product/:id", storeProductController.UncollectProduct)
 		store.POST("/collect_product/:id", storeProductController.CollectProduct)
 		store.GET("/user_collect_product", storeProductController.GetUserCollectProduct)
 		store.DELETE("/user_collect_product_del/:id", storeProductController.UserCollectProductDel)
+		store.POST("/collect_product_all", storeProductController.CollectProductAll)
 
 	}
 
@@ -94,6 +95,17 @@ func Routers() *gin.Engine {
 		userG.PUT("/set_user_default_address/:id", userController.SetUserDefaultAddress)
 		userG.DELETE("/remove_user_address/:id", userController.RemoveUserAddress)
 		userG.GET("/user_address/:id", userController.GetUserAddress)
+	}
+
+	authApiController := controllers.AuthApiController{}
+	authApi := api.Group("/auth").Use(common.JWT())
+	{
+		authApi.POST("/remove_cart", authApiController.RemoveCart)
+		authApi.GET("/cart_list", authApiController.GetCartList)
+		authApi.GET("/cart_num", authApiController.GetCartNum)
+		authApi.PUT("/change_user_cart_num", authApiController.ChangeUserCartNum)
+		authApi.POST("/set_cart", authApiController.SetCart)
+		authApi.POST("/now_buy", authApiController.NowBuy)
 	}
 
 	return r

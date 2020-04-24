@@ -185,3 +185,15 @@ func (storeProductRelation *StoreProductRelation) UserCollectProductDel(uid, pro
 	return
 	//return storeProductRelation.GetUserCollectProduct(uid, &Query{Page: 1, PageNum: 20})
 }
+
+// 批量收藏收藏品
+func (storeProductRelation *StoreProductRelation) ProductRelationAll(ids []int, uid int, relationType string, category string) (err error) {
+	for _, id := range ids {
+		// @Todo 待改善
+		err = storeProductRelation.ProductRelation(uid, id, relationType, category)
+		if err != nil {
+			return err
+		}
+	}
+	return
+}

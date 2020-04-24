@@ -235,3 +235,32 @@ func (ctl *StoreProductController) UserCollectProductDel(c *gin.Context) {
 
 	handleOk(c, "取消收藏成功")
 }
+
+type CollectProduct struct {
+	ProductIds []int `json:"productIds"`
+}
+
+func (ctl *StoreProductController) CollectProductAll(c *gin.Context) {
+	uidT, ok := c.Get("uid")
+	if !ok {
+		handleErr(c, errors.New("无效的uid"))
+		return
+	}
+	uid := uidT.(int)
+	if uid <= 0 {
+		handleErr(c, errors.New("无效的uid"))
+		return
+	}
+	req := new(CollectProduct)
+	err := c.ShouldBind(&req)
+	if err != nil {
+		handleErr(c, err)
+	}
+	storeProductRelation := &models.StoreProductRelation{}
+	err = storeProductRelation.ProductRelationAll(req.ProductIds, uid, "collect", "product")
+	if err != nil {
+		handleErr(c, err)
+		return
+	}
+	handleOk(c, "收藏成功")
+}
